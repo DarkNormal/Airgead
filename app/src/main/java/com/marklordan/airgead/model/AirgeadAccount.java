@@ -1,5 +1,6 @@
 package com.marklordan.airgead.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,8 @@ public class AirgeadAccount {
 
     public AirgeadAccount(double balance, List<Transaction> transactions, double savingsTarget) {
         mBalance = balance;
-        mTransactions = transactions;
+        if(transactions != null) mTransactions = transactions;
+        else mTransactions = new ArrayList<>();
         mSavingsTarget = savingsTarget;
     }
 
@@ -42,6 +44,19 @@ public class AirgeadAccount {
     }
 
     public boolean addTransaction(Transaction transaction){
+        mTransactions.add(transaction);
+        if(Income.class.isInstance(transaction)){
+            logIncome(transaction.getAmount());
+        }
+        else{
+            logExpense(transaction.getAmount());
+        }
         return true;
+    }
+    private void logIncome(double amount){
+        mBalance+=amount;
+    }
+    private void logExpense(double amount){
+        mBalance-=amount;
     }
 }
