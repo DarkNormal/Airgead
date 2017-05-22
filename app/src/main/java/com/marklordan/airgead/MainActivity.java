@@ -2,6 +2,7 @@ package com.marklordan.airgead;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import com.marklordan.airgead.model.AirgeadAccount;
@@ -16,6 +17,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAddExpenseButton = (Button) findViewById(R.id.button_add_expense);
+        mAddExpenseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
         mDeleteExpenseButton = (Button) findViewById(R.id.button_delete_expense);
 
     }

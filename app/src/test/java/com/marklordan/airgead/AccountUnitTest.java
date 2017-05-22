@@ -19,13 +19,13 @@ import java.util.Calendar;
 public class AccountUnitTest {
     @Test
     public void checkAccountBalanceIsSet() {
-        AirgeadAccount account = new AirgeadAccount(0,null,0);
+        AirgeadAccount account = new AirgeadAccount(0,0);
         account.setBalance(100);
         Assert.assertEquals(100, account.getBalance(), 0);
     }
     @Test
     public void addTransactionToAccount(){
-        AirgeadAccount account = new AirgeadAccount(0,null,0);
+        AirgeadAccount account = new AirgeadAccount(0,0);
         account.addTransaction(new Income(200, Calendar.getInstance().getTime(), null));
         Assert.assertTrue(account.getTransactions().size() > 0);
         Assert.assertEquals(200,account.getBalance(), 0);
@@ -33,8 +33,16 @@ public class AccountUnitTest {
     }
     @Test
     public void addTransactionCheckBalance(){
-        AirgeadAccount account = new AirgeadAccount(0,null,0);
+        AirgeadAccount account = new AirgeadAccount(0,0);
         account.addTransaction(new Expense(200, Calendar.getInstance().getTime(), null));
         Assert.assertEquals(-200,account.getBalance(), 0);
+    }
+
+    @Test
+    public void checkSetSavingsTarget(){
+        AirgeadAccount account = new AirgeadAccount();
+        account.setSavingsTarget(1000);
+
+        Assert.assertEquals(1000, account.getSavingsTarget(), 0);
     }
 }

@@ -12,6 +12,17 @@ public class AirgeadAccount {
     private List<Transaction> mTransactions;
     private double mSavingsTarget;
 
+    public AirgeadAccount() {
+        mTransactions = new ArrayList<>();
+    }
+
+    public AirgeadAccount(double balance, double savingsTarget) {
+        this();
+        mBalance = balance;
+        mSavingsTarget = savingsTarget;
+
+    }
+
     public AirgeadAccount(double balance, List<Transaction> transactions, double savingsTarget) {
         mBalance = balance;
         if(transactions != null) mTransactions = transactions;
