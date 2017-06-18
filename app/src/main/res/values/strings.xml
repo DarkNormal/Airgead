@@ -16,4 +16,9 @@
     <string name="error_field_required">This field is required</string>
     <string name="text_no_account">Don\'t have an account?</string>
     <string name="action_sign_up">Sign up</string>
+    <string-array name="pay_frequency_array">
+        <item>Weekly</item>
+        <item>Fortnightly</item>
+        <item>Monthly</item>
+    </string-array>
 </resources>
