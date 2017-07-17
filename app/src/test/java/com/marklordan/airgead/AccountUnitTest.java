@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import java.util.Calendar;
 
+import static com.marklordan.airgead.model.Currency.*;
+
 
 /**
  *
@@ -17,6 +19,13 @@ import java.util.Calendar;
  *
  */
 public class AccountUnitTest {
+    @Test
+    public void createAccountWithInputtedOptions(){
+        AirgeadAccount account = new AirgeadAccount();
+        account.setCurrency(EURO);
+        Assert.assertEquals(EURO, account.getCurrency());
+    }
+
     @Test
     public void checkAccountBalanceIsSet() {
         AirgeadAccount account = new AirgeadAccount(0,0);
