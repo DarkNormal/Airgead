@@ -3,14 +3,11 @@ package com.marklordan.airgead.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Mark on 20/12/2016.
- */
-
 public class AirgeadAccount {
     private double mBalance;
     private List<Transaction> mTransactions;
     private double mSavingsTarget;
+    private Currency mChosenCurrency;
 
     public AirgeadAccount() {
         mTransactions = new ArrayList<>();
@@ -70,4 +67,14 @@ public class AirgeadAccount {
     private void logExpense(double amount){
         mBalance-=amount;
     }
+
+    public Currency getCurrency(){
+        return mChosenCurrency;
+    }
+
+    public void setCurrency(Currency chosenCurrency){
+
+    }
+
+
 }
