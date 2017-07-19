@@ -20,13 +20,6 @@ public class AirgeadAccount {
 
     }
 
-    public AirgeadAccount(double balance, List<Transaction> transactions, double savingsTarget) {
-        mBalance = balance;
-        if(transactions != null) mTransactions = transactions;
-        else mTransactions = new ArrayList<>();
-        mSavingsTarget = savingsTarget;
-    }
-
     public double getBalance() {
         return mBalance;
     }
@@ -43,6 +36,7 @@ public class AirgeadAccount {
         mTransactions = transactions;
     }
 
+
     public double getSavingsTarget() {
         return mSavingsTarget;
     }
@@ -51,7 +45,7 @@ public class AirgeadAccount {
         mSavingsTarget = savingsTarget;
     }
 
-    public boolean addTransaction(Transaction transaction){
+    public boolean performTransaction(Transaction transaction){
         mTransactions.add(transaction);
         if(Income.class.isInstance(transaction)){
             logIncome(transaction.getAmount());
@@ -73,8 +67,18 @@ public class AirgeadAccount {
     }
 
     public void setCurrency(Currency chosenCurrency){
+        mChosenCurrency = chosenCurrency;
 
     }
-
-
+    
+    public Transaction getLatestTransactionAdded() {
+        List<Transaction> transactionList = getTransactions();
+        Transaction latestTransaction = transactionList.get(0);
+        for (int i = 1; i < transactionList.size(); i++) {
+            if (transactionList.get(i).getDateOfTransaction().after(latestTransaction.getDateOfTransaction())){
+                latestTransaction = transactionList.get(i);
+            }
+        }
+        return latestTransaction;
+    }
 }
