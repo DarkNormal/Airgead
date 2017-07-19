@@ -1,0 +1,6 @@
+#
+# Build configuration for Circle CI
+#
+dependencies:
+    override:
+        - chmod +x gradlew

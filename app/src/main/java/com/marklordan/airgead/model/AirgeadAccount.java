@@ -3,20 +3,21 @@ package com.marklordan.airgead.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Mark on 20/12/2016.
- */
-
 public class AirgeadAccount {
     private double mBalance;
     private List<Transaction> mTransactions;
     private double mSavingsTarget;
+    private Currency mChosenCurrency;
 
-    public AirgeadAccount(double balance, List<Transaction> transactions, double savingsTarget) {
+    public AirgeadAccount() {
+        mTransactions = new ArrayList<>();
+    }
+
+    public AirgeadAccount(double balance, double savingsTarget) {
+        this();
         mBalance = balance;
-        if(transactions != null) mTransactions = transactions;
-        else mTransactions = new ArrayList<>();
         mSavingsTarget = savingsTarget;
+
     }
 
     public double getBalance() {
@@ -35,6 +36,7 @@ public class AirgeadAccount {
         mTransactions = transactions;
     }
 
+
     public double getSavingsTarget() {
         return mSavingsTarget;
     }
@@ -43,7 +45,7 @@ public class AirgeadAccount {
         mSavingsTarget = savingsTarget;
     }
 
-    public boolean addTransaction(Transaction transaction){
+    public boolean performTransaction(Transaction transaction){
         mTransactions.add(transaction);
         if(Income.class.isInstance(transaction)){
             logIncome(transaction.getAmount());
@@ -58,5 +60,25 @@ public class AirgeadAccount {
     }
     private void logExpense(double amount){
         mBalance-=amount;
+    }
+
+    public Currency getCurrency(){
+        return mChosenCurrency;
+    }
+
+    public void setCurrency(Currency chosenCurrency){
+        mChosenCurrency = chosenCurrency;
+
+    }
+    
+    public Transaction getLatestTransactionAdded() {
+        List<Transaction> transactionList = getTransactions();
+        Transaction latestTransaction = transactionList.get(0);
+        for (int i = 1; i < transactionList.size(); i++) {
+            if (transactionList.get(i).getDateOfTransaction().after(latestTransaction.getDateOfTransaction())){
+                latestTransaction = transactionList.get(i);
+            }
+        }
+        return latestTransaction;
     }
 }
