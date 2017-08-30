@@ -15,6 +15,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:text="Set Balance"
+        android:onClick="setCurrentBalance"
         app:layout_constraintBottom_toTopOf="@+id/button_add_expense"
         app:layout_constraintLeft_toLeftOf="@+id/button_add_expense"
         app:layout_constraintRight_toRightOf="@+id/button_add_expense" />
