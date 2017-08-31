@@ -21,6 +21,7 @@ public class AccountDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + AirgeadContract.AccountTable.TABLE_NAME + "(" +
                 AirgeadContract.AccountTable.Cols._ID + " INTEGER PRIMARY KEY," +
+                AirgeadContract.AccountTable.Cols.ACCOUNT_ID + " INTEGER NOT NULL," +
                 AirgeadContract.AccountTable.Cols.SAVINGS_TARGET + " NUMBER," +
                 AirgeadContract.AccountTable.Cols.BALANCE + " NUMBER)");
 

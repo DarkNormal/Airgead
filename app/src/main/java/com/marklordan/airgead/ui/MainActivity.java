@@ -1,6 +1,7 @@
 package com.marklordan.airgead.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AccountDbHelper;
+import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.model.AirgeadAccount;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,8 +52,37 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         Log.d(TAG, "onResume: ");
+        refreshBalance();
+    }
+
+    private void refreshBalance() {
+
+        String[] projection = {AirgeadContract.AccountTable.Cols.BALANCE};
+        Cursor cursor = getContentResolver().query(
+                AirgeadContract.AccountTable.CONTENT_URI,
+                projection,
+                null,
+                null,
+                null,
+                null
+                );
+
+        if(cursor == null || cursor.getCount() <= 0){
+            return;
+        }
+        try {
+            int balanceIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.BALANCE);
+
+            cursor.moveToNext();
+            double currentBalance = cursor.getDouble(balanceIndex);
+            Log.d(TAG, "refreshBalance: " + currentBalance);
+
+            mAccountBalanceTextView.setText(String.valueOf(currentBalance));
+        }
+        finally {
+            cursor.close();
+        }
     }
 
     private void setBalance(double amount){

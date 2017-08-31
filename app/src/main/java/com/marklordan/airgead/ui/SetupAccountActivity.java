@@ -22,7 +22,10 @@ public class SetupAccountActivity extends AppCompatActivity {
 
 
     public void confirmBalanceDetails(View v){
+        //TODO this will currently fail, as the NOT NULL constraint in the DB
+        //rejects the insert. A unique ID (ACCOUNT_ID
         ContentValues values = new ContentValues();
+        values.put(AirgeadContract.AccountTable.Cols._ID, 1);
         values.put(AirgeadContract.AccountTable.Cols.BALANCE, Double.parseDouble(currentBalanceEditText.getText().toString()));
         values.put(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET, 0);
         getContentResolver().insert(AirgeadContract.AccountTable.CONTENT_URI,values);
