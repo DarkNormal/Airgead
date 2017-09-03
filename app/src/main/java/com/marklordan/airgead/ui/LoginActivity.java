@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,11 +25,14 @@ import com.marklordan.airgead.R;
  */
 public class LoginActivity extends AppCompatActivity{
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
+
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private Button mSignInButton;
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,20 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    Log.d(TAG, "onAuthStateChanged: signed_in: " + user.getUid());
+                }
+                else{
+                    Log.d(TAG, "onAuthStateChanged: signed_out");
+                }
+            }
+        };
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
@@ -54,8 +72,15 @@ public class LoginActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        mAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mAuthStateListener != null){
+            mAuth.removeAuthStateListener(mAuthStateListener);
+        }
     }
 
     /**
@@ -73,12 +98,15 @@ public class LoginActivity extends AppCompatActivity{
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "onComplete: " + task.isSuccessful());
                         if(task.isSuccessful()){
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.d(this.getClass().toString(), user.getEmail());
                             updateUI(user);
                         }
                         else{
+                            Log.d(TAG, "onComplete: " + task.getException().getMessage());
+                            Toast.makeText(LoginActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     }
