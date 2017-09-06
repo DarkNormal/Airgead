@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,12 +26,24 @@ import com.marklordan.airgead.R;
  */
 public class LoginActivity extends AppCompatActivity{
 
+    public interface ProgressListener {
+        public void onProgressShown();
+        public void onProgressDismissed();
+    }
+
     private static final String TAG = LoginActivity.class.getSimpleName();
+
+    private ProgressListener mProgressListener;
+
+    public void setProgressListener(ProgressListener progressListener){
+        mProgressListener = progressListener;
+    }
 
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private Button mSignInButton;
+    private ProgressBar mProgressBar;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
@@ -58,6 +71,7 @@ public class LoginActivity extends AppCompatActivity{
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
         mPasswordView = (EditText) findViewById(R.id.password);
+        mProgressBar = (ProgressBar) findViewById(R.id.loginProgressbar);
 
         mSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mSignInButton.setOnClickListener(new OnClickListener() {
@@ -94,10 +108,12 @@ public class LoginActivity extends AppCompatActivity{
             return;
         }
 
+        showProgress();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        dismissProgress();
                         Log.d(TAG, "onComplete: " + task.isSuccessful());
                         if(task.isSuccessful()){
                             FirebaseUser user = mAuth.getCurrentUser();
@@ -140,6 +156,37 @@ public class LoginActivity extends AppCompatActivity{
             finish();
         }
 
+
+
+    }
+
+    private void showProgress() {
+        // show the progress and notify the listener
+        mProgressBar.setVisibility(View.VISIBLE);
+        notifyListener(mProgressListener);
+    }
+
+    private void dismissProgress() {
+        // hide the progress and notify the listener
+        mProgressBar.setVisibility(View.INVISIBLE);
+        notifyListener(mProgressListener);
+    }
+
+    public boolean isInProgress() {
+        // return true if progress is visible
+        return mProgressBar.isShown();
+    }
+
+    private void notifyListener(ProgressListener listener) {
+        if (listener == null){
+            return;
+        }
+        if (isInProgress()){
+            listener.onProgressShown();
+        }
+        else {
+            listener.onProgressDismissed();
+        }
     }
 
 }
