@@ -188,6 +188,7 @@ public class LoginActivity extends AppCompatActivity{
     private void initialiseUSerAccountOnDb() {
         ContentValues values = new ContentValues();
         values.put(AirgeadContract.AccountTable.Cols._ID, 1);
+        values.put(AirgeadContract.AccountTable.Cols.ACCOUNT_ID, 1);
         values.put(AirgeadContract.AccountTable.Cols.BALANCE, 0);
         values.put(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET, 0);
         try {

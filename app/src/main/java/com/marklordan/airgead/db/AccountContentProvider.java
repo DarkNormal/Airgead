@@ -40,7 +40,7 @@ public class AccountContentProvider extends ContentProvider {
         long id = db.insert(AirgeadContract.AccountTable.TABLE_NAME,null, values);
 
         returnUri = ContentUris.withAppendedId(AirgeadContract.AccountTable.CONTENT_URI, id);
-        if(id >0 == false){
+        if(id > 0 == false){
             Log.d(AccountContentProvider.class.getSimpleName(), "insert: failed");
         }
         else Log.d(AccountContentProvider.class.getSimpleName(), "insert: successful");
@@ -78,7 +78,6 @@ public class AccountContentProvider extends ContentProvider {
                       String[] selectionArgs) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-        // TODO - FIGURE OUT WHY UPDATE IS NOT WORKING
         int count = db.update(AirgeadContract.AccountTable.TABLE_NAME, values, selection, selectionArgs);
         Log.d(TAG, "update: rows updated:" + count);
         return count;
