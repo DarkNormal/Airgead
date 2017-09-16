@@ -44,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
         mSetBalanceButton = (Button) findViewById(R.id.button_set_balance);
 
 
-        SQLiteDatabase mDatabase = new AccountDbHelper(getApplicationContext()).getWritableDatabase();
-
-
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.util.Log;
 public class AccountContentProvider extends ContentProvider {
 
     private static AccountDbHelper mDbHelper;
+    public static final String TAG = AccountContentProvider.class.getSimpleName();
 
 
     public AccountContentProvider() {
@@ -75,7 +76,11 @@ public class AccountContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        // TODO: Implement this to handle requests to update one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        // TODO - FIGURE OUT WHY UPDATE IS NOT WORKING
+        int count = db.update(AirgeadContract.AccountTable.TABLE_NAME, values, selection, selectionArgs);
+        Log.d(TAG, "update: rows updated:" + count);
+        return count;
     }
 }
