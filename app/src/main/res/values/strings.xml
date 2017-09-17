@@ -23,4 +23,9 @@
         <item>Fortnightly</item>
         <item>Monthly</item>
     </string-array>
+
+    <string name="is_expense_transaction">TRANSACTION_TYPE_ID</string>
+
+
+    <string name="transaction_description">%1$s Description</string>
 </resources>

@@ -2,7 +2,6 @@ package com.marklordan.airgead.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.marklordan.airgead.R;
-import com.marklordan.airgead.db.AccountDbHelper;
 import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.model.AirgeadAccount;
 
@@ -19,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private AirgeadAccount mAccount;
-    private Button mAddExpenseButton, mDeleteExpenseButton, mSetBalanceButton;
+    private Button mAddExpenseButton, mDeleteExpenseButton;
     private TextView mAccountBalanceTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,19 +27,20 @@ public class MainActivity extends AppCompatActivity {
 
         mAccount = new AirgeadAccount();
 
+        // TODO SETUP SEPARATE TRANSACTION (INCOME / EXPENSE) OPTIONS
         mAddExpenseButton = (Button) findViewById(R.id.button_add_expense);
         mAddExpenseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
+                intent.putExtra(getString(R.string.is_expense_transaction), false);
+                startActivity(intent);
             }
         });
         mDeleteExpenseButton = (Button) findViewById(R.id.button_delete_expense);
 
         mAccountBalanceTextView = (TextView) findViewById(R.id.textview_account_balance);
         mAccountBalanceTextView.setText("Your balance is " + mAccount.getBalance());
-
-        mSetBalanceButton = (Button) findViewById(R.id.button_set_balance);
 
 
     }
@@ -80,10 +79,6 @@ public class MainActivity extends AppCompatActivity {
         finally {
             cursor.close();
         }
-    }
-
-    private void setBalance(double amount){
-        mAccount.setBalance(amount);
     }
 
     public void setCurrentBalance(View v) {

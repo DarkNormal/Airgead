@@ -36,6 +36,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- TODO IMPROVE DISPLAY OF DETAILS
+
+    -->
+
 
     <Button
         android:id="@+id/button_add_expense"
