@@ -5,6 +5,8 @@
     <string name="button_delete_expense">Delete Expense</string>
     <string name="title_activity_login">Sign in</string>
 
+    <string name="total_balance">Total Balance</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>

@@ -25,6 +25,14 @@ public class AccountDbHelper extends SQLiteOpenHelper {
                 AirgeadContract.AccountTable.Cols.SAVINGS_TARGET + " NUMBER," +
                 AirgeadContract.AccountTable.Cols.BALANCE + " NUMBER)");
 
+        db.execSQL("CREATE TABLE " + AirgeadContract.TransactionTable.TABLE_NAME + "(" +
+                AirgeadContract.TransactionTable.Cols._ID + " INTEGER PRIMARY KEY," +
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_ID + " INTEGER," +
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT + " NUMBER," +
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE + " TEXT)");
+        //TODO ADD TRANSACTION CATEOGRY AND TYPE
+
+
     }
 
     @Override
