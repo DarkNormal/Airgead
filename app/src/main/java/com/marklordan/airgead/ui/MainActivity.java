@@ -12,6 +12,12 @@ import android.widget.TextView;
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.model.AirgeadAccount;
+import com.marklordan.airgead.model.Expense;
+import com.marklordan.airgead.model.Income;
+import com.marklordan.airgead.model.Transaction;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,10 +25,20 @@ public class MainActivity extends AppCompatActivity {
     private AirgeadAccount mAccount;
     private Button mAddExpenseButton, mDeleteExpenseButton;
     private TextView mAccountBalanceTextView;
+
+    private Transaction[] dummyTransactions = new Transaction[]{
+            new Income(2500, Calendar.getInstance().getTime(), null),
+            new Income(100, Calendar.getInstance().getTime(), null),
+            new Income(1456, Calendar.getInstance().getTime(), null),
+            new Income(350, Calendar.getInstance().getTime(), null),
+            new Expense(400, Calendar.getInstance().getTime(), null)
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
 
         mAccount = new AirgeadAccount();
