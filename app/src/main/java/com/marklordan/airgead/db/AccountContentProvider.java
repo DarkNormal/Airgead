@@ -54,19 +54,28 @@ public class AccountContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
 
-        Uri returnUri;
-        //TODO SWITCH ON URI TO ALLOW INSERT TO TRANSACTION TABLE
+
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-        long id = db.insert(AirgeadContract.AccountTable.TABLE_NAME,null, values);
+        int match = sUriMatcher.match(uri);
+        long id = -1; //-1 if an error occurred or if the insert was not performed
 
-        returnUri = ContentUris.withAppendedId(AirgeadContract.AccountTable.CONTENT_URI, id);
-        if(id > 0 == false){
+        //switch for account or transaction insert
+        switch(match){
+            case ACCOUNT:
+                id = db.insert(AirgeadContract.AccountTable.TABLE_NAME, null, values);
+                break;
+            case TRANSACTION:
+                id = db.insert(AirgeadContract.TransactionTable.TABLE_NAME, null, values);
+        }
+
+
+        if(id < 0){
             Log.d(AccountContentProvider.class.getSimpleName(), "insert: failed");
         }
         else Log.d(AccountContentProvider.class.getSimpleName(), "insert: successful");
 
-        return returnUri;
+        return ContentUris.withAppendedId(AirgeadContract.AccountTable.CONTENT_URI, id);
     }
 
     @Override
