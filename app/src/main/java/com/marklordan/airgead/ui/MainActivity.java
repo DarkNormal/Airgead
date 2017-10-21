@@ -104,10 +104,18 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "refreshBalance: " + currentBalance);
 
             int transactionAmountIndex = transactionCursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT);
+            int transactionTypeIndex = transactionCursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE);
 
             while(transactionCursor.moveToNext()){
                 double transactionAmount = transactionCursor.getDouble(transactionAmountIndex);
-                currentBalance += transactionAmount;
+
+                int transactionType = transactionCursor.getInt(transactionTypeIndex);
+                if(transactionType == 0)
+                    currentBalance += transactionAmount;
+                else
+                    currentBalance -= transactionAmount;
+
+
             }
 
             mAccountBalanceTextView.setText(String.valueOf(currentBalance));

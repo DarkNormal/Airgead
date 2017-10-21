@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.marklordan.airgead.R;
@@ -19,6 +21,7 @@ public class TransactionActivity extends AppCompatActivity {
     private AutoCompleteTextView transactionValueTextView;
     private double transactionValue;
     private String transactionTitle;
+    private Switch transactionTypeSwitch;
 
     private Button addTransactionButton;
 
@@ -31,6 +34,18 @@ public class TransactionActivity extends AppCompatActivity {
 
         boolean isExpense = getIntent().getBooleanExtra(getString(R.string.is_expense_transaction), false);
         displayExpenseOrIncomeTransactionDetails(isExpense);
+
+        transactionTypeSwitch = (Switch) findViewById(R.id.transaction_type_switch);
+        transactionTypeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    isAnExpense = true;
+                }
+                else
+                    isAnExpense = false;
+            }
+        });
 
         transactionValueTextView = (AutoCompleteTextView) findViewById(R.id.transaction_value_input);
 
@@ -49,7 +64,7 @@ public class TransactionActivity extends AppCompatActivity {
                 String enteredAmount = transactionValueTextView.getText().toString();
                 String enteredTitle = transactionDescriptionInput.getText().toString();
                 if(enteredAmount != null && !enteredAmount.isEmpty() && enteredTitle != null && !enteredTitle.isEmpty()){
-                    transactionValue = Integer.valueOf(enteredAmount);
+                    transactionValue = Double.valueOf(enteredAmount);
                     transactionTitle = enteredTitle;
                     insertTransactionToDb();
                 }
@@ -90,6 +105,7 @@ public class TransactionActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT, transactionValue);
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE, transactionTitle);
+        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE, isAnExpense);
 
         getContentResolver().insert(AirgeadContract.TransactionTable.CONTENT_URI, values);
     }

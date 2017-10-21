@@ -29,7 +29,9 @@ public class AccountDbHelper extends SQLiteOpenHelper {
                 AirgeadContract.TransactionTable.Cols._ID + " INTEGER PRIMARY KEY," +
                 AirgeadContract.TransactionTable.Cols.TRANSACTION_ID + " INTEGER," +
                 AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT + " NUMBER," +
-                AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE + " TEXT)");
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE + " TEXT," +
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE + " INTEGER" +
+                ")");
         //TODO ADD TRANSACTION CATEGORY AND TYPE
 
 
@@ -37,6 +39,7 @@ public class AccountDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
 
     }
 }
