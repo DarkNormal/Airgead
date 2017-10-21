@@ -68,6 +68,12 @@ public class MainActivity extends AppCompatActivity {
         refreshBalance();
     }
 
+
+    /**
+     * Retrieves the balance of the account, and applies any transactions to it
+     *
+     *
+     */
     private void refreshBalance() {
 
         String[] projection = {AirgeadContract.AccountTable.Cols.BALANCE};
@@ -80,7 +86,14 @@ public class MainActivity extends AppCompatActivity {
                 null
                 );
 
-        if(cursor == null || cursor.getCount() <= 0){
+        Cursor transactionCursor = getContentResolver().query(
+                AirgeadContract.TransactionTable.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+
+        if(cursor == null || cursor.getCount() <= 0 || transactionCursor == null || transactionCursor.getCount() <= 0){
             return;
         }
         try {
@@ -90,10 +103,18 @@ public class MainActivity extends AppCompatActivity {
             double currentBalance = cursor.getDouble(balanceIndex);
             Log.d(TAG, "refreshBalance: " + currentBalance);
 
+            int transactionAmountIndex = transactionCursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT);
+
+            while(transactionCursor.moveToNext()){
+                double transactionAmount = transactionCursor.getDouble(transactionAmountIndex);
+                currentBalance += transactionAmount;
+            }
+
             mAccountBalanceTextView.setText(String.valueOf(currentBalance));
         }
         finally {
             cursor.close();
+            transactionCursor.close();
         }
     }
 

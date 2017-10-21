@@ -91,15 +91,30 @@ public class AccountContentProvider extends ContentProvider {
                         String[] selectionArgs, String sortOrder) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        Cursor returnCursor = db.query(
-                AirgeadContract.AccountTable.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                sortOrder);
-
+        int match = sUriMatcher.match(uri);
+        Cursor returnCursor = null;
+        switch(match){
+            case ACCOUNT:
+                returnCursor = db.query(
+                    AirgeadContract.AccountTable.TABLE_NAME,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    sortOrder);
+                break;
+            case TRANSACTION:
+                returnCursor = db.query(
+                        AirgeadContract.TransactionTable.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                break;
+        }
         return returnCursor;
     }
 
