@@ -19,9 +19,16 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
+      - run:
+          name: Post-Checkout step
+          command: |
+            echo $PWD
+            ls -alt
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      #- run: echo $GOOGLE_SERVICES_JSON | base64 --decode > ${HOME}/${CIRCLE_PROJECT_REPONAME}/app/google-services.json
+      - run:
+          name: Set Google Service file
+          command: echo $GOOGLE_SERVICES_JSON | base64 --decode > ${HOME}/${CIRCLE_PROJECT_REPONAME}/app/google-services.json
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
