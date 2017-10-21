@@ -43,4 +43,6 @@ public abstract class Transaction {
     public void setLocationOfTransaction(Location locationOfTransaction) {
         mLocationOfTransaction = locationOfTransaction;
     }
+
+    //TODO contentValues method for easier use in application
 }

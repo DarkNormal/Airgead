@@ -14,9 +14,10 @@ public class AirgeadContract {
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
     public static final String PATH_ACCOUNT = "airgeadAccount";
+    public static final String PATH_TRANSACTION = "airgeadTransaction";
 
     public static final class AccountTable{
-        public static final String TABLE_NAME = "account";
+        public static final String TABLE_NAME = "tbaccount";
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACCOUNT).build();
 
@@ -30,6 +31,20 @@ public class AirgeadContract {
         public static final String TABLE_NAME = "tbwallet";
         //TODO Separate wallet details from account table
         //once the basic content provider is working
+    }
+
+    public static final class TransactionTable{
+        public static final String TABLE_NAME = "tbtransaction";
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_TRANSACTION).build();
+
+        public static class Cols implements BaseColumns{
+            public static final String TRANSACTION_ID = "transactionId";
+            public static final String TRANSACTION_AMOUNT = "amount";
+            public static final String TRANSACTION_TYPE = "type";
+            public static final String TRANSACTION_CATEGORY = "category";
+            public static final String TRANSACTION_TITLE = "title";
+        }
     }
 
 }

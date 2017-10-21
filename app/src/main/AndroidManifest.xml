@@ -12,7 +12,6 @@
         </activity>
         <activity
             android:name=".ui.LoginActivity"
-            android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -28,6 +27,9 @@
             android:enabled="true"
             android:exported="false">
         </provider>
+
+        <activity android:name=".ui.TransactionActivity">
+        </activity>
     </application>
 
 </manifest>
