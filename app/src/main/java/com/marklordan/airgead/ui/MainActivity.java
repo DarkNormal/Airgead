@@ -96,14 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 null
                 );
 
-        Cursor transactionCursor = getContentResolver().query(
-                AirgeadContract.TransactionTable.CONTENT_URI,
-                null,
-                null,
-                null,
-                null);
-
-        if(cursor == null || cursor.getCount() <= 0 || transactionCursor == null || transactionCursor.getCount() <= 0){
+        if(cursor == null || cursor.getCount() <= 0){
             return;
         }
         try {
@@ -113,26 +106,11 @@ public class MainActivity extends AppCompatActivity {
             double currentBalance = cursor.getDouble(balanceIndex);
             Log.d(TAG, "refreshBalance: " + currentBalance);
 
-            int transactionAmountIndex = transactionCursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT);
-            int transactionTypeIndex = transactionCursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE);
-
-            while(transactionCursor.moveToNext()){
-                double transactionAmount = transactionCursor.getDouble(transactionAmountIndex);
-
-                int transactionType = transactionCursor.getInt(transactionTypeIndex);
-                if(transactionType == 0)
-                    currentBalance += transactionAmount;
-                else
-                    currentBalance -= transactionAmount;
-
-
-            }
-
             mAccountBalanceTextView.setText(String.valueOf(currentBalance));
         }
         finally {
             cursor.close();
-            transactionCursor.close();
+            //transactionCursor.close();
         }
     }
 

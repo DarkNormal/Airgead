@@ -67,6 +67,8 @@ public class AccountContentProvider extends ContentProvider {
                 break;
             case TRANSACTION:
                 id = db.insert(AirgeadContract.TransactionTable.TABLE_NAME, null, values);
+                applyTransactionToBalance(values.getAsDouble(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT));
+
         }
 
 
@@ -126,5 +128,29 @@ public class AccountContentProvider extends ContentProvider {
         int count = db.update(AirgeadContract.AccountTable.TABLE_NAME, values, selection, selectionArgs);
         Log.d(TAG, "update: rows updated:" + count);
         return count;
+    }
+
+
+    private void applyTransactionToBalance(double transactionAmount){
+        ContentValues values = new ContentValues();
+        double currentBalance = 0;
+        String[] projection = {AirgeadContract.AccountTable.Cols.BALANCE};
+        Cursor cursor = query(
+                AirgeadContract.AccountTable.CONTENT_URI,
+                projection,
+                null,
+                null,
+                null,
+                null
+        );
+        while(cursor.moveToNext()){
+            int balanceIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.BALANCE);
+            currentBalance = cursor.getDouble(balanceIndex);
+        }
+        //TODO changing balance here doesn't differentiate between income / expense
+        double newBalance = currentBalance + transactionAmount;
+        values.put(AirgeadContract.AccountTable.Cols.BALANCE, newBalance);
+        update(AirgeadContract.AccountTable.CONTENT_URI,values, AirgeadContract.AccountTable.Cols.ACCOUNT_ID + "= ?", new String[]{"1"});
+
     }
 }
