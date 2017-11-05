@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.marklordan.airgead.R;
+import com.marklordan.airgead.adapters.TransactionAdapter;
 import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Expense;
@@ -17,6 +20,7 @@ import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private AirgeadAccount mAccount;
     private Button mAddExpenseButton, mDeleteExpenseButton;
     private TextView mAccountBalanceTextView;
+    private RecyclerView mRecyclerView;
 
     private Transaction[] dummyTransactions = new Transaction[]{
             new Income(2500, Calendar.getInstance().getTime(), null),
@@ -58,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
         mAccountBalanceTextView = (TextView) findViewById(R.id.textview_account_balance);
         mAccountBalanceTextView.setText("Your balance is " + mAccount.getBalance());
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.recent_transaction_recyclerview);
+        mRecyclerView.setAdapter(new TransactionAdapter(this, Arrays.asList(dummyTransactions)));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+
+
 
     }
 
@@ -86,14 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 null
                 );
 
-        Cursor transactionCursor = getContentResolver().query(
-                AirgeadContract.TransactionTable.CONTENT_URI,
-                null,
-                null,
-                null,
-                null);
-
-        if(cursor == null || cursor.getCount() <= 0 || transactionCursor == null || transactionCursor.getCount() <= 0){
+        if(cursor == null || cursor.getCount() <= 0){
             return;
         }
         try {
@@ -103,26 +106,11 @@ public class MainActivity extends AppCompatActivity {
             double currentBalance = cursor.getDouble(balanceIndex);
             Log.d(TAG, "refreshBalance: " + currentBalance);
 
-            int transactionAmountIndex = transactionCursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT);
-            int transactionTypeIndex = transactionCursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE);
-
-            while(transactionCursor.moveToNext()){
-                double transactionAmount = transactionCursor.getDouble(transactionAmountIndex);
-
-                int transactionType = transactionCursor.getInt(transactionTypeIndex);
-                if(transactionType == 0)
-                    currentBalance += transactionAmount;
-                else
-                    currentBalance -= transactionAmount;
-
-
-            }
-
             mAccountBalanceTextView.setText(String.valueOf(currentBalance));
         }
         finally {
             cursor.close();
-            transactionCursor.close();
+            //transactionCursor.close();
         }
     }
 
