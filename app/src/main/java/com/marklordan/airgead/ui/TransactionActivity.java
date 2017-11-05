@@ -102,6 +102,7 @@ public class TransactionActivity extends AppCompatActivity {
      *
      */
     private void insertTransactionToDb(){
+        //TODO method on model should do this POJO -> ContentValues work
         ContentValues values = new ContentValues();
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT, transactionValue);
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE, transactionTitle);
