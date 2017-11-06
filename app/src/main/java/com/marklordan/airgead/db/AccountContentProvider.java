@@ -147,6 +147,7 @@ public class AccountContentProvider extends ContentProvider {
             int balanceIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.BALANCE);
             currentBalance = cursor.getDouble(balanceIndex);
         }
+        cursor.close();
         //TODO changing balance here doesn't differentiate between income / expense
         double newBalance = currentBalance + transactionAmount;
         values.put(AirgeadContract.AccountTable.Cols.BALANCE, newBalance);

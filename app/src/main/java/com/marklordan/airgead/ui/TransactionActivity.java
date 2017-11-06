@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -18,12 +17,14 @@ public class TransactionActivity extends AppCompatActivity {
 
     private EditText transactionDescriptionInput;
     private Boolean isAnExpense;
-    private EditText transactionValueTextView;
+    private EditText mTransactionValueEditText;
     private double transactionValue;
     private String transactionTitle;
     private Switch transactionTypeSwitch;
 
     private Button addTransactionButton;
+
+    private EditText mTransactionDateEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +40,14 @@ public class TransactionActivity extends AppCompatActivity {
         transactionTypeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    isAnExpense = true;
-                }
-                else
-                    isAnExpense = false;
+                isAnExpense = isChecked;
             }
         });
 
-        transactionValueTextView = (EditText) findViewById(R.id.transaction_value_input);
+        mTransactionValueEditText = (EditText) findViewById(R.id.transaction_value_input);
+
+        //TODO update this to use a DatePicker Dialog instead of entering manually
+        mTransactionDateEditText = (EditText) findViewById(R.id.transaction_date_input);
 
         Button cancelButton = (Button) findViewById(R.id.cancel_transaction_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +61,7 @@ public class TransactionActivity extends AppCompatActivity {
         addTransactionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String enteredAmount = transactionValueTextView.getText().toString();
+                String enteredAmount = mTransactionValueEditText.getText().toString();
                 String enteredTitle = transactionDescriptionInput.getText().toString();
                 if(enteredAmount != null && !enteredAmount.isEmpty() && enteredTitle != null && !enteredTitle.isEmpty()){
                     transactionValue = Double.valueOf(enteredAmount);
@@ -94,7 +94,8 @@ public class TransactionActivity extends AppCompatActivity {
             expenseTypeToDisplay = "Income ";
         }
 
-        transactionDescriptionInput.setHint(String.format(getString(R.string.transaction_description), expenseTypeToDisplay));
+        //not using this as the expense/income usage is messy this way, will plan out steps
+        //transactionDescriptionInput.setHint(String.format(getString(R.string.transaction_description), expenseTypeToDisplay));
     }
 
     /**
