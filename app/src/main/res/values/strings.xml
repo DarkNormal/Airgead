@@ -26,6 +26,8 @@
         <item>Monthly</item>
     </string-array>
 
+    <string name="activity_new_transaction_title">New Transaction</string>
+
     <string name="is_expense_transaction">TRANSACTION_TYPE_ID</string>
 
 

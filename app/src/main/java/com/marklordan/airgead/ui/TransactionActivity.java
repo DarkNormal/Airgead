@@ -1,13 +1,13 @@
 package com.marklordan.airgead.ui;
 
 import android.content.ContentValues;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -16,9 +16,9 @@ import com.marklordan.airgead.db.AirgeadContract;
 
 public class TransactionActivity extends AppCompatActivity {
 
-    private AutoCompleteTextView transactionDescriptionInput;
+    private EditText transactionDescriptionInput;
     private Boolean isAnExpense;
-    private AutoCompleteTextView transactionValueTextView;
+    private EditText transactionValueTextView;
     private double transactionValue;
     private String transactionTitle;
     private Switch transactionTypeSwitch;
@@ -30,7 +30,7 @@ public class TransactionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
-        transactionDescriptionInput = (AutoCompleteTextView) findViewById(R.id.transaction_desc_input);
+        transactionDescriptionInput = (EditText) findViewById(R.id.transaction_desc_input);
 
         boolean isExpense = getIntent().getBooleanExtra(getString(R.string.is_expense_transaction), false);
         displayExpenseOrIncomeTransactionDetails(isExpense);
@@ -47,7 +47,7 @@ public class TransactionActivity extends AppCompatActivity {
             }
         });
 
-        transactionValueTextView = (AutoCompleteTextView) findViewById(R.id.transaction_value_input);
+        transactionValueTextView = (EditText) findViewById(R.id.transaction_value_input);
 
         Button cancelButton = (Button) findViewById(R.id.cancel_transaction_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {

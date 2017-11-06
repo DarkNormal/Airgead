@@ -16,12 +16,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/transaction_desc_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:completionHint="Description"
+            android:hint="Description"
             android:inputType="textAutoComplete"
             android:maxLength="30"/>
     </android.support.design.widget.TextInputLayout>
@@ -36,12 +36,12 @@
         tools:layout_editor_absoluteY="16dp"
         android:layout_marginLeft="8dp">
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/transaction_value_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:completionHint="Amount"
+            android:hint="Amount"
             android:inputType="numberDecimal"
             android:maxLength="30"/>
 
