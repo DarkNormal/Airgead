@@ -9,8 +9,11 @@ import java.util.Date;
  */
 
 public class Expense extends Transaction {
+
+    public Expense(){};
+
     public Expense(double amount, Date dateOfTransaction, Location locationOfTransaction) {
-        super(amount, dateOfTransaction, locationOfTransaction);
+        super(amount, dateOfTransaction, locationOfTransaction, null);
 
     }
 }

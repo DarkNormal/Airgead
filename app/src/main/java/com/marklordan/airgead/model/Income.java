@@ -10,6 +10,6 @@ import java.util.Date;
 
 public class Income extends Transaction {
     public Income(double amount, Date dateOfTransaction, Location locationOfTransaction) {
-        super(amount, dateOfTransaction, locationOfTransaction);
+        super(amount, dateOfTransaction, locationOfTransaction, null);
     }
 }
