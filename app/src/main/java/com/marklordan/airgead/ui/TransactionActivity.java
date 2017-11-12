@@ -1,53 +1,46 @@
 package com.marklordan.airgead.ui;
 
 import android.content.ContentValues;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AirgeadContract;
+import com.marklordan.airgead.model.Expense;
+import com.marklordan.airgead.model.Transaction;
+import com.marklordan.airgead.model.TransactionCategory;
 
 public class TransactionActivity extends AppCompatActivity {
 
-    private AutoCompleteTextView transactionDescriptionInput;
-    private Boolean isAnExpense;
-    private AutoCompleteTextView transactionValueTextView;
-    private double transactionValue;
-    private String transactionTitle;
-    private Switch transactionTypeSwitch;
+    private EditText transactionDescriptionInput;
+    private Spinner mCategorySpinner;
+    private EditText mTransactionValueEditText;
 
     private Button addTransactionButton;
+
+    private EditText mTransactionDateEditText;
+
+    private Transaction mCurrentTransaction = new Expense();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
-        transactionDescriptionInput = (AutoCompleteTextView) findViewById(R.id.transaction_desc_input);
+        transactionDescriptionInput = (EditText) findViewById(R.id.transaction_desc_input);
 
-        boolean isExpense = getIntent().getBooleanExtra(getString(R.string.is_expense_transaction), false);
-        displayExpenseOrIncomeTransactionDetails(isExpense);
+        mTransactionValueEditText = (EditText) findViewById(R.id.transaction_value_input);
 
-        transactionTypeSwitch = (Switch) findViewById(R.id.transaction_type_switch);
-        transactionTypeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    isAnExpense = true;
-                }
-                else
-                    isAnExpense = false;
-            }
-        });
-
-        transactionValueTextView = (AutoCompleteTextView) findViewById(R.id.transaction_value_input);
+        //TODO update this to use a DatePicker Dialog instead of entering manually
+        mTransactionDateEditText = (EditText) findViewById(R.id.transaction_date_input);
 
         Button cancelButton = (Button) findViewById(R.id.cancel_transaction_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -61,12 +54,13 @@ public class TransactionActivity extends AppCompatActivity {
         addTransactionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String enteredAmount = transactionValueTextView.getText().toString();
+                String enteredAmount = mTransactionValueEditText.getText().toString();
                 String enteredTitle = transactionDescriptionInput.getText().toString();
                 if(enteredAmount != null && !enteredAmount.isEmpty() && enteredTitle != null && !enteredTitle.isEmpty()){
-                    transactionValue = Double.valueOf(enteredAmount);
-                    transactionTitle = enteredTitle;
-                    insertTransactionToDb();
+                    mCurrentTransaction.setAmount(Double.valueOf(enteredAmount));
+                    mCurrentTransaction.setDescription(enteredTitle);
+                    insertTransactionToDb(mCurrentTransaction);
+                    finish();
                 }
                 else{
                     Toast.makeText(TransactionActivity.this, "A transaction needs at least a name and a value!", Toast.LENGTH_SHORT).show();
@@ -75,39 +69,16 @@ public class TransactionActivity extends AppCompatActivity {
             }
         });
 
+        mCategorySpinner = (Spinner) findViewById(R.id.transaction_category);
+        mCategorySpinner.setAdapter(new ArrayAdapter<TransactionCategory>(this, android.R.layout.simple_list_item_1, TransactionCategory.values()));
 
-
-        //TODO save transaction to DB table - need to create table too
-        //TODO apply transaction to account balance
-        // info for transaction - type (enum?), name, date incurred, amount
-
-
-
-    }
-
-    private void displayExpenseOrIncomeTransactionDetails(boolean isExpense){
-        String expenseTypeToDisplay;
-        if(isExpense){
-            expenseTypeToDisplay = "Expense ";
-        }
-        else{
-            expenseTypeToDisplay = "Income ";
-        }
-
-        transactionDescriptionInput.setHint(String.format(getString(R.string.transaction_description), expenseTypeToDisplay));
     }
 
     /**
      * Insert an Expense or an Income to the local database via Content Provider
      *
      */
-    private void insertTransactionToDb(){
-        //TODO method on model should do this POJO -> ContentValues work
-        ContentValues values = new ContentValues();
-        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT, transactionValue);
-        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE, transactionTitle);
-        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE, isAnExpense);
-
-        getContentResolver().insert(AirgeadContract.TransactionTable.CONTENT_URI, values);
+    private void insertTransactionToDb(Transaction transaction){
+        getContentResolver().insert(AirgeadContract.TransactionTable.CONTENT_URI, transaction.transactionToContentValues());
     }
 }

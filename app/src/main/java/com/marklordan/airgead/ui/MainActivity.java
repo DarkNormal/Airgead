@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
-                intent.putExtra(getString(R.string.is_expense_transaction), false);
                 startActivity(intent);
             }
         });

@@ -1,6 +1,9 @@
 package com.marklordan.airgead.model;
 
+import android.content.ContentValues;
 import android.location.Location;
+
+import com.marklordan.airgead.db.AirgeadContract;
 
 import java.util.Date;
 
@@ -13,11 +16,18 @@ public abstract class Transaction {
     private double mAmount;
     private Date mDateOfTransaction;
     private Location mLocationOfTransaction;
+    private TransactionCategory mCategory;
+    private String mDescription;
 
-    public Transaction(double amount, Date dateOfTransaction, Location locationOfTransaction) {
+    public Transaction(){};
+
+
+    public Transaction(double amount, Date dateOfTransaction, Location locationOfTransaction, String description) {
         mAmount = amount;
         mDateOfTransaction = dateOfTransaction;
         mLocationOfTransaction = locationOfTransaction;
+        mDescription = description;
+        mCategory = TransactionCategory.GENERAL;
     }
 
     public double getAmount() {
@@ -44,5 +54,23 @@ public abstract class Transaction {
         mLocationOfTransaction = locationOfTransaction;
     }
 
+    public TransactionCategory getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(TransactionCategory category) {
+        mCategory = category;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        mDescription = description;
+    }
+
     //TODO contentValues method for easier use in application
+
+    public abstract ContentValues transactionToContentValues();
 }
