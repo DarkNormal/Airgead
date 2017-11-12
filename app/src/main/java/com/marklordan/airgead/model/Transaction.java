@@ -72,11 +72,5 @@ public abstract class Transaction {
 
     //TODO contentValues method for easier use in application
 
-    public ContentValues transactionToContentValues(){
-        ContentValues values = new ContentValues();
-        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT, getAmount());
-        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE, getDescription());
-        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE, true); //true if expense, false if income
-        return values;
-    }
+    public abstract ContentValues transactionToContentValues();
 }

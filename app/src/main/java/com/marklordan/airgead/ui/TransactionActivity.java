@@ -60,6 +60,7 @@ public class TransactionActivity extends AppCompatActivity {
                     mCurrentTransaction.setAmount(Double.valueOf(enteredAmount));
                     mCurrentTransaction.setDescription(enteredTitle);
                     insertTransactionToDb(mCurrentTransaction);
+                    finish();
                 }
                 else{
                     Toast.makeText(TransactionActivity.this, "A transaction needs at least a name and a value!", Toast.LENGTH_SHORT).show();
