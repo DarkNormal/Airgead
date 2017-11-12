@@ -1,4 +1,4 @@
-package com.marklordan.airgead.ui;
+package com.marklordan.airgead.ui.main;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,43 +9,40 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.adapters.TransactionAdapter;
 import com.marklordan.airgead.db.AirgeadContract;
+import com.marklordan.airgead.db.TransactionInteractorImpl;
 import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Expense;
 import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
+import com.marklordan.airgead.ui.SetupAccountActivity;
+import com.marklordan.airgead.ui.TransactionActivity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainView{
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private AirgeadAccount mAccount;
     private Button mAddExpenseButton, mDeleteExpenseButton;
     private TextView mAccountBalanceTextView;
     private RecyclerView mRecyclerView;
+    private ProgressBar mProgressBar;
 
-    private Transaction[] dummyTransactions = new Transaction[]{
-            new Income(2500, Calendar.getInstance().getTime(), null),
-            new Income(100, Calendar.getInstance().getTime(), null),
-            new Income(1456, Calendar.getInstance().getTime(), null),
-            new Income(350, Calendar.getInstance().getTime(), null),
-            new Expense(400, Calendar.getInstance().getTime(), null)
-    };
+    private MainPresenter mPresenter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
         mAccount = new AirgeadAccount();
 
         // TODO SETUP SEPARATE TRANSACTION (INCOME / EXPENSE) OPTIONS
@@ -60,12 +57,13 @@ public class MainActivity extends AppCompatActivity {
         mDeleteExpenseButton = (Button) findViewById(R.id.button_delete_expense);
 
         mAccountBalanceTextView = (TextView) findViewById(R.id.textview_account_balance);
-        mAccountBalanceTextView.setText("Your balance is " + mAccount.getBalance());
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recent_transaction_recyclerview);
-        mRecyclerView.setAdapter(new TransactionAdapter(this, Arrays.asList(dummyTransactions)));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
 
+        mProgressBar = (ProgressBar) findViewById(R.id.transaction_list_progress_bar);
+
+        mPresenter = new MainPresenterImpl(this, new TransactionInteractorImpl(), getContentResolver());
 
 
     }
@@ -74,43 +72,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
-        refreshBalance();
+        mPresenter.onResume();
     }
 
+    @Override
+    protected void onDestroy() {
+        mPresenter.onDestroy();
+        super.onDestroy();
 
-    /**
-     * Retrieves the balance of the account, and applies any transactions to it
-     *
-     *
-     */
-    private void refreshBalance() {
-
-        String[] projection = {AirgeadContract.AccountTable.Cols.BALANCE};
-        Cursor cursor = getContentResolver().query(
-                AirgeadContract.AccountTable.CONTENT_URI,
-                projection,
-                null,
-                null,
-                null,
-                null
-                );
-
-        if(cursor == null || cursor.getCount() <= 0){
-            return;
-        }
-        try {
-            int balanceIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.BALANCE);
-
-            cursor.moveToNext();
-            double currentBalance = cursor.getDouble(balanceIndex);
-            Log.d(TAG, "refreshBalance: " + currentBalance);
-
-            mAccountBalanceTextView.setText(String.valueOf(currentBalance));
-        }
-        finally {
-            cursor.close();
-            //transactionCursor.close();
-        }
     }
 
     public void setCurrentBalance(View v) {
@@ -118,5 +87,31 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void setItems(List<Transaction> transactions) {
+        mRecyclerView.setAdapter(new TransactionAdapter(this, transactions));
     }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showProgress() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void displayBalance(double balanceAmount) {
+        mAccountBalanceTextView.setText(String.valueOf(balanceAmount));
+    }
+}
 

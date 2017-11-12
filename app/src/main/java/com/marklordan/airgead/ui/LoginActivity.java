@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AirgeadContract;
+import com.marklordan.airgead.ui.main.MainActivity;
 
 /**
  * A login screen that offers login via email/password.
