@@ -1,8 +1,7 @@
 package com.marklordan.airgead.ui.main;
 
-import android.content.ContentResolver;
-
 import com.marklordan.airgead.db.TransactionInteractor;
+import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.model.Transaction;
 
 import java.util.List;
@@ -15,12 +14,12 @@ public class MainPresenterImpl implements MainPresenter, TransactionInteractor.O
 
     private MainView mMainView;
     private TransactionInteractor mInteractor;
-    private ContentResolver mContentResolver;
+    private AirgeadRepository mRepository;
 
-    public MainPresenterImpl(MainView mainView, TransactionInteractor transactionInteractor, ContentResolver contentResolver) {
+    public MainPresenterImpl(MainView mainView, TransactionInteractor transactionInteractor, AirgeadRepository repository) {
         this.mMainView = mainView;
         this.mInteractor = transactionInteractor;
-        mContentResolver = contentResolver;
+        mRepository = repository;
     }
 
     @Override
@@ -30,7 +29,9 @@ public class MainPresenterImpl implements MainPresenter, TransactionInteractor.O
             mMainView.showProgress();
         }
 
-        mInteractor.findItems(this, mContentResolver);
+        //TODO move content resovler usage to repository, continue working on this issue
+        //mInteractor.findItems(this, mContentResolver);
+        mRepository.getTransactions();
     }
 
     @Override
