@@ -5,8 +5,12 @@ import android.database.Cursor;
 import android.os.Handler;
 import android.util.Log;
 
+import com.marklordan.airgead.model.Expense;
+import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
 
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -14,6 +18,8 @@ import java.util.List;
  */
 
 public class LocalDataSource implements AirgeadDataSource{
+
+    private static final String TAG = LocalDataSource.class.getSimpleName();
 
     private ContentResolver mContentResolver;
 
@@ -57,7 +63,40 @@ public class LocalDataSource implements AirgeadDataSource{
     }
 
     @Override
-    public List<Transaction> getTransactions() {
-        return null;
+    public void getTransactions(GetDataCallback callback) {
+        Cursor cursor = mContentResolver.query(AirgeadContract.TransactionTable.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+
+        if(cursor == null || cursor.getCount() <= 0){
+            return;
+        }
+
+        try {
+            int amountIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT);
+
+            while(cursor.moveToNext()){
+                Log.i(TAG, "getTransactions: Transaction amount is: " + cursor.getDouble(amountIndex));
+            }
+        }finally {
+            cursor.close();
+        }
+        callback.onTransactionsLoaded(createArrayList());
+
+
     }
+
+
+    private List<Transaction> createArrayList() {
+        return Arrays.asList(
+                new Income(2500, Calendar.getInstance().getTime(), null),
+                new Income(100, Calendar.getInstance().getTime(), null),
+                new Income(1456, Calendar.getInstance().getTime(), null),
+                new Income(350, Calendar.getInstance().getTime(), null),
+                new Expense(400, Calendar.getInstance().getTime(), null));
+    }
+
+
 }

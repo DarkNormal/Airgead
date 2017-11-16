@@ -28,7 +28,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
         }
 
         mRepository.getAccountBalance(this);
-        mRepository.getTransactions();
+        mRepository.getTransactions(this);
     }
 
     @Override

@@ -18,5 +18,5 @@ public interface AirgeadDataSource {
 
     void getAccountBalance(GetDataCallback callback);
 
-    List<Transaction> getTransactions();
+    void getTransactions(GetDataCallback callback);
 }

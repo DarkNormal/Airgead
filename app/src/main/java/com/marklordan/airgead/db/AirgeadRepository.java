@@ -24,8 +24,8 @@ public class AirgeadRepository implements AirgeadDataSource {
     }
 
     @Override
-    public List<Transaction> getTransactions() {
-        return null;
+    public void getTransactions(GetDataCallback callback) {
+        mDataSource.getTransactions(callback);
     }
 
 }
