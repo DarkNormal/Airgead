@@ -1,6 +1,6 @@
 package com.marklordan.airgead.ui.main;
 
-import com.marklordan.airgead.db.TransactionInteractor;
+import com.marklordan.airgead.db.AirgeadDataSource;
 import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.model.Transaction;
 
@@ -10,15 +10,13 @@ import java.util.List;
  * Created by Mark on 12/11/2017.
  */
 
-public class MainPresenterImpl implements MainPresenter, TransactionInteractor.OnFinishedListener {
+public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDataCallback{
 
     private MainView mMainView;
-    private TransactionInteractor mInteractor;
     private AirgeadRepository mRepository;
 
-    public MainPresenterImpl(MainView mainView, TransactionInteractor transactionInteractor, AirgeadRepository repository) {
+    public MainPresenterImpl(MainView mainView, AirgeadRepository repository) {
         this.mMainView = mainView;
-        this.mInteractor = transactionInteractor;
         mRepository = repository;
     }
 
@@ -29,8 +27,7 @@ public class MainPresenterImpl implements MainPresenter, TransactionInteractor.O
             mMainView.showProgress();
         }
 
-        //TODO move content resovler usage to repository, continue working on this issue
-        //mInteractor.findItems(this, mContentResolver);
+        mRepository.getAccountBalance(this);
         mRepository.getTransactions();
     }
 
@@ -49,11 +46,15 @@ public class MainPresenterImpl implements MainPresenter, TransactionInteractor.O
     }
 
     @Override
-    public void onFinished(List<Transaction> transactions, double balance) {
+    public void onBalanceLoaded(double balance) {
+        mMainView.displayBalance(balance);
+    }
+
+    @Override
+    public void onTransactionsLoaded(List<Transaction> transactions) {
         if(mMainView != null){
             mMainView.setItems(transactions);
             mMainView.hideProgress();
-            mMainView.displayBalance(balance);
         }
     }
 }

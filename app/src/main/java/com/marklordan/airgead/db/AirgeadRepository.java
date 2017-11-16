@@ -9,13 +9,23 @@ import java.util.List;
  */
 
 public class AirgeadRepository implements AirgeadDataSource {
-    @Override
-    public void getAccountBalance() {
 
+    private final LocalDataSource mDataSource;
+
+    public AirgeadRepository(LocalDataSource localDataSource){
+
+        this.mDataSource = localDataSource;
+    }
+
+
+    @Override
+    public void getAccountBalance(GetDataCallback callback) {
+        mDataSource.getAccountBalance(callback);
     }
 
     @Override
     public List<Transaction> getTransactions() {
         return null;
     }
+
 }

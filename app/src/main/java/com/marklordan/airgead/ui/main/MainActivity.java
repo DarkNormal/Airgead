@@ -1,7 +1,6 @@
 package com.marklordan.airgead.ui.main;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,17 +13,13 @@ import android.widget.TextView;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.adapters.TransactionAdapter;
-import com.marklordan.airgead.db.AirgeadContract;
-import com.marklordan.airgead.db.TransactionInteractorImpl;
+import com.marklordan.airgead.db.AirgeadRepository;
+import com.marklordan.airgead.db.LocalDataSource;
 import com.marklordan.airgead.model.AirgeadAccount;
-import com.marklordan.airgead.model.Expense;
-import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.ui.SetupAccountActivity;
 import com.marklordan.airgead.ui.TransactionActivity;
 
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainView{
@@ -63,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
         mProgressBar = (ProgressBar) findViewById(R.id.transaction_list_progress_bar);
 
-        mPresenter = new MainPresenterImpl(this, new TransactionInteractorImpl(), getContentResolver());
+        mPresenter = new MainPresenterImpl(this, new AirgeadRepository(new LocalDataSource(getContentResolver())));
 
 
     }

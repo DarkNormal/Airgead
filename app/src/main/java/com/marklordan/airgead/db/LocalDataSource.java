@@ -5,31 +5,33 @@ import android.database.Cursor;
 import android.os.Handler;
 import android.util.Log;
 
-import com.marklordan.airgead.model.Expense;
-import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
 
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by Mark on 12/11/2017.
+ * Created by Mark on 16/11/2017.
  */
 
-public class TransactionInteractorImpl implements TransactionInteractor {
+public class LocalDataSource implements AirgeadDataSource{
 
+    private ContentResolver mContentResolver;
+
+    public LocalDataSource(ContentResolver contentResolver){
+        this.mContentResolver = contentResolver;
+    }
 
     @Override
-    public void findItems(final OnFinishedListener listener, ContentResolver contentResolver) {
+    public void getAccountBalance(final GetDataCallback callback) {
+
         double currentBalance = 0;
         String[] projection = {AirgeadContract.AccountTable.Cols.BALANCE};
-        Cursor cursor = contentResolver.query(AirgeadContract.AccountTable.CONTENT_URI,
+        Cursor cursor = mContentResolver.query(AirgeadContract.AccountTable.CONTENT_URI,
                 projection,
                 null,
                 null,
                 null
-                );
+        );
         if(cursor == null || cursor.getCount() <= 0){
             return;
         }
@@ -37,7 +39,7 @@ public class TransactionInteractorImpl implements TransactionInteractor {
             int balanceIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.BALANCE);
 
             cursor.moveToNext();
-             currentBalance = cursor.getDouble(balanceIndex);
+            currentBalance = cursor.getDouble(balanceIndex);
             Log.d("TransactionInteractorIm", "refreshBalance: " + currentBalance);
 
         }
@@ -49,17 +51,13 @@ public class TransactionInteractorImpl implements TransactionInteractor {
         final double finalCurrentBalance = currentBalance;
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
-                listener.onFinished(createArrayList(), finalCurrentBalance);
+                callback.onBalanceLoaded(finalCurrentBalance);
             }
         }, 2000);
     }
 
-    private List<Transaction> createArrayList() {
-        return Arrays.asList(
-                new Income(2500, Calendar.getInstance().getTime(), null),
-                new Income(100, Calendar.getInstance().getTime(), null),
-                new Income(1456, Calendar.getInstance().getTime(), null),
-                new Income(350, Calendar.getInstance().getTime(), null),
-                new Expense(400, Calendar.getInstance().getTime(), null));
+    @Override
+    public List<Transaction> getTransactions() {
+        return null;
     }
 }

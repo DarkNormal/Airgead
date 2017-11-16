@@ -10,7 +10,13 @@ import java.util.List;
 
 public interface AirgeadDataSource {
 
-    void getAccountBalance();
+    interface GetDataCallback{
+        void onBalanceLoaded(double balance);
+
+        void onTransactionsLoaded(List<Transaction> transactions);
+    }
+
+    void getAccountBalance(GetDataCallback callback);
 
     List<Transaction> getTransactions();
 }
