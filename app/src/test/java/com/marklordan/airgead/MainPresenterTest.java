@@ -76,6 +76,7 @@ public class MainPresenterTest {
     public void onItemClickedDisplayToast(){
         mMainPresenter.onItemClicked(0);
 
+
         verify(mMainView).showMessage(any(String.class));
     }
 
