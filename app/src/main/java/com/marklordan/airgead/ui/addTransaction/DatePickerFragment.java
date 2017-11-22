@@ -2,6 +2,7 @@ package com.marklordan.airgead.ui.addTransaction;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -14,6 +15,22 @@ import java.util.Calendar;
  */
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+    private OnDateSetListener mListener;
+
+    public interface OnDateSetListener {
+        void onDateSet(int year, int month, int day);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            mListener = (OnDateSetListener) context;
+        }catch(ClassCastException e){
+            throw new ClassCastException(context.toString() + " must implement OnDateSetListener");
+        }
+    }
 
     @NonNull
     @Override
@@ -28,6 +45,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
+        mListener.onDateSet(year, month,dayOfMonth);
     }
 }

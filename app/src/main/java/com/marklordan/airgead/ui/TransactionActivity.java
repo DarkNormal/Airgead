@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.model.TransactionCategory;
 import com.marklordan.airgead.ui.addTransaction.DatePickerFragment;
 
-public class TransactionActivity extends AppCompatActivity {
+public class TransactionActivity extends AppCompatActivity implements DatePickerFragment.OnDateSetListener{
 
     private EditText transactionDescriptionInput;
     private Spinner mCategorySpinner;
@@ -88,5 +89,10 @@ public class TransactionActivity extends AppCompatActivity {
     public void showDateDialog(View v) {
         DialogFragment dateFragment = new DatePickerFragment();
         dateFragment.show(getSupportFragmentManager(), "datepicker");
+    }
+
+    @Override
+    public void onDateSet(int year, int month, int day) {
+
     }
 }
