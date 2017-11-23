@@ -22,6 +22,8 @@ import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.model.TransactionCategory;
 import com.marklordan.airgead.ui.addTransaction.DatePickerFragment;
 
+import java.util.Calendar;
+
 public class TransactionActivity extends AppCompatActivity implements DatePickerFragment.OnDateSetListener{
 
     private EditText transactionDescriptionInput;
@@ -93,6 +95,8 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
 
     @Override
     public void onDateSet(int year, int month, int day) {
-
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month,day);
+        mCurrentTransaction.setDateOfTransaction(calendar.getTime());
     }
 }

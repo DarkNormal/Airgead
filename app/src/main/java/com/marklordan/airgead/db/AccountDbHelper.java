@@ -28,9 +28,10 @@ public class AccountDbHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + AirgeadContract.TransactionTable.TABLE_NAME + "(" +
                 AirgeadContract.TransactionTable.Cols._ID + " INTEGER PRIMARY KEY," +
                 AirgeadContract.TransactionTable.Cols.TRANSACTION_ID + " INTEGER," +
-                AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT + " NUMBER," +
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT + " REAL," +
                 AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE + " TEXT," +
-                AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE + " INTEGER NOT NULL" +
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE + " INTEGER NOT NULL," +
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_DATE + " INTEGER"+
                 ")");
         //TODO ADD TRANSACTION CATEGORY AND TYPE
 
