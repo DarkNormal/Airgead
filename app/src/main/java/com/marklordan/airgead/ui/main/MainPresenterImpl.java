@@ -53,7 +53,11 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     @Override
     public void onTransactionsLoaded(List<Transaction> transactions) {
         if(mMainView != null){
-            mMainView.setItems(transactions);
+            if(transactions != null) {
+                //only set items in RecyclerView if there are some there, otherwise skip
+                mMainView.setItems(transactions);
+            }
+            //TODO show 'No transactions yet' or similar message if transaction list is empty
             mMainView.hideProgress();
         }
     }

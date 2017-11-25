@@ -1,5 +1,7 @@
 package com.marklordan.airgead.db;
 
+import android.support.annotation.Nullable;
+
 import com.marklordan.airgead.model.Transaction;
 
 import java.util.List;
@@ -13,7 +15,8 @@ public interface AirgeadDataSource {
     interface GetDataCallback{
         void onBalanceLoaded(double balance);
 
-        void onTransactionsLoaded(List<Transaction> transactions);
+        void onTransactionsLoaded(@Nullable List<Transaction> transactions);
+
     }
 
     void getAccountBalance(GetDataCallback callback);

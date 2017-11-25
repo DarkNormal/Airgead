@@ -44,6 +44,7 @@ public class AirgeadContract {
             public static final String TRANSACTION_TYPE = "type";
             public static final String TRANSACTION_CATEGORY = "category";
             public static final String TRANSACTION_TITLE = "title";
+            public static final String TRANSACTION_DATE = "date_occurred";
         }
     }
 

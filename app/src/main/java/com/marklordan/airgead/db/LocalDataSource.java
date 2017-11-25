@@ -63,7 +63,7 @@ public class LocalDataSource implements AirgeadDataSource{
     }
 
     @Override
-    public void getTransactions(GetDataCallback callback) {
+    public void getTransactions(final GetDataCallback callback) {
         Cursor cursor = mContentResolver.query(AirgeadContract.TransactionTable.CONTENT_URI,
                 null,
                 null,
@@ -71,6 +71,13 @@ public class LocalDataSource implements AirgeadDataSource{
                 null);
 
         if(cursor == null || cursor.getCount() <= 0){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onTransactionsLoaded(null);
+                }
+            }, 2000);
+
             return;
         }
 
@@ -83,7 +90,13 @@ public class LocalDataSource implements AirgeadDataSource{
         }finally {
             cursor.close();
         }
-        callback.onTransactionsLoaded(createArrayList());
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                callback.onTransactionsLoaded(createArrayList());
+            }
+        }, 2000);
 
 
     }

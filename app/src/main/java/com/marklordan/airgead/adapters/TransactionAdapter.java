@@ -21,10 +21,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     private Context mContext;
     private List<Transaction> mTransactions;
+    private TransactionClickListener mListener;
 
-    public TransactionAdapter(Context context, List<Transaction> transactions){
+    public interface TransactionClickListener{
+        void onItemClicked(int itemPosition);
+    }
+
+    public TransactionAdapter(Context context, List<Transaction> transactions, TransactionClickListener listener){
         mContext = context;
         mTransactions = transactions;
+        mListener = listener;
     }
 
 
@@ -50,7 +56,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return mTransactions.size();
     }
 
-    public class TransactionViewHolder extends RecyclerView.ViewHolder{
+    public class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mTransactionAmount, mTransactionCategory, mTransactionDesc;
 
         public TransactionViewHolder(View itemView) {
@@ -59,7 +65,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             mTransactionAmount = (TextView) itemView.findViewById(R.id.transaction_amount);
             mTransactionCategory = (TextView) itemView.findViewById(R.id.transaction_category);
             mTransactionDesc = (TextView) itemView.findViewById(R.id.transaction_description);
+
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            mListener.onItemClicked(getAdapterPosition());
+        }
     }
 }

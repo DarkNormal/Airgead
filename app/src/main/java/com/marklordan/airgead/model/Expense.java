@@ -21,6 +21,7 @@ public class Expense extends Transaction {
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT, getAmount());
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE, getDescription());
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE, true); //true if expense, false if income
+        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_DATE, getDateOfTransaction().getTime() / 1000);
         return values;
     }
 
