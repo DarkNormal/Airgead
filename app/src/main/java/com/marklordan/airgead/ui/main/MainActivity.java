@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.adapters.TransactionAdapter;
@@ -22,7 +23,7 @@ import com.marklordan.airgead.ui.TransactionActivity;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MainView{
+public class MainActivity extends AppCompatActivity implements MainView, TransactionAdapter.TransactionClickListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private AirgeadAccount mAccount;
@@ -84,12 +85,12 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     @Override
     public void setItems(List<Transaction> transactions) {
-        mRecyclerView.setAdapter(new TransactionAdapter(this, transactions));
+        mRecyclerView.setAdapter(new TransactionAdapter(this, transactions, this));
     }
 
     @Override
     public void showMessage(String message) {
-
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -107,6 +108,11 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Override
     public void displayBalance(double balanceAmount) {
         mAccountBalanceTextView.setText(String.valueOf(balanceAmount));
+    }
+
+    @Override
+    public void onItemClicked(int itemPosition) {
+        mPresenter.onItemClicked(itemPosition);
     }
 }
 

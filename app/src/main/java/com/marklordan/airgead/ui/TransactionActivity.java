@@ -23,6 +23,7 @@ import com.marklordan.airgead.model.TransactionCategory;
 import com.marklordan.airgead.ui.addTransaction.DatePickerFragment;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class TransactionActivity extends AppCompatActivity implements DatePickerFragment.OnDateSetListener{
 
@@ -65,6 +66,9 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                 if(enteredAmount != null && !enteredAmount.isEmpty() && enteredTitle != null && !enteredTitle.isEmpty()){
                     mCurrentTransaction.setAmount(Double.valueOf(enteredAmount));
                     mCurrentTransaction.setDescription(enteredTitle);
+                    if(mCurrentTransaction.getDateOfTransaction() == null){
+                        mCurrentTransaction.setDateOfTransaction(new Date());
+                    }
                     insertTransactionToDb(mCurrentTransaction);
                     finish();
                 }
