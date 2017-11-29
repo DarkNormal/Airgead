@@ -27,8 +27,8 @@ public class Expense extends Transaction {
 
     ;
 
-    public Expense(double amount, Date dateOfTransaction, Location locationOfTransaction) {
-        super(amount, dateOfTransaction, locationOfTransaction, null);
+    public Expense(double amount, Date dateOfTransaction, Location locationOfTransaction, String title) {
+        super(amount, dateOfTransaction, locationOfTransaction, title);
 
     }
 }

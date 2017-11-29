@@ -10,8 +10,8 @@ import java.util.Date;
  */
 
 public class Income extends Transaction {
-    public Income(double amount, Date dateOfTransaction, Location locationOfTransaction) {
-        super(amount, dateOfTransaction, locationOfTransaction, null);
+    public Income(double amount, Date dateOfTransaction, Location locationOfTransaction, String title) {
+        super(amount, dateOfTransaction, locationOfTransaction, title);
     }
 
     @Override

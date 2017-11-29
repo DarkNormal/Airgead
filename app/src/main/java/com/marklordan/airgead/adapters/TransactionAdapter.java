@@ -48,6 +48,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.mTransactionAmount.setText("€" + transactionToBind.getAmount());
         //TODO bind transaction category once it is stored correctly in DB
         //also bind transaction description / title
+        holder.mTransactionDesc.setText(transactionToBind.getDescription());
 
     }
 
