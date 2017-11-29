@@ -20,4 +20,18 @@ public enum TransactionCategory {
     public String toString() {
         return mFriendlyName;
     }
+
+    public static TransactionCategory fromInteger(int x){
+        switch(x){
+            case 0:
+                return GENERAL;
+            case 1:
+                return FOOD;
+            case 2:
+                return DRINKS;
+            case 3:
+                return TRANSPORT;
+        }
+        return null;
+    }
 }

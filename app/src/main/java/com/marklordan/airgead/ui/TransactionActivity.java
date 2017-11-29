@@ -64,8 +64,9 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                 String enteredAmount = mTransactionValueEditText.getText().toString();
                 String enteredTitle = transactionDescriptionInput.getText().toString();
                 if(enteredAmount != null && !enteredAmount.isEmpty() && enteredTitle != null && !enteredTitle.isEmpty()){
-                    mCurrentTransaction.setAmount(Double.valueOf(enteredAmount));
+                    mCurrentTransaction.setAmount(Double.valueOf(enteredAmount) * -1);
                     mCurrentTransaction.setDescription(enteredTitle);
+                    mCurrentTransaction.setCategory(TransactionCategory.fromInteger(mCategorySpinner.getSelectedItemPosition()));
                     if(mCurrentTransaction.getDateOfTransaction() == null){
                         mCurrentTransaction.setDateOfTransaction(new Date());
                     }

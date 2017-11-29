@@ -68,9 +68,6 @@ public class AccountContentProvider extends ContentProvider {
             case TRANSACTION:
                 id = db.insert(AirgeadContract.TransactionTable.TABLE_NAME, null, values);
                 double transactionAmount = values.getAsDouble(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT);
-                boolean isExpense = values.getAsBoolean(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE);
-                if(isExpense)
-                    transactionAmount = transactionAmount * -1;
                 applyTransactionToBalance(transactionAmount);
 
         }

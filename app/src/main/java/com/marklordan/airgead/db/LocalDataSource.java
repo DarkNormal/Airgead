@@ -100,6 +100,7 @@ public class LocalDataSource implements AirgeadDataSource{
         int amountIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT);
         int titleIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE);
         int dateIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_DATE);
+        int typeIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_CATEGORY);
 
         boolean isAnExpense;
 
@@ -108,10 +109,11 @@ public class LocalDataSource implements AirgeadDataSource{
             int id = cursor.getInt(idIndex);
             String title = cursor.getString(titleIndex);
             long date = cursor.getLong(dateIndex);
+            int type = cursor.getInt(typeIndex);
             isAnExpense = amount < 0;
             Transaction transaction;
             if(isAnExpense)
-                transaction = new Expense(amount, new Date(date), null, title);
+                transaction = new Expense(amount, new Date(date), null, title, type);
             else
                 transaction = new Income(amount, new Date(date), null, title);
 
