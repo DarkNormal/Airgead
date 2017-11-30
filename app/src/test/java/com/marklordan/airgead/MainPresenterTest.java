@@ -32,7 +32,7 @@ import static org.mockito.Mockito.verify;
 public class MainPresenterTest {
 
     private static final Transaction[] mRawTransactions = {new Income(2500, Calendar.getInstance().getTime(), null, "Test"),
-            new Expense(100, Calendar.getInstance().getTime(), null, "Test")};
+            new Expense(100, Calendar.getInstance().getTime(), null, "Test", 0)};
     private static ArrayList<Transaction> mTransactions = new ArrayList<Transaction>(Arrays.asList(mRawTransactions));
 
 

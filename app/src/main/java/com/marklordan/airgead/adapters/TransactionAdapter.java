@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.model.Transaction;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private Context mContext;
     private List<Transaction> mTransactions;
     private TransactionClickListener mListener;
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public interface TransactionClickListener{
         void onItemClicked(int itemPosition);
@@ -50,6 +52,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         //also bind transaction description / title
         holder.mTransactionDesc.setText(transactionToBind.getDescription());
         holder.mTransactionCategory.setText(transactionToBind.getCategory().toString());
+        holder.mTransactionDate.setText(mDateFormat.format(transactionToBind.getDateOfTransaction()));
 
     }
 
@@ -59,7 +62,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     public class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView mTransactionAmount, mTransactionCategory, mTransactionDesc;
+        private TextView mTransactionAmount, mTransactionCategory, mTransactionDesc, mTransactionDate;
 
         public TransactionViewHolder(View itemView) {
             super(itemView);
@@ -67,6 +70,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             mTransactionAmount = (TextView) itemView.findViewById(R.id.transaction_amount);
             mTransactionCategory = (TextView) itemView.findViewById(R.id.transaction_category);
             mTransactionDesc = (TextView) itemView.findViewById(R.id.transaction_description);
+            mTransactionDate = (TextView) itemView.findViewById(R.id.transaction_date);
 
             itemView.setOnClickListener(this);
         }

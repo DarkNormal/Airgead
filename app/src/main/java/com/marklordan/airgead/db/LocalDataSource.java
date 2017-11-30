@@ -108,7 +108,7 @@ public class LocalDataSource implements AirgeadDataSource{
             double amount = cursor.getDouble(amountIndex);
             int id = cursor.getInt(idIndex);
             String title = cursor.getString(titleIndex);
-            long date = cursor.getLong(dateIndex);
+            long date = cursor.getLong(dateIndex) * 1000;
             int type = cursor.getInt(typeIndex);
             isAnExpense = amount < 0;
             Transaction transaction;
