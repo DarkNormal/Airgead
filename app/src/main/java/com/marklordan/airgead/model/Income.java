@@ -18,4 +18,9 @@ public class Income extends Transaction {
     public ContentValues transactionToContentValues() {
         return null;
     }
+
+    @Override
+    public boolean isAnExpense() {
+        return false;
+    }
 }

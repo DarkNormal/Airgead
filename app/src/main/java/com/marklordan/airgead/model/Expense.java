@@ -27,6 +27,11 @@ public class Expense extends Transaction {
         return values;
     }
 
+    @Override
+    public boolean isAnExpense() {
+        return true;
+    }
+
     public Expense(double amount, Date dateOfTransaction, Location locationOfTransaction, String title, int type) {
         super(amount, dateOfTransaction, locationOfTransaction, title);
         setCategory(TransactionCategory.fromInteger(type));
