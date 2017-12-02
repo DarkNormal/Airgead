@@ -14,10 +14,12 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.model.Expense;
+import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.model.TransactionCategory;
 import com.marklordan.airgead.ui.addTransaction.DatePickerFragment;
@@ -30,6 +32,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     private EditText transactionDescriptionInput;
     private Spinner mCategorySpinner;
     private EditText mTransactionValueEditText;
+    private ToggleButton mExpenseOptionBtn, mIncomeOptionBtn;
 
     private Button addTransactionButton;
 
@@ -46,8 +49,38 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
 
         mTransactionValueEditText = (EditText) findViewById(R.id.transaction_value_input);
 
-        //TODO update this to use a DatePicker Dialog instead of entering manually
+
         mTransactionDateTextView = (TextView) findViewById(R.id.transaction_date_input);
+
+        mExpenseOptionBtn = (ToggleButton) findViewById(R.id.expense_option_btn);
+        mExpenseOptionBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    mCurrentTransaction = new Expense();
+                    mIncomeOptionBtn.toggle();
+                }
+                else{
+                    mCurrentTransaction = new Income();
+                    mIncomeOptionBtn.setChecked(true);
+                }
+            }
+        });
+        mIncomeOptionBtn = (ToggleButton) findViewById(R.id.income_option_btn);
+        mIncomeOptionBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    mCurrentTransaction = new Income();
+                    mExpenseOptionBtn.toggle();
+                }
+                else{
+                    mCurrentTransaction = new Expense();
+                    mExpenseOptionBtn.setChecked(true);
+                }
+
+            }
+        });
 
 
         Button cancelButton = (Button) findViewById(R.id.cancel_transaction_button);

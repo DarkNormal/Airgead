@@ -11,10 +11,8 @@
         android:id="@+id/transaction_desc_input_wrapper"
         android:layout_width="368dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <EditText
             android:id="@+id/transaction_desc_input"
@@ -100,5 +98,36 @@
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/transaction_date_input"
         app:layout_constraintTop_toBottomOf="@+id/transaction_date_input"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ToggleButton
+            android:id="@+id/expense_option_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:checked="true"
+            android:text="Expense"
+            android:textOff="Expense"
+            android:textOn="Expense"/>
+
+        <ToggleButton
+            android:id="@+id/income_option_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Income"
+            android:textOff="Income"
+            android:textOn="Income"/>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

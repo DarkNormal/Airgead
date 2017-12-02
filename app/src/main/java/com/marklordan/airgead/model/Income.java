@@ -14,6 +14,10 @@ public class Income extends Transaction {
         super(amount, dateOfTransaction, locationOfTransaction, title);
     }
 
+    public Income() {
+
+    }
+
     @Override
     public ContentValues transactionToContentValues() {
         return null;
