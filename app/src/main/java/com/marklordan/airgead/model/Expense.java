@@ -8,10 +8,6 @@ import com.marklordan.airgead.db.AirgeadContract;
 
 import java.util.Date;
 
-/**
- * Created by Mark on 20/12/2016.
- */
-
 public class Expense extends Transaction {
 
     public Expense(){}
@@ -30,6 +26,11 @@ public class Expense extends Transaction {
     @Override
     public boolean isAnExpense() {
         return true;
+    }
+
+    @Override
+    public double getAmount() {
+        return super.getAmount() * -1;
     }
 
     public Expense(double amount, Date dateOfTransaction, Location locationOfTransaction, String title, int type) {

@@ -24,6 +24,7 @@ import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.model.TransactionCategory;
 import com.marklordan.airgead.ui.addTransaction.DatePickerFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,6 +38,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     private Button addTransactionButton;
 
     private TextView mTransactionDateTextView;
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private Transaction mCurrentTransaction = new Expense();
 
@@ -58,11 +60,10 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
             public void onClick(View v) {
                 if(mExpenseOptionBtn.isChecked()){
                     mIncomeOptionBtn.setChecked(false);
+                    mCurrentTransaction = new Expense();
                 }
                 else{
                     mExpenseOptionBtn.setChecked(true);
-
-
                 }
             }
         });
@@ -72,6 +73,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
             public void onClick(View v) {
                 if(mIncomeOptionBtn.isChecked()){
                     mExpenseOptionBtn.setChecked(false);
+                    mCurrentTransaction = new Income();
                 }
                 else{
                     mIncomeOptionBtn.setChecked(true);
@@ -79,21 +81,6 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                 }
             }
         });
-
-//        mIncomeOptionBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked){
-//                    mCurrentTransaction = new Income();
-//                    mExpenseOptionBtn.toggle();
-//                }
-//                else{
-//                    mCurrentTransaction = new Expense();
-//                    mExpenseOptionBtn.setChecked(true);
-//                }
-//
-//            }
-//        });
 
 
         Button cancelButton = (Button) findViewById(R.id.cancel_transaction_button);
@@ -110,7 +97,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                 String enteredAmount = mTransactionValueEditText.getText().toString();
                 String enteredTitle = transactionDescriptionInput.getText().toString();
                 if(enteredAmount != null && !enteredAmount.isEmpty() && enteredTitle != null && !enteredTitle.isEmpty()){
-                    mCurrentTransaction.setAmount(Double.valueOf(enteredAmount) * -1);
+                    mCurrentTransaction.setAmount(Double.valueOf(enteredAmount));
                     mCurrentTransaction.setDescription(enteredTitle);
                     mCurrentTransaction.setCategory(TransactionCategory.fromInteger(mCategorySpinner.getSelectedItemPosition()));
                     if(mCurrentTransaction.getDateOfTransaction() == null){
@@ -127,7 +114,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
         });
 
         mCategorySpinner = (Spinner) findViewById(R.id.transaction_category);
-        mCategorySpinner.setAdapter(new ArrayAdapter<TransactionCategory>(this, android.R.layout.simple_list_item_1, TransactionCategory.values()));
+        mCategorySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, TransactionCategory.values()));
 
     }
 
@@ -147,7 +134,8 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     @Override
     public void onDateSet(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month,day);
+        calendar.set(year, month, day);
         mCurrentTransaction.setDateOfTransaction(calendar.getTime());
+        mTransactionDateTextView.setText(mDateFormat.format(calendar.getTime()));
     }
 }
