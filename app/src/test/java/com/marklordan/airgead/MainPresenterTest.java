@@ -1,5 +1,7 @@
 package com.marklordan.airgead;
 
+import android.util.Log;
+
 import com.marklordan.airgead.db.AirgeadDataSource;
 import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.model.Expense;
@@ -10,12 +12,16 @@ import com.marklordan.airgead.ui.main.MainView;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,11 +35,12 @@ import static org.mockito.Mockito.verify;
  * Created by Mark on 17/11/2017.
  */
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Log.class)
 public class MainPresenterTest {
 
-    private static final Transaction[] mRawTransactions = {new Income(2500, Calendar.getInstance().getTime(), null, "Test"),
-            new Expense(100, Calendar.getInstance().getTime(), null, "Test", 0)};
-    private static ArrayList<Transaction> mTransactions = new ArrayList<Transaction>(Arrays.asList(mRawTransactions));
+    private static Transaction[] mRawTransactions = new Transaction[2];
+    private static ArrayList<Transaction> mTransactions;
 
 
     @Mock
@@ -54,6 +61,12 @@ public class MainPresenterTest {
         MockitoAnnotations.initMocks(this);
 
         mMainPresenter = new MainPresenterImpl(mMainView, mRepository);
+
+        PowerMockito.mockStatic(Log.class);
+
+        mRawTransactions = new Transaction[]{new Income(2500, Calendar.getInstance().getTime(), null, "Test"),
+                new Expense(100, Calendar.getInstance().getTime(), null, "Test", 0)};
+        mTransactions = new ArrayList<>(Arrays.asList(mRawTransactions));
     }
 
 
