@@ -37,7 +37,5 @@ public class Expense extends Transaction {
         super(amount, dateOfTransaction, locationOfTransaction, title);
         setCategory(TransactionCategory.fromInteger(type));
 
-        Log.d("Expense", "Expense: ");
-
     }
 }
