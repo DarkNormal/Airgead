@@ -9,8 +9,10 @@ import com.marklordan.airgead.model.Expense;
 import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -64,7 +66,7 @@ public class LocalDataSource implements AirgeadDataSource{
 
     @Override
     public void getTransactions(final GetDataCallback callback) {
-        Cursor cursor = mContentResolver.query(AirgeadContract.TransactionTable.CONTENT_URI,
+        final Cursor cursor = mContentResolver.query(AirgeadContract.TransactionTable.CONTENT_URI,
                 null,
                 null,
                 null,
@@ -81,20 +83,10 @@ public class LocalDataSource implements AirgeadDataSource{
             return;
         }
 
-        try {
-            int amountIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT);
-
-            while(cursor.moveToNext()){
-                Log.i(TAG, "getTransactions: Transaction amount is: " + cursor.getDouble(amountIndex));
-            }
-        }finally {
-            cursor.close();
-        }
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                callback.onTransactionsLoaded(createArrayList());
+                callback.onTransactionsLoaded(createArrayList(cursor));
             }
         }, 2000);
 
@@ -102,13 +94,33 @@ public class LocalDataSource implements AirgeadDataSource{
     }
 
 
-    private List<Transaction> createArrayList() {
-        return Arrays.asList(
-                new Income(2500, Calendar.getInstance().getTime(), null),
-                new Income(100, Calendar.getInstance().getTime(), null),
-                new Income(1456, Calendar.getInstance().getTime(), null),
-                new Income(350, Calendar.getInstance().getTime(), null),
-                new Expense(400, Calendar.getInstance().getTime(), null));
+    private List<Transaction> createArrayList(Cursor cursor) {
+        ArrayList<Transaction> transactionList = new ArrayList<>();
+        int idIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols._ID);
+        int amountIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT);
+        int titleIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE);
+        int dateIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_DATE);
+        int typeIndex = cursor.getColumnIndex(AirgeadContract.TransactionTable.Cols.TRANSACTION_CATEGORY);
+
+        boolean isAnExpense;
+
+        while(cursor.moveToNext()){
+            double amount = cursor.getDouble(amountIndex);
+            int id = cursor.getInt(idIndex);
+            String title = cursor.getString(titleIndex);
+            long date = cursor.getLong(dateIndex) * 1000;
+            int type = cursor.getInt(typeIndex);
+            isAnExpense = amount < 0;
+            Transaction transaction;
+            if(isAnExpense)
+                transaction = new Expense(amount, new Date(date), null, title, type);
+            else
+                transaction = new Income(amount, new Date(date), null, title);
+
+            transactionList.add(transaction);
+        }
+        cursor.close();
+        return transactionList;
     }
 
 

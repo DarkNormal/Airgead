@@ -31,7 +31,8 @@ public class AccountDbHelper extends SQLiteOpenHelper {
                 AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT + " REAL," +
                 AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE + " TEXT," +
                 AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE + " INTEGER NOT NULL," +
-                AirgeadContract.TransactionTable.Cols.TRANSACTION_DATE + " INTEGER"+
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_DATE + " INTEGER," +
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_CATEGORY + " INTEGER" +
                 ")");
         //TODO ADD TRANSACTION CATEGORY AND TYPE
 

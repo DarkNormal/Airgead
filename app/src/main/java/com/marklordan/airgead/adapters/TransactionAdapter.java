@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.model.Transaction;
 
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private Context mContext;
     private List<Transaction> mTransactions;
     private TransactionClickListener mListener;
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private int expenseColor, incomeColor;
+    private NumberFormat mNumberFormat = NumberFormat.getCurrencyInstance();
 
     public interface TransactionClickListener{
         void onItemClicked(int itemPosition);
@@ -31,6 +36,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         mContext = context;
         mTransactions = transactions;
         mListener = listener;
+        expenseColor = mContext.getResources().getColor(R.color.amount_expense);
+        incomeColor = mContext.getResources().getColor(R.color.amount_income);
     }
 
 
@@ -45,9 +52,17 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(TransactionViewHolder holder, int position) {
         Transaction transactionToBind = mTransactions.get(position);
 
-        holder.mTransactionAmount.setText("€" + transactionToBind.getAmount());
+        holder.mTransactionAmount.setText(mNumberFormat.format(transactionToBind.getAmount()));
         //TODO bind transaction category once it is stored correctly in DB
         //also bind transaction description / title
+        holder.mTransactionDesc.setText(transactionToBind.getDescription());
+        holder.mTransactionCategory.setText(transactionToBind.getCategory().toString());
+        holder.mTransactionDate.setText(mDateFormat.format(transactionToBind.getDateOfTransaction()));
+
+        if(transactionToBind.isAnExpense())
+            holder.mTransactionAmount.setTextColor(expenseColor);
+        else
+            holder.mTransactionAmount.setTextColor(incomeColor);
 
     }
 
@@ -57,7 +72,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     public class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView mTransactionAmount, mTransactionCategory, mTransactionDesc;
+        private TextView mTransactionAmount, mTransactionCategory, mTransactionDesc, mTransactionDate;
 
         public TransactionViewHolder(View itemView) {
             super(itemView);
@@ -65,6 +80,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             mTransactionAmount = (TextView) itemView.findViewById(R.id.transaction_amount);
             mTransactionCategory = (TextView) itemView.findViewById(R.id.transaction_category);
             mTransactionDesc = (TextView) itemView.findViewById(R.id.transaction_description);
+            mTransactionDate = (TextView) itemView.findViewById(R.id.transaction_date);
 
             itemView.setOnClickListener(this);
         }

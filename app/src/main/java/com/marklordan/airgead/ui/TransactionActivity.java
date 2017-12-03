@@ -14,14 +14,17 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.model.Expense;
+import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.model.TransactionCategory;
 import com.marklordan.airgead.ui.addTransaction.DatePickerFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -30,10 +33,12 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     private EditText transactionDescriptionInput;
     private Spinner mCategorySpinner;
     private EditText mTransactionValueEditText;
+    private ToggleButton mExpenseOptionBtn, mIncomeOptionBtn;
 
     private Button addTransactionButton;
 
     private TextView mTransactionDateTextView;
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private Transaction mCurrentTransaction = new Expense();
 
@@ -46,8 +51,36 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
 
         mTransactionValueEditText = (EditText) findViewById(R.id.transaction_value_input);
 
-        //TODO update this to use a DatePicker Dialog instead of entering manually
+
         mTransactionDateTextView = (TextView) findViewById(R.id.transaction_date_input);
+
+        mExpenseOptionBtn = (ToggleButton) findViewById(R.id.expense_option_btn);
+        mExpenseOptionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mExpenseOptionBtn.isChecked()){
+                    mIncomeOptionBtn.setChecked(false);
+                    mCurrentTransaction = new Expense();
+                }
+                else{
+                    mExpenseOptionBtn.setChecked(true);
+                }
+            }
+        });
+        mIncomeOptionBtn = (ToggleButton) findViewById(R.id.income_option_btn);
+        mIncomeOptionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mIncomeOptionBtn.isChecked()){
+                    mExpenseOptionBtn.setChecked(false);
+                    mCurrentTransaction = new Income();
+                }
+                else{
+                    mIncomeOptionBtn.setChecked(true);
+
+                }
+            }
+        });
 
 
         Button cancelButton = (Button) findViewById(R.id.cancel_transaction_button);
@@ -66,6 +99,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                 if(enteredAmount != null && !enteredAmount.isEmpty() && enteredTitle != null && !enteredTitle.isEmpty()){
                     mCurrentTransaction.setAmount(Double.valueOf(enteredAmount));
                     mCurrentTransaction.setDescription(enteredTitle);
+                    mCurrentTransaction.setCategory(TransactionCategory.fromInteger(mCategorySpinner.getSelectedItemPosition()));
                     if(mCurrentTransaction.getDateOfTransaction() == null){
                         mCurrentTransaction.setDateOfTransaction(new Date());
                     }
@@ -80,7 +114,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
         });
 
         mCategorySpinner = (Spinner) findViewById(R.id.transaction_category);
-        mCategorySpinner.setAdapter(new ArrayAdapter<TransactionCategory>(this, android.R.layout.simple_list_item_1, TransactionCategory.values()));
+        mCategorySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, TransactionCategory.values()));
 
     }
 
@@ -100,7 +134,8 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     @Override
     public void onDateSet(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month,day);
+        calendar.set(year, month, day);
         mCurrentTransaction.setDateOfTransaction(calendar.getTime());
+        mTransactionDateTextView.setText(mDateFormat.format(calendar.getTime()));
     }
 }

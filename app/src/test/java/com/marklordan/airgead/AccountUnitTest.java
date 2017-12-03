@@ -41,14 +41,14 @@ public class AccountUnitTest {
     }
     @Test
     public void addTransactionToAccount(){
-        account.performTransaction(new Income(200, Calendar.getInstance().getTime(), null));
+        account.performTransaction(new Income(200, Calendar.getInstance().getTime(), null, "Test"));
         Assert.assertTrue(account.getTransactions().size() > 0);
         Assert.assertEquals(200,account.getBalance(), 0);
 
     }
     @Test
     public void addTransactionCheckBalance(){
-        account.performTransaction(new Expense(200, Calendar.getInstance().getTime(), null));
+        account.performTransaction(new Expense(200, Calendar.getInstance().getTime(), null, "Test", 0));
         Assert.assertEquals(-200,account.getBalance(), 0);
     }
 
@@ -63,12 +63,12 @@ public class AccountUnitTest {
     //Returns the most recent transaction, based on date of occurrence
     @Test
     public void getMostRecentTransaction(){
-        Expense recentTransaction = new Expense(200, Calendar.getInstance().getTime(), null);
+        Expense recentTransaction = new Expense(200, Calendar.getInstance().getTime(), null, "Test", 0);
 
-        account.performTransaction(new Expense(145, generateDate(2017, 6, 1), null));
-        account.performTransaction(new Income(52, generateDate(2017, 6, 6), null));
+        account.performTransaction(new Expense(145, generateDate(2017, 6, 1), null, "Test", 0));
+        account.performTransaction(new Income(52, generateDate(2017, 6, 6), null, "Test"));
         account.performTransaction(recentTransaction);
-        account.performTransaction(new Expense(947, generateDate(2017, 5, 15), null));
+        account.performTransaction(new Expense(947, generateDate(2017, 5, 15), null, "Test", 0));
 
 
         Assert.assertEquals(recentTransaction, account.getLatestTransactionAdded());

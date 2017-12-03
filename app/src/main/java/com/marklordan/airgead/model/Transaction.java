@@ -73,4 +73,6 @@ public abstract class Transaction {
     //TODO contentValues method for easier use in application
 
     public abstract ContentValues transactionToContentValues();
+
+    public abstract boolean isAnExpense();
 }

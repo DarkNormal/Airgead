@@ -2,14 +2,11 @@ package com.marklordan.airgead.model;
 
 import android.content.ContentValues;
 import android.location.Location;
+import android.util.Log;
 
 import com.marklordan.airgead.db.AirgeadContract;
 
 import java.util.Date;
-
-/**
- * Created by Mark on 20/12/2016.
- */
 
 public class Expense extends Transaction {
 
@@ -22,13 +19,23 @@ public class Expense extends Transaction {
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE, getDescription());
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE, true); //true if expense, false if income
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_DATE, getDateOfTransaction().getTime() / 1000);
+        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_CATEGORY, getCategory().ordinal());
         return values;
     }
 
-    ;
+    @Override
+    public boolean isAnExpense() {
+        return true;
+    }
 
-    public Expense(double amount, Date dateOfTransaction, Location locationOfTransaction) {
-        super(amount, dateOfTransaction, locationOfTransaction, null);
+    @Override
+    public double getAmount() {
+        return super.getAmount() * -1;
+    }
+
+    public Expense(double amount, Date dateOfTransaction, Location locationOfTransaction, String title, int type) {
+        super(amount, dateOfTransaction, locationOfTransaction, title);
+        setCategory(TransactionCategory.fromInteger(type));
 
     }
 }
