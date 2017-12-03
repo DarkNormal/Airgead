@@ -47,7 +47,9 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
 
     @Override
     public void onBalanceLoaded(double balance) {
-        mMainView.displayBalance(balance);
+        if(mMainView != null) {
+            mMainView.displayBalance(balance);
+        }
     }
 
     @Override

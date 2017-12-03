@@ -53,34 +53,47 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
         mTransactionDateTextView = (TextView) findViewById(R.id.transaction_date_input);
 
         mExpenseOptionBtn = (ToggleButton) findViewById(R.id.expense_option_btn);
-        mExpenseOptionBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mExpenseOptionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    mCurrentTransaction = new Expense();
-                    mIncomeOptionBtn.toggle();
+            public void onClick(View v) {
+                if(mExpenseOptionBtn.isChecked()){
+                    mIncomeOptionBtn.setChecked(false);
                 }
                 else{
-                    mCurrentTransaction = new Income();
-                    mIncomeOptionBtn.setChecked(true);
+                    mExpenseOptionBtn.setChecked(true);
+
+
                 }
             }
         });
         mIncomeOptionBtn = (ToggleButton) findViewById(R.id.income_option_btn);
-        mIncomeOptionBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mIncomeOptionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    mCurrentTransaction = new Income();
-                    mExpenseOptionBtn.toggle();
+            public void onClick(View v) {
+                if(mIncomeOptionBtn.isChecked()){
+                    mExpenseOptionBtn.setChecked(false);
                 }
                 else{
-                    mCurrentTransaction = new Expense();
-                    mExpenseOptionBtn.setChecked(true);
-                }
+                    mIncomeOptionBtn.setChecked(true);
 
+                }
             }
         });
+
+//        mIncomeOptionBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(isChecked){
+//                    mCurrentTransaction = new Income();
+//                    mExpenseOptionBtn.toggle();
+//                }
+//                else{
+//                    mCurrentTransaction = new Expense();
+//                    mExpenseOptionBtn.setChecked(true);
+//                }
+//
+//            }
+//        });
 
 
         Button cancelButton = (Button) findViewById(R.id.cancel_transaction_button);
