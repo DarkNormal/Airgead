@@ -5,6 +5,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,8 +37,6 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     private Spinner mCategorySpinner;
     private EditText mTransactionValueEditText;
     private ToggleButton mExpenseOptionBtn, mIncomeOptionBtn;
-
-    private Button addTransactionButton;
 
     private TextView mTransactionDateTextView;
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -82,40 +83,45 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
             }
         });
 
-
-        Button cancelButton = (Button) findViewById(R.id.cancel_transaction_button);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                finish();
-                                            }
-                                        });
-                addTransactionButton = (Button) findViewById(R.id.save_transaction_button);
-        addTransactionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String enteredAmount = mTransactionValueEditText.getText().toString();
-                String enteredTitle = transactionDescriptionInput.getText().toString();
-                if(enteredAmount != null && !enteredAmount.isEmpty() && enteredTitle != null && !enteredTitle.isEmpty()){
-                    mCurrentTransaction.setAmount(Double.valueOf(enteredAmount));
-                    mCurrentTransaction.setDescription(enteredTitle);
-                    mCurrentTransaction.setCategory(TransactionCategory.fromInteger(mCategorySpinner.getSelectedItemPosition()));
-                    if(mCurrentTransaction.getDateOfTransaction() == null){
-                        mCurrentTransaction.setDateOfTransaction(new Date());
-                    }
-                    insertTransactionToDb(mCurrentTransaction);
-                    finish();
-                }
-                else{
-                    Toast.makeText(TransactionActivity.this, "A transaction needs at least a name and a value!", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
         mCategorySpinner = (Spinner) findViewById(R.id.transaction_category);
         mCategorySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, TransactionCategory.values()));
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_transaction, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.add_transaction_item:
+                addTransaction();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void addTransaction(){
+        String enteredAmount = mTransactionValueEditText.getText().toString();
+        String enteredTitle = transactionDescriptionInput.getText().toString();
+        if(enteredAmount != null && !enteredAmount.isEmpty() && enteredTitle != null && !enteredTitle.isEmpty()){
+            mCurrentTransaction.setAmount(Double.valueOf(enteredAmount));
+            mCurrentTransaction.setDescription(enteredTitle);
+            mCurrentTransaction.setCategory(TransactionCategory.fromInteger(mCategorySpinner.getSelectedItemPosition()));
+            if(mCurrentTransaction.getDateOfTransaction() == null){
+                mCurrentTransaction.setDateOfTransaction(new Date());
+            }
+            insertTransactionToDb(mCurrentTransaction);
+            finish();
+        }
+        else{
+            Toast.makeText(TransactionActivity.this, "A transaction needs at least a name and a value!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
