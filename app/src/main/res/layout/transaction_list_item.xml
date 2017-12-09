@@ -10,14 +10,11 @@
         android:id="@+id/transaction_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/transaction_date"
         app:layout_constraintTop_toBottomOf="@+id/transaction_date"
-        app:layout_constraintVertical_bias="0.0"
         tools:text="€0.00"/>
 
     <TextView
@@ -25,10 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/transaction_category"
         app:layout_constraintTop_toBottomOf="@+id/transaction_category"
-        app:layout_constraintVertical_bias="0.25"
         tools:text="Sample Description"/>
 
     <TextView
@@ -46,13 +43,10 @@
         android:id="@+id/transaction_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Notification.Info"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:text="29/11/2017"/>
 </android.support.constraint.ConstraintLayout>
