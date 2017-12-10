@@ -19,4 +19,6 @@ public interface MainView {
     void hideProgress();
 
     void displayBalance(double balanceAmount);
+
+    void showAccountDetails();
 }

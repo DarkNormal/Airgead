@@ -22,6 +22,7 @@ import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.ui.SetupAccountActivity;
 import com.marklordan.airgead.ui.SwipeToDelete;
 import com.marklordan.airgead.ui.TransactionActivity;
+import com.marklordan.airgead.ui.account_details.AccountDetailsActivity;
 
 import java.util.List;
 
@@ -55,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         });
 
         mAccountBalanceTextView = (TextView) findViewById(R.id.textview_account_balance);
+        mAccountBalanceTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAccountDetails();
+            }
+        });
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recent_transaction_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
@@ -118,7 +125,15 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     @Override
     public void displayBalance(double balanceAmount) {
+        mAccount.setBalance(balanceAmount);
         mAccountBalanceTextView.setText(String.valueOf(balanceAmount));
+    }
+
+    @Override
+    public void showAccountDetails() {
+        Intent intent = new Intent(this, AccountDetailsActivity.class);
+        intent.putExtra(AccountDetailsActivity.EXTRA_BALANCE, mAccount.getBalance());
+        startActivity(intent);
     }
 
     @Override
