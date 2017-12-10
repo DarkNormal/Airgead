@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import com.marklordan.airgead.db.LocalDataSource;
 import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.ui.SetupAccountActivity;
+import com.marklordan.airgead.ui.SwipeToDelete;
 import com.marklordan.airgead.ui.TransactionActivity;
 
 import java.util.List;
@@ -27,12 +29,13 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private AirgeadAccount mAccount;
-    private Button mAddExpenseButton, mDeleteExpenseButton;
+    private Button mAddExpenseButton;
     private TextView mAccountBalanceTextView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
 
     private MainPresenter mPresenter;
+    private TransactionAdapter mAdapter;
 
 
     @Override
@@ -50,12 +53,19 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
                 startActivity(intent);
             }
         });
-        mDeleteExpenseButton = (Button) findViewById(R.id.button_delete_expense);
 
         mAccountBalanceTextView = (TextView) findViewById(R.id.textview_account_balance);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recent_transaction_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+
+        SwipeToDelete swipeHelper = new SwipeToDelete(this){
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                mAdapter.removeItem(viewHolder.getAdapterPosition());
+            }
+        };
+        new ItemTouchHelper(swipeHelper).attachToRecyclerView(mRecyclerView);
 
         mProgressBar = (ProgressBar) findViewById(R.id.transaction_list_progress_bar);
 
@@ -85,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     @Override
     public void setItems(List<Transaction> transactions) {
-        mRecyclerView.setAdapter(new TransactionAdapter(this, transactions, this));
+        mAdapter = new TransactionAdapter(this, transactions, this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

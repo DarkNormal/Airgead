@@ -40,6 +40,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         incomeColor = mContext.getResources().getColor(R.color.amount_income);
     }
 
+    public void removeItem(int position){
+        //TODO does not remove transaction from DB, just from Adapter list
+        mTransactions.remove(position);
+        notifyItemRemoved(position);
+    }
+
 
     @Override
     public TransactionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

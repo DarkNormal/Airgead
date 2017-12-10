@@ -28,9 +28,10 @@ public class Expense extends Transaction {
         return true;
     }
 
+
     @Override
-    public double getAmount() {
-        return super.getAmount() * -1;
+    public void setAmount(double amount) {
+        super.setAmount(amount * -1);
     }
 
     public Expense(double amount, Date dateOfTransaction, Location locationOfTransaction, String title, int type) {
