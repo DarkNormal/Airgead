@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private AirgeadAccount mAccount;
-    private Button mAddExpenseButton, mDeleteExpenseButton;
+    private Button mAddExpenseButton;
     private TextView mAccountBalanceTextView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
                 startActivity(intent);
             }
         });
-        mDeleteExpenseButton = (Button) findViewById(R.id.button_delete_expense);
 
         mAccountBalanceTextView = (TextView) findViewById(R.id.textview_account_balance);
 
