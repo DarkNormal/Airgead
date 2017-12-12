@@ -1,20 +1,15 @@
 package com.marklordan.airgead.ui;
 
-import android.content.ContentValues;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -98,7 +93,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.add_transaction_item:
+            case R.id.confirm_item:
                 addTransaction();
                 return true;
             default:

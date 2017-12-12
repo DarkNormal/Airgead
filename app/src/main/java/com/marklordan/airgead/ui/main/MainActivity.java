@@ -19,7 +19,6 @@ import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.db.LocalDataSource;
 import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Transaction;
-import com.marklordan.airgead.ui.SetupAccountActivity;
 import com.marklordan.airgead.ui.SwipeToDelete;
 import com.marklordan.airgead.ui.TransactionActivity;
 import com.marklordan.airgead.ui.account_details.AccountDetailsActivity;
@@ -93,11 +92,6 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         mPresenter.onDestroy();
         super.onDestroy();
 
-    }
-
-    public void setCurrentBalance(View v) {
-        Intent intent = new Intent(MainActivity.this, SetupAccountActivity.class);
-        startActivity(intent);
     }
 
     @Override

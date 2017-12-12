@@ -7,21 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.marklordan.airgead.ui.main.MainActivity">
 
-    <Button
-        android:id="@+id/button_set_balance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Set Balance"
-        android:onClick="setCurrentBalance"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_expense"
-        app:layout_constraintLeft_toLeftOf="@+id/button_add_expense"
-        app:layout_constraintRight_toRightOf="@+id/button_add_expense"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"/>
-
     <TextView
         android:id="@+id/textview_account_balance"
         android:layout_width="0dp"
@@ -72,7 +57,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_set_balance"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_expense"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_account_balance">
