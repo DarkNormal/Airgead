@@ -2,6 +2,7 @@ package com.marklordan.airgead.db;
 
 import android.support.annotation.Nullable;
 
+import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Transaction;
 
 import java.util.List;
@@ -13,13 +14,13 @@ import java.util.List;
 public interface AirgeadDataSource {
 
     interface GetDataCallback{
-        void onBalanceLoaded(double balance);
+        void onAccountLoaded(AirgeadAccount account);
 
         void onTransactionsLoaded(@Nullable List<Transaction> transactions);
 
     }
 
-    void getAccountBalance(GetDataCallback callback);
+    void getAccountDetails(GetDataCallback callback);
 
     void getTransactions(GetDataCallback callback);
 }

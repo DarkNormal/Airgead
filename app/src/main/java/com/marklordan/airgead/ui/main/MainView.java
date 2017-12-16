@@ -1,5 +1,6 @@
 package com.marklordan.airgead.ui.main;
 
+import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Transaction;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface MainView {
     void displayBalance(double balanceAmount);
 
     void showAccountDetails();
+
+    void setAccount(AirgeadAccount account);
 }

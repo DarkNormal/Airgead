@@ -2,6 +2,7 @@ package com.marklordan.airgead.ui.main;
 
 import com.marklordan.airgead.db.AirgeadDataSource;
 import com.marklordan.airgead.db.AirgeadRepository;
+import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Transaction;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
             mMainView.showProgress();
         }
 
-        mRepository.getAccountBalance(this);
+        mRepository.getAccountDetails(this);
         mRepository.getTransactions(this);
     }
 
@@ -53,9 +54,10 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     }
 
     @Override
-    public void onBalanceLoaded(double balance) {
+    public void onAccountLoaded(AirgeadAccount account) {
         if(mMainView != null) {
-            mMainView.displayBalance(balance);
+            mMainView.setAccount(account);
+            mMainView.displayBalance(account.getBalance());
         }
     }
 

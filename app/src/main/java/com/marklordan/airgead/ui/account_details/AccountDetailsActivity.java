@@ -1,7 +1,6 @@
 package com.marklordan.airgead.ui.account_details;
 
 import android.content.ContentValues;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +10,8 @@ import android.widget.EditText;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AirgeadContract;
+import com.marklordan.airgead.db.AirgeadRepository;
+import com.marklordan.airgead.db.LocalDataSource;
 
 public class AccountDetailsActivity extends AppCompatActivity implements AccountDetailsView {
 
@@ -33,7 +34,8 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
         mSavingsTargetEditText = (EditText) findViewById(R.id.savings_target_edit_text);
 
-        mPresenter = new AccountDetailsPresenterImpl();
+        mPresenter = new AccountDetailsPresenterImpl(this, new AirgeadRepository(new LocalDataSource(getContentResolver())));
+        mPresenter.onResume();
     }
 
     @Override
@@ -56,13 +58,13 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     @Override
     public void displaySavingsTarget(double savingsTarget) {
-        //todo show savings target to user
+        mSavingsTargetEditText.setText(String.valueOf(savingsTarget));
 
     }
 
     @Override
     public void displayBalance(double balance) {
-        //todo show balance to user
+        mBalanceEditText.setText(String.valueOf(balance));
     }
 
 

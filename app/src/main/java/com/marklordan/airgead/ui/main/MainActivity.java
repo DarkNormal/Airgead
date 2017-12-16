@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAccount = new AirgeadAccount();
 
         // TODO SETUP SEPARATE TRANSACTION (INCOME / EXPENSE) OPTIONS
         mAddTransactionBtn = (FloatingActionButton) findViewById(R.id.add_transaction_fab);
@@ -143,8 +142,12 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     @Override
     public void showAccountDetails() {
         Intent intent = new Intent(this, AccountDetailsActivity.class);
-        intent.putExtra(AccountDetailsActivity.EXTRA_BALANCE, mAccount.getBalance());
         startActivity(intent);
+    }
+
+    @Override
+    public void setAccount(AirgeadAccount account) {
+        mAccount = account;
     }
 
     @Override

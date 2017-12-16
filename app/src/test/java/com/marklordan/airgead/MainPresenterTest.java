@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.marklordan.airgead.db.AirgeadDataSource;
 import com.marklordan.airgead.db.AirgeadRepository;
+import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Expense;
 import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
@@ -95,7 +96,7 @@ public class MainPresenterTest {
 
     @Test
     public void onBalanceLoadedUpdateUI(){
-        mMainPresenter.onBalanceLoaded(any(Double.class));
+        mMainPresenter.onAccountLoaded(any(AirgeadAccount.class));
 
         verify(mMainView).displayBalance(any(Double.class));
     }
