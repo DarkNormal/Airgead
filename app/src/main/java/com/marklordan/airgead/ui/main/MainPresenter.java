@@ -11,4 +11,6 @@ public interface MainPresenter {
     void onItemClicked(int position);
 
     void onDestroy();
+
+    void onItemRemoved();
 }

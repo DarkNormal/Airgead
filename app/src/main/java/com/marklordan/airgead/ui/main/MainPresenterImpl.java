@@ -46,6 +46,13 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     }
 
     @Override
+    public void onItemRemoved() {
+        if(mMainView != null){
+            mMainView.showMessage("Transaction removed");
+        }
+    }
+
+    @Override
     public void onBalanceLoaded(double balance) {
         if(mMainView != null) {
             mMainView.displayBalance(balance);

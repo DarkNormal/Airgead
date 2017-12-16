@@ -1,6 +1,8 @@
 package com.marklordan.airgead.ui.main;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private AirgeadAccount mAccount;
-    private Button mAddExpenseButton;
+    private FloatingActionButton mAddTransactionBtn;
     private TextView mAccountBalanceTextView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
@@ -45,8 +47,8 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         mAccount = new AirgeadAccount();
 
         // TODO SETUP SEPARATE TRANSACTION (INCOME / EXPENSE) OPTIONS
-        mAddExpenseButton = (Button) findViewById(R.id.button_add_expense);
-        mAddExpenseButton.setOnClickListener(new View.OnClickListener() {
+        mAddTransactionBtn = (FloatingActionButton) findViewById(R.id.add_transaction_fab);
+        mAddTransactionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 mAdapter.removeItem(viewHolder.getAdapterPosition());
+                mPresenter.onItemRemoved();
             }
         };
         new ItemTouchHelper(swipeHelper).attachToRecyclerView(mRecyclerView);
@@ -88,6 +91,12 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: called");
+    }
+
+    @Override
     protected void onDestroy() {
         mPresenter.onDestroy();
         super.onDestroy();
@@ -102,7 +111,15 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.main_coordinator_layout), message, Snackbar.LENGTH_SHORT);
+        snackbar.setAction("Undo", new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //TODO undo removal / make a soft delete feature
+            }
+        });
+        snackbar.show();
     }
 
     @Override
