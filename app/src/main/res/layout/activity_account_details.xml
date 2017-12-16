@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Balance"
+            android:inputType="number|numberSigned|numberDecimal"
             android:text=" "/>
     </android.support.design.widget.TextInputLayout>
 
@@ -40,6 +41,8 @@
             android:id="@+id/savings_target_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Savings Target"/>
+            android:hint="Savings Target"
+            android:text=" "
+            android:inputType="number|numberDecimal"/>
     </android.support.design.widget.TextInputLayout>
 </android.support.constraint.ConstraintLayout>

@@ -15,22 +15,17 @@ import com.marklordan.airgead.db.LocalDataSource;
 
 public class AccountDetailsActivity extends AppCompatActivity implements AccountDetailsView {
 
-    public static final String EXTRA_BALANCE = "extra_balance";
     private AccountDetailsPresenter mPresenter;
 
     private EditText mBalanceEditText, mSavingsTargetEditText;
 
-    private double accountBalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_details);
 
-        accountBalance = getIntent().getDoubleExtra(EXTRA_BALANCE, 0);
-
         mBalanceEditText = (EditText) findViewById(R.id.balance_edit_text);
-        mBalanceEditText.setText("€" + accountBalance);
 
         mSavingsTargetEditText = (EditText) findViewById(R.id.savings_target_edit_text);
 
@@ -53,7 +48,13 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch(item.getItemId()){
+            case R.id.confirm_item:
+                updateAccountDetails();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -73,7 +74,9 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         ContentValues values = new ContentValues();
         values.put(AirgeadContract.AccountTable.Cols._ID, 1);
         values.put(AirgeadContract.AccountTable.Cols.BALANCE, Double.parseDouble(mBalanceEditText.getText().toString()));
-        values.put(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET, mSavingsTargetEditText.getText().toString());
+        values.put(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET, Double.parseDouble(mSavingsTargetEditText.getText().toString()));
         getContentResolver().update(AirgeadContract.AccountTable.CONTENT_URI,values, AirgeadContract.AccountTable.Cols.ACCOUNT_ID + "= ?", new String[]{"1"});
+
+        finish();
     }
 }
