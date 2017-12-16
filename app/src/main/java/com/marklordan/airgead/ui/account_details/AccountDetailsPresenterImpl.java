@@ -6,13 +6,8 @@ import com.marklordan.airgead.db.AirgeadDataSource;
 import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Transaction;
-import com.marklordan.airgead.ui.main.MainView;
 
 import java.util.List;
-
-/**
- * Created by Mark on 10/12/2017.
- */
 
 public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, AirgeadDataSource.GetDataCallback {
 

@@ -32,7 +32,8 @@
             android:label="@string/activity_new_transaction_title"
             android:parentActivityName=".ui.main.MainActivity">
         </activity>
-        <activity android:name=".ui.account_details.AccountDetailsActivity">
+        <activity android:name=".ui.account_details.AccountDetailsActivity"
+            android:parentActivityName=".ui.main.MainActivity">
         </activity>
     </application>
 

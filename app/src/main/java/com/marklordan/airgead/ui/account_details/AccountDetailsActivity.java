@@ -25,6 +25,8 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_details);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mBalanceEditText = (EditText) findViewById(R.id.balance_edit_text);
 
         mSavingsTargetEditText = (EditText) findViewById(R.id.savings_target_edit_text);
