@@ -15,6 +15,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
 
     private MainView mMainView;
     private AirgeadRepository mRepository;
+    private List<Transaction> mTransactionList;
 
     public MainPresenterImpl(MainView mainView, AirgeadRepository repository) {
         this.mMainView = mainView;
@@ -47,10 +48,15 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     }
 
     @Override
-    public void onItemRemoved() {
+    public void onItemRemoved(int position) {
         if(mMainView != null){
-            mMainView.showMessage("Transaction removed");
+            mMainView.showRemovedMessage("Transaction removed", mTransactionList.get(position), position);
         }
+    }
+
+    @Override
+    public void removeItemFromDb(int position) {
+        //todo repository call to delete transaction
     }
 
     @Override
@@ -65,6 +71,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     public void onTransactionsLoaded(List<Transaction> transactions) {
         if(mMainView != null){
             if(transactions != null) {
+                mTransactionList = transactions;
                 //only set items in RecyclerView if there are some there, otherwise skip
                 mMainView.setItems(transactions);
             }

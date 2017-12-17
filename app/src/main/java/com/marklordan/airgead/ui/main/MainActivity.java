@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO SETUP SEPARATE TRANSACTION (INCOME / EXPENSE) OPTIONS
         mAddTransactionBtn = (FloatingActionButton) findViewById(R.id.add_transaction_fab);
         mAddTransactionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,8 +68,10 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         SwipeToDelete swipeHelper = new SwipeToDelete(this){
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                mAdapter.removeItem(viewHolder.getAdapterPosition());
-                mPresenter.onItemRemoved();
+                int position = viewHolder.getAdapterPosition();
+                mPresenter.onItemRemoved(position);
+                mAdapter.removeItem(position);
+
             }
         };
         new ItemTouchHelper(swipeHelper).attachToRecyclerView(mRecyclerView);
@@ -110,12 +111,21 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     @Override
     public void showMessage(String message) {
-        //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showRemovedMessage(String message, final Transaction transaction, final int position) {
         Snackbar snackbar = Snackbar.make(findViewById(R.id.main_coordinator_layout), message, Snackbar.LENGTH_SHORT);
         snackbar.setAction("Undo", new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //TODO undo removal / make a soft delete feature
+                mAdapter.restoreItem(transaction, position);
+            }
+        }).addCallback(new Snackbar.Callback(){
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                mPresenter.removeItemFromDb(position);
             }
         });
         snackbar.show();

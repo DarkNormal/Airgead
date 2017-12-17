@@ -15,6 +15,8 @@ public interface MainView {
 
     void showMessage(String message);
 
+    void showRemovedMessage(String message, Transaction transaction, int position);
+
     void showProgress();
 
     void hideProgress();

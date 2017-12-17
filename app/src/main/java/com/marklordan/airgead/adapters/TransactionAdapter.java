@@ -46,6 +46,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         notifyItemRemoved(position);
     }
 
+    public void restoreItem(Transaction transaction, int position){
+        mTransactions.add(position, transaction);
+        notifyItemInserted(position);
+    }
+
 
     @Override
     public TransactionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

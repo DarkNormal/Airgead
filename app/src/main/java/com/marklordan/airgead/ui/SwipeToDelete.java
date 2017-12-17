@@ -42,7 +42,7 @@ public class SwipeToDelete extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        Toast.makeText(mContext, "swiped!!", Toast.LENGTH_SHORT).show();
+        //Not overridden here
     }
 
     @Override
