@@ -3,8 +3,11 @@ package com.marklordan.airgead.ui.main;
 import com.marklordan.airgead.db.AirgeadDataSource;
 import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.model.AirgeadAccount;
+import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,11 +73,14 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     @Override
     public void onTransactionsLoaded(List<Transaction> transactions) {
         if(mMainView != null){
-            if(transactions != null) {
+            if(transactions == null) {
+                transactions = new ArrayList<>();
+                transactions.add(new Income(0, new Date(), null, "Sample Income"));
+            }
                 mTransactionList = transactions;
                 //only set items in RecyclerView if there are some there, otherwise skip
                 mMainView.setItems(transactions);
-            }
+
             //TODO show 'No transactions yet' or similar message if transaction list is empty
             mMainView.hideProgress();
         }
