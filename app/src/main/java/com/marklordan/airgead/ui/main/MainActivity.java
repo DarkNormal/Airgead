@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         }).addCallback(new Snackbar.Callback(){
             @Override
             public void onDismissed(Snackbar transientBottomBar, int event) {
-                mPresenter.removeItemFromDb(position);
+                mPresenter.removeItemFromDb(transaction.getId());
             }
         });
         snackbar.show();

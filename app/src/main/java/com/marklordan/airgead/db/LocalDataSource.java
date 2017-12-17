@@ -83,6 +83,11 @@ public class LocalDataSource implements AirgeadDataSource{
 
     }
 
+    @Override
+    public void removeTransaction(int transactionId) {
+        mContentResolver.delete(AirgeadContract.TransactionTable.CONTENT_URI, null, new String[]{String.valueOf(transactionId)});
+    }
+
 
     private List<Transaction> createArrayList(Cursor cursor) {
         ArrayList<Transaction> transactionList = new ArrayList<>();
@@ -103,9 +108,9 @@ public class LocalDataSource implements AirgeadDataSource{
             isAnExpense = amount < 0;
             Transaction transaction;
             if(isAnExpense)
-                transaction = new Expense(amount, new Date(date), null, title, type);
+                transaction = new Expense(id, amount, new Date(date), null, title, type);
             else
-                transaction = new Income(amount, new Date(date), null, title);
+                transaction = new Income(id, amount, new Date(date), null, title);
 
             transactionList.add(transaction);
         }

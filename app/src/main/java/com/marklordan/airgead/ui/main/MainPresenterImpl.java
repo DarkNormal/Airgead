@@ -1,5 +1,7 @@
 package com.marklordan.airgead.ui.main;
 
+import android.util.Log;
+
 import com.marklordan.airgead.db.AirgeadDataSource;
 import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.model.AirgeadAccount;
@@ -19,6 +21,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     private MainView mMainView;
     private AirgeadRepository mRepository;
     private List<Transaction> mTransactionList;
+    private static final String TAG = MainPresenterImpl.class.getSimpleName();
 
     public MainPresenterImpl(MainView mainView, AirgeadRepository repository) {
         this.mMainView = mainView;
@@ -58,8 +61,11 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     }
 
     @Override
-    public void removeItemFromDb(int position) {
+    public void removeItemFromDb(int transactionId) {
         //todo repository call to delete transaction
+        Log.d(TAG, "removeItemFromDb: request received from view to delete item");
+        mRepository.removeTransaction(transactionId);
+
     }
 
     @Override
@@ -77,11 +83,9 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
                 transactions = new ArrayList<>();
                 transactions.add(new Income(0, new Date(), null, "Sample Income"));
             }
-                mTransactionList = transactions;
-                //only set items in RecyclerView if there are some there, otherwise skip
-                mMainView.setItems(transactions);
-
-            //TODO show 'No transactions yet' or similar message if transaction list is empty
+            mTransactionList = transactions;
+            //only set items in RecyclerView if there are some there, otherwise skip
+            mMainView.setItems(transactions);
             mMainView.hideProgress();
         }
     }

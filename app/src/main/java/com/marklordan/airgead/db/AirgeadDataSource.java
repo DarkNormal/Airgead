@@ -23,4 +23,6 @@ public interface AirgeadDataSource {
     void getAccountDetails(GetDataCallback callback);
 
     void getTransactions(GetDataCallback callback);
+
+    void removeTransaction(int transactionId);
 }

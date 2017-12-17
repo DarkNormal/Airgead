@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
+import com.marklordan.airgead.model.AirgeadAccount;
+
 public class AccountContentProvider extends ContentProvider {
 
     private static AccountDbHelper mDbHelper;
@@ -41,7 +43,18 @@ public class AccountContentProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        int match = sUriMatcher.match(uri);
+        int deleteReturnValue;
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        switch(match){
+            case TRANSACTION:
+                deleteReturnValue = db.delete(AirgeadContract.TransactionTable.TABLE_NAME, "_id=?", selectionArgs);
+                break;
+            default:
+                deleteReturnValue = 0;
+        }
+        return deleteReturnValue;
     }
 
     @Override
