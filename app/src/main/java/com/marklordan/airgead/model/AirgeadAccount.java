@@ -70,6 +70,10 @@ public class AirgeadAccount {
         mChosenCurrency = chosenCurrency;
 
     }
+
+    public double getRemainingBudget(){
+        return getBalance() - getSavingsTarget();
+    }
     
     public Transaction getLatestTransactionAdded() {
         List<Transaction> transactionList = getTransactions();

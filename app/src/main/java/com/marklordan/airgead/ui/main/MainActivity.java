@@ -30,9 +30,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MainView, TransactionAdapter.TransactionClickListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private AirgeadAccount mAccount;
     private FloatingActionButton mAddTransactionBtn;
-    private TextView mAccountBalanceTextView, mSavingsTargetTextView;
+    private TextView mAccountBalanceTextView, mSavingsTargetTextView, mRemainingBudgetTextView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
 
@@ -63,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         });
 
         mSavingsTargetTextView = (TextView) findViewById(R.id.savings_target_value_textview);
+        mRemainingBudgetTextView = (TextView) findViewById(R.id.remaining_balance_value_textview);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recent_transaction_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         mProgressBar.setVisibility(View.GONE);
 
         mPresenter = new MainPresenterImpl(this, new AirgeadRepository(new LocalDataSource(getContentResolver())));
+
 
 
     }
@@ -148,14 +149,17 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     @Override
     public void displayBalance(double balanceAmount) {
-        mAccount.setBalance(balanceAmount);
         mAccountBalanceTextView.setText(String.valueOf(balanceAmount));
     }
 
     @Override
     public void displaySavingsTarget(double savingsTargetAmount) {
-        mAccount.setSavingsTarget(savingsTargetAmount);
         mSavingsTargetTextView.setText(String.valueOf(savingsTargetAmount));
+    }
+
+    @Override
+    public void displayRemainingBudget(double remainingBudget) {
+        mRemainingBudgetTextView.setText(String.valueOf(remainingBudget));
     }
 
     @Override
@@ -166,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     @Override
     public void setAccount(AirgeadAccount account) {
-        mAccount = account;
+        //mAccount = account;
     }
 
     @Override
