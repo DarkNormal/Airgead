@@ -23,6 +23,8 @@ public interface MainView {
 
     void displayBalance(double balanceAmount);
 
+    void displaySavingsTarget(double savingsTargetAmount);
+
     void showAccountDetails();
 
     void setAccount(AirgeadAccount account);

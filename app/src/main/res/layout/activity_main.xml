@@ -42,20 +42,40 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/total_balance"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="@+id/textview_account_balance"
             app:layout_constraintRight_toRightOf="@+id/textview_account_balance"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/recent_transactions_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3"/>
+
+        <TextView
+            android:id="@+id/recent_transaction_recyclerview_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/recent_transactions"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recent_transactions_guideline"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recent_transaction_recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_account_balance">
+            app:layout_constraintTop_toBottomOf="@+id/recent_transaction_recyclerview_header">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -71,7 +91,63 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="@+id/recent_transactions_guideline"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/vertical_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <TextView
+            android:id="@+id/savings_target_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Savings Target"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_account_balance"/>
+
+        <TextView
+            android:id="@+id/remaining_budget_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Remaining Budget"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/vertical_divider"
+            app:layout_constraintTop_toBottomOf="@+id/textview_account_balance"/>
+
+        <TextView
+            android:id="@+id/remaining_balance_value_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:layout_constraintEnd_toEndOf="@+id/remaining_budget_textview"
+            app:layout_constraintStart_toStartOf="@+id/remaining_budget_textview"
+            app:layout_constraintTop_toBottomOf="@+id/remaining_budget_textview"
+            tools:text="€1000"/>
+
+        <TextView
+            android:id="@+id/savings_target_value_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:layout_constraintEnd_toEndOf="@+id/savings_target_textview"
+            app:layout_constraintStart_toStartOf="@+id/savings_target_textview"
+            app:layout_constraintTop_toBottomOf="@+id/savings_target_textview"
+            tools:text="€1000"/>
 
 
     </android.support.constraint.ConstraintLayout>

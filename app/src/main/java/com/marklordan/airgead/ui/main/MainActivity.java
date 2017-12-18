@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     private static final String TAG = MainActivity.class.getSimpleName();
     private AirgeadAccount mAccount;
     private FloatingActionButton mAddTransactionBtn;
-    private TextView mAccountBalanceTextView;
+    private TextView mAccountBalanceTextView, mSavingsTargetTextView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
 
@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
             }
         });
 
+        mSavingsTargetTextView = (TextView) findViewById(R.id.savings_target_value_textview);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recent_transaction_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
 
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         new ItemTouchHelper(swipeHelper).attachToRecyclerView(mRecyclerView);
 
         mProgressBar = (ProgressBar) findViewById(R.id.transaction_list_progress_bar);
+        mProgressBar.setVisibility(View.GONE);
 
         mPresenter = new MainPresenterImpl(this, new AirgeadRepository(new LocalDataSource(getContentResolver())));
 
@@ -147,6 +150,12 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     public void displayBalance(double balanceAmount) {
         mAccount.setBalance(balanceAmount);
         mAccountBalanceTextView.setText(String.valueOf(balanceAmount));
+    }
+
+    @Override
+    public void displaySavingsTarget(double savingsTargetAmount) {
+        mAccount.setSavingsTarget(savingsTargetAmount);
+        mSavingsTargetTextView.setText(String.valueOf(savingsTargetAmount));
     }
 
     @Override
