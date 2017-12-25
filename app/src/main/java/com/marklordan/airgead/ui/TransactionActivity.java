@@ -1,23 +1,23 @@
 package com.marklordan.airgead.ui;
 
-import android.content.ContentValues;
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AirgeadContract;
@@ -33,58 +33,66 @@ import java.util.Date;
 
 public class TransactionActivity extends AppCompatActivity implements DatePickerFragment.OnDateSetListener{
 
+    private static final String TAG = "TransactionActivity";
+
     private EditText transactionDescriptionInput;
     private Spinner mCategorySpinner;
     private EditText mTransactionValueEditText;
-    private ToggleButton mExpenseOptionBtn, mIncomeOptionBtn;
-
     private TextView mTransactionDateTextView;
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private Transaction mCurrentTransaction = new Expense();
+
+    private TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_transaction_toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setSubtitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         transactionDescriptionInput = (EditText) findViewById(R.id.transaction_desc_input);
 
         mTransactionValueEditText = (EditText) findViewById(R.id.transaction_value_input);
-
-
         mTransactionDateTextView = (TextView) findViewById(R.id.transaction_date_input);
 
-        mExpenseOptionBtn = (ToggleButton) findViewById(R.id.expense_option_btn);
-        mExpenseOptionBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mExpenseOptionBtn.isChecked()){
-                    mIncomeOptionBtn.setChecked(false);
-                    mCurrentTransaction = new Expense();
-                }
-                else{
-                    mExpenseOptionBtn.setChecked(true);
-                }
-            }
-        });
-        mIncomeOptionBtn = (ToggleButton) findViewById(R.id.income_option_btn);
-        mIncomeOptionBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mIncomeOptionBtn.isChecked()){
-                    mExpenseOptionBtn.setChecked(false);
-                    mCurrentTransaction = new Income();
-                }
-                else{
-                    mIncomeOptionBtn.setChecked(true);
-
-                }
-            }
-        });
 
         mCategorySpinner = (Spinner) findViewById(R.id.transaction_category);
         mCategorySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, TransactionCategory.values()));
+
+        mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        mTabLayout.addTab(mTabLayout.newTab().setText("Expense"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Income"));
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.d(TAG, "onTabSelected: " + tab.getPosition());
+                switch (tab.getPosition()){
+                    case 0:
+                        mCurrentTransaction = new Expense();
+                        break;
+                    case 1:
+                        mCurrentTransaction = new Income();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
@@ -98,7 +106,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.add_transaction_item:
+            case R.id.confirm_item:
                 addTransaction();
                 return true;
             default:

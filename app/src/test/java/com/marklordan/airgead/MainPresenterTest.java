@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.marklordan.airgead.db.AirgeadDataSource;
 import com.marklordan.airgead.db.AirgeadRepository;
+import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Expense;
 import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
@@ -72,16 +73,18 @@ public class MainPresenterTest {
 
     @Test
     public void showProgressBarWhenLoadingTransactions(){
+        //given
         mMainPresenter.onResume();
 
+        //when
         verify(mRepository).getTransactions(mGetTransactionsCallbackCaptor.capture());
         mGetTransactionsCallbackCaptor.getValue().onTransactionsLoaded(mTransactions);
 
+        //then
         InOrder inOrder = Mockito.inOrder(mMainView);
         inOrder.verify(mMainView).showProgress();
         inOrder.verify(mMainView).hideProgress();
         verify(mMainView).setItems(mTransactions);
-
         verify(mMainView).showProgress();
     }
 
@@ -95,17 +98,34 @@ public class MainPresenterTest {
 
     @Test
     public void onBalanceLoadedUpdateUI(){
-        mMainPresenter.onBalanceLoaded(any(Double.class));
+        mMainPresenter.onAccountLoaded(new AirgeadAccount(5000, 3000));
 
         verify(mMainView).displayBalance(any(Double.class));
     }
 
     @Test
     public void onTransactionsLoadedUpdateUI(){
-        mMainPresenter.onTransactionsLoaded(new ArrayList<Transaction>());
 
+        //given / when
+        mMainPresenter.onTransactionsLoaded(mTransactions);
+
+        //then
         verify(mMainView).hideProgress();
-        verify(mMainView).setItems(new ArrayList<Transaction>());
+        verify(mMainView).setItems(mTransactions);
+    }
+
+    @Test
+    public void onItemSwipeToDeleteSendMessageToView(){
+        int position = 0;
+
+        //given
+        mMainPresenter.onTransactionsLoaded(mTransactions);
+
+        //when
+        mMainPresenter.onItemRemoved(position);
+
+        //then
+        verify(mMainView).showRemovedMessage("Transaction removed", mTransactions.get(position), position);
     }
 
 }

@@ -1,9 +1,5 @@
 package com.marklordan.airgead.db;
 
-import com.marklordan.airgead.model.Transaction;
-
-import java.util.List;
-
 /**
  * Created by Mark on 14/11/2017.
  */
@@ -19,13 +15,18 @@ public class AirgeadRepository implements AirgeadDataSource {
 
 
     @Override
-    public void getAccountBalance(GetDataCallback callback) {
-        mDataSource.getAccountBalance(callback);
+    public void getAccountDetails(GetDataCallback callback) {
+        mDataSource.getAccountDetails(callback);
     }
 
     @Override
     public void getTransactions(GetDataCallback callback) {
         mDataSource.getTransactions(callback);
+    }
+
+    @Override
+    public void removeTransaction(int transactionId) {
+        mDataSource.removeTransaction(transactionId);
     }
 
 }

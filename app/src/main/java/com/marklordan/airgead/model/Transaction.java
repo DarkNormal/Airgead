@@ -13,6 +13,8 @@ import java.util.Date;
 
 public abstract class Transaction {
 
+
+    private int mId;
     private double mAmount;
     private Date mDateOfTransaction;
     private Location mLocationOfTransaction;
@@ -22,12 +24,25 @@ public abstract class Transaction {
     public Transaction(){};
 
 
+    public Transaction(int id, double amount, Date dateOfTransaction, Location locationOfTransaction, String description) {
+        mId = id;
+        mAmount = amount;
+        mDateOfTransaction = dateOfTransaction;
+        mLocationOfTransaction = locationOfTransaction;
+        mDescription = description;
+        mCategory = TransactionCategory.GENERAL;
+    }
+
     public Transaction(double amount, Date dateOfTransaction, Location locationOfTransaction, String description) {
         mAmount = amount;
         mDateOfTransaction = dateOfTransaction;
         mLocationOfTransaction = locationOfTransaction;
         mDescription = description;
         mCategory = TransactionCategory.GENERAL;
+    }
+
+    public int getId() {
+        return mId;
     }
 
     public double getAmount() {

@@ -12,6 +12,11 @@ import java.util.Date;
  */
 
 public class Income extends Transaction {
+
+    public Income(int id,double amount, Date dateOfTransaction, Location locationOfTransaction, String title) {
+        super(id, amount, dateOfTransaction, locationOfTransaction, title);
+    }
+
     public Income(double amount, Date dateOfTransaction, Location locationOfTransaction, String title) {
         super(amount, dateOfTransaction, locationOfTransaction, title);
     }

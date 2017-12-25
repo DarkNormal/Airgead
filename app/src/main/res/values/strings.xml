@@ -29,10 +29,12 @@
     <string name="activity_new_transaction_title">New Transaction</string>
     <string name="transaction_description_title">Description</string>
     <string name="transaction_amount_title">Amount</string>
-    <string name="transaction_date_title">Date</string>
+    <string name="transaction_date_today_title">Today</string>
 
     <string name="is_expense_transaction">TRANSACTION_TYPE_ID</string>
 
 
     <string name="transaction_description">%1$s Description</string>
+    <string name="transaction_removed">Transaction removed</string>
+    <string name="recent_transactions">Recent Transactions</string>
 </resources>

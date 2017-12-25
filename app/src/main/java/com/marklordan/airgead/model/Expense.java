@@ -34,6 +34,12 @@ public class Expense extends Transaction {
         super.setAmount(amount * -1);
     }
 
+    public Expense(int id, double amount, Date dateOfTransaction, Location locationOfTransaction, String title, int type) {
+        super(id, amount, dateOfTransaction, locationOfTransaction, title);
+        setCategory(TransactionCategory.fromInteger(type));
+
+    }
+
     public Expense(double amount, Date dateOfTransaction, Location locationOfTransaction, String title, int type) {
         super(amount, dateOfTransaction, locationOfTransaction, title);
         setCategory(TransactionCategory.fromInteger(type));

@@ -1,9 +1,15 @@
 package com.marklordan.airgead.ui.main;
 
+import android.util.Log;
+
 import com.marklordan.airgead.db.AirgeadDataSource;
 import com.marklordan.airgead.db.AirgeadRepository;
+import com.marklordan.airgead.model.AirgeadAccount;
+import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +20,8 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
 
     private MainView mMainView;
     private AirgeadRepository mRepository;
+    private List<Transaction> mTransactionList;
+    private static final String TAG = MainPresenterImpl.class.getSimpleName();
 
     public MainPresenterImpl(MainView mainView, AirgeadRepository repository) {
         this.mMainView = mainView;
@@ -27,7 +35,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
             mMainView.showProgress();
         }
 
-        mRepository.getAccountBalance(this);
+        mRepository.getAccountDetails(this);
         mRepository.getTransactions(this);
     }
 
@@ -46,20 +54,40 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     }
 
     @Override
-    public void onBalanceLoaded(double balance) {
+    public void onItemRemoved(int position) {
+        if(mMainView != null){
+            mMainView.showRemovedMessage("Transaction removed", mTransactionList.get(position), position);
+        }
+    }
+
+    @Override
+    public void removeItemFromDb(int transactionId) {
+        //todo repository call to delete transaction
+        Log.d(TAG, "removeItemFromDb: request received from view to delete item");
+        mRepository.removeTransaction(transactionId);
+
+    }
+
+    @Override
+    public void onAccountLoaded(AirgeadAccount account) {
         if(mMainView != null) {
-            mMainView.displayBalance(balance);
+            mMainView.setAccount(account);
+            mMainView.displayBalance(account.getBalance());
+            mMainView.displaySavingsTarget(account.getSavingsTarget());
+            mMainView.displayRemainingBudget(account.getRemainingBudget());
         }
     }
 
     @Override
     public void onTransactionsLoaded(List<Transaction> transactions) {
         if(mMainView != null){
-            if(transactions != null) {
-                //only set items in RecyclerView if there are some there, otherwise skip
-                mMainView.setItems(transactions);
+            if(transactions == null) {
+                transactions = new ArrayList<>();
+                transactions.add(new Income(0, new Date(), null, "Sample Income"));
             }
-            //TODO show 'No transactions yet' or similar message if transaction list is empty
+            mTransactionList = transactions;
+            //only set items in RecyclerView if there are some there, otherwise skip
+            mMainView.setItems(transactions);
             mMainView.hideProgress();
         }
     }

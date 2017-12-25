@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Handler;
 import android.util.Log;
 
+import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Expense;
 import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
@@ -30,12 +31,11 @@ public class LocalDataSource implements AirgeadDataSource{
     }
 
     @Override
-    public void getAccountBalance(final GetDataCallback callback) {
+    public void getAccountDetails(final GetDataCallback callback) {
 
-        double currentBalance = 0;
-        String[] projection = {AirgeadContract.AccountTable.Cols.BALANCE};
+        final AirgeadAccount account;
         Cursor cursor = mContentResolver.query(AirgeadContract.AccountTable.CONTENT_URI,
-                projection,
+                null,
                 null,
                 null,
                 null
@@ -45,10 +45,10 @@ public class LocalDataSource implements AirgeadDataSource{
         }
         try {
             int balanceIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.BALANCE);
+            int savingstargetIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET);
 
             cursor.moveToNext();
-            currentBalance = cursor.getDouble(balanceIndex);
-            Log.d("TransactionInteractorIm", "refreshBalance: " + currentBalance);
+            account = new AirgeadAccount(cursor.getDouble(balanceIndex), cursor.getDouble(savingstargetIndex));
 
         }
         finally {
@@ -56,12 +56,7 @@ public class LocalDataSource implements AirgeadDataSource{
             //transactionCursor.close();
         }
 
-        final double finalCurrentBalance = currentBalance;
-        new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-                callback.onBalanceLoaded(finalCurrentBalance);
-            }
-        }, 2000);
+        callback.onAccountLoaded(account);
     }
 
     @Override
@@ -83,14 +78,14 @@ public class LocalDataSource implements AirgeadDataSource{
             return;
         }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                callback.onTransactionsLoaded(createArrayList(cursor));
-            }
-        }, 2000);
+        callback.onTransactionsLoaded(createArrayList(cursor));
 
 
+    }
+
+    @Override
+    public void removeTransaction(int transactionId) {
+        mContentResolver.delete(AirgeadContract.TransactionTable.CONTENT_URI, null, new String[]{String.valueOf(transactionId)});
     }
 
 
@@ -113,9 +108,9 @@ public class LocalDataSource implements AirgeadDataSource{
             isAnExpense = amount < 0;
             Transaction transaction;
             if(isAnExpense)
-                transaction = new Expense(amount, new Date(date), null, title, type);
+                transaction = new Expense(id, amount, new Date(date), null, title, type);
             else
-                transaction = new Income(amount, new Date(date), null, title);
+                transaction = new Income(id, amount, new Date(date), null, title);
 
             transactionList.add(transaction);
         }

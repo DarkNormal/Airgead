@@ -9,17 +9,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.main.MainActivity">
-        </activity>
-        <activity
-            android:name=".ui.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SetupAccountActivity"/>
+        <activity
+            android:name=".ui.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <provider
             android:name=".db.AccountContentProvider"
@@ -31,6 +30,10 @@
         <activity
             android:name=".ui.TransactionActivity"
             android:label="@string/activity_new_transaction_title"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.main.MainActivity">
+        </activity>
+        <activity android:name=".ui.account_details.AccountDetailsActivity"
             android:parentActivityName=".ui.main.MainActivity">
         </activity>
     </application>
