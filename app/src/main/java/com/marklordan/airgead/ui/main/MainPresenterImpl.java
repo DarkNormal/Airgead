@@ -8,6 +8,7 @@ import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Income;
 import com.marklordan.airgead.model.Transaction;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     private AirgeadRepository mRepository;
     private List<Transaction> mTransactionList;
     private static final String TAG = MainPresenterImpl.class.getSimpleName();
+    private NumberFormat mNumberFormat = NumberFormat.getCurrencyInstance();
 
     public MainPresenterImpl(MainView mainView, AirgeadRepository repository) {
         this.mMainView = mainView;
@@ -72,9 +74,9 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     public void onAccountLoaded(AirgeadAccount account) {
         if(mMainView != null) {
             mMainView.setAccount(account);
-            mMainView.displayBalance(account.getBalance());
-            mMainView.displaySavingsTarget(account.getSavingsTarget());
-            mMainView.displayRemainingBudget(account.getRemainingBudget());
+            mMainView.displayBalance(mNumberFormat.format(account.getBalance()));
+            mMainView.displaySavingsTarget(mNumberFormat.format(account.getSavingsTarget()));
+            mMainView.displayRemainingBudget(mNumberFormat.format(account.getRemainingBudget()));
         }
     }
 
