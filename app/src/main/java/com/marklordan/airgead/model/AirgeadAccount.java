@@ -8,9 +8,11 @@ public class AirgeadAccount {
     private List<Transaction> mTransactions;
     private double mSavingsTarget;
     private Currency mChosenCurrency;
+    private boolean mIsNewAccount;
 
     public AirgeadAccount() {
         mTransactions = new ArrayList<>();
+        mIsNewAccount = true;
     }
 
     public AirgeadAccount(double balance, double savingsTarget) {
@@ -84,5 +86,10 @@ public class AirgeadAccount {
             }
         }
         return latestTransaction;
+    }
+
+    public boolean isNewAccount(){
+        return mIsNewAccount;
+        //todo - to be used for a new user
     }
 }
