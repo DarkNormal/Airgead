@@ -33,7 +33,7 @@ public class LocalDataSource implements AirgeadDataSource{
     @Override
     public void getAccountDetails(final GetDataCallback callback) {
 
-        final AirgeadAccount account;
+        AirgeadAccount account;
         Cursor cursor = mContentResolver.query(AirgeadContract.AccountTable.CONTENT_URI,
                 null,
                 null,
@@ -41,19 +41,19 @@ public class LocalDataSource implements AirgeadDataSource{
                 null
         );
         if(cursor == null || cursor.getCount() <= 0){
-            return;
+            account = new AirgeadAccount();
         }
-        try {
-            int balanceIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.BALANCE);
-            int savingstargetIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET);
+        else {
+            try {
+                int balanceIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.BALANCE);
+                int savingstargetIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET);
 
-            cursor.moveToNext();
-            account = new AirgeadAccount(cursor.getDouble(balanceIndex), cursor.getDouble(savingstargetIndex));
+                cursor.moveToNext();
+                account = new AirgeadAccount(cursor.getDouble(balanceIndex), cursor.getDouble(savingstargetIndex));
 
-        }
-        finally {
-            cursor.close();
-            //transactionCursor.close();
+            } finally {
+                cursor.close();
+            }
         }
 
         callback.onAccountLoaded(account);
