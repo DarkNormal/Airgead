@@ -17,11 +17,11 @@ public interface MainView {
 
     void hideProgress();
 
-    void displayBalance(double balanceAmount);
+    void displayBalance(String balanceAmount);
 
-    void displaySavingsTarget(double savingsTargetAmount);
+    void displaySavingsTarget(String savingsTargetAmount);
 
-    void displayRemainingBudget(double remainingBudget);
+    void displayRemainingBudget(String remainingBudget);
 
     void showAccountDetails();
 
