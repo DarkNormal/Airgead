@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     private TextView mAccountBalanceTextView, mSavingsTargetTextView, mRemainingBudgetTextView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
+    private DividerItemDecoration mDividerItemDecoration;
+    private LinearLayoutManager mLinearLayoutManager;
 
     private MainPresenter mPresenter;
     private TransactionAdapter mAdapter;
@@ -66,7 +69,10 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         mRemainingBudgetTextView = (TextView) findViewById(R.id.remaining_balance_value_textview);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recent_transaction_recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        mDividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), mLinearLayoutManager.getOrientation());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
         SwipeToDelete swipeHelper = new SwipeToDelete(this){
             @Override
