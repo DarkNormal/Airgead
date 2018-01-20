@@ -2,6 +2,8 @@ package com.marklordan.airgead.model;
 
 import android.content.ContentValues;
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.marklordan.airgead.db.AirgeadContract;
@@ -11,6 +13,11 @@ import java.util.Date;
 public class Expense extends Transaction {
 
     public Expense(){}
+
+    public Expense(Parcel in){
+        setAmount(in.readDouble());
+        setDescription(in.readString());
+    }
 
     @Override
     public ContentValues transactionToContentValues() {
@@ -45,4 +52,25 @@ public class Expense extends Transaction {
         setCategory(TransactionCategory.fromInteger(type));
 
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeDouble(getAmount());
+        parcel.writeString(getDescription());
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Expense createFromParcel(Parcel in) {
+            return new Expense(in);
+        }
+
+        public Expense[] newArray(int size) {
+            return new Expense[size];
+        }
+    };
 }

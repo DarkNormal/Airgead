@@ -23,6 +23,7 @@ import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.ui.SwipeToDelete;
 import com.marklordan.airgead.ui.TransactionActivity;
+import com.marklordan.airgead.ui.TransactionDetailsActivity;
 import com.marklordan.airgead.ui.account_details.AccountDetailsActivity;
 
 import java.util.List;
@@ -171,6 +172,13 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     @Override
     public void setAccount(AirgeadAccount account) {
         //mAccount = account;
+    }
+
+    @Override
+    public void showTransactionDetails(Transaction t) {
+        Intent i = new Intent(this, TransactionDetailsActivity.class);
+        i.putExtra("TRANSACTION", t);
+        startActivity(i);
     }
 
     @Override

@@ -45,6 +45,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     public void onItemClicked(int position) {
         if(mMainView != null){
             mMainView.showMessage(String.format("Position %d clicked!", position +1));
+            mMainView.showTransactionDetails(mTransactionList.get(position));
         }
 
     }

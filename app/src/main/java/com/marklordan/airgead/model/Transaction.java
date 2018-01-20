@@ -2,6 +2,7 @@ package com.marklordan.airgead.model;
 
 import android.content.ContentValues;
 import android.location.Location;
+import android.os.Parcelable;
 
 import com.marklordan.airgead.db.AirgeadContract;
 
@@ -11,7 +12,7 @@ import java.util.Date;
  * Created by Mark on 20/12/2016.
  */
 
-public abstract class Transaction {
+public abstract class Transaction implements Parcelable{
 
 
     private int mId;

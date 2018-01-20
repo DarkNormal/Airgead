@@ -26,4 +26,6 @@ public interface MainView {
     void showAccountDetails();
 
     void setAccount(AirgeadAccount account);
+
+    void showTransactionDetails(Transaction t);
 }
