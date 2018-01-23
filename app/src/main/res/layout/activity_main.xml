@@ -14,14 +14,16 @@
         tools:context="com.marklordan.airgead.ui.main.MainActivity">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/balance_carview"
+            android:id="@+id/balance_cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="4dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="parent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,7 +150,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/balance_carview"/>
+            app:layout_constraintTop_toBottomOf="@+id/balance_cardview"/>
 
         <TextView
             android:id="@+id/remaining_budget_textview"
@@ -160,7 +162,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/vertical_divider"
-            app:layout_constraintTop_toBottomOf="@+id/balance_carview"/>
+            app:layout_constraintTop_toBottomOf="@+id/balance_cardview"/>
 
         <TextView
             android:id="@+id/remaining_balance_value_textview"
