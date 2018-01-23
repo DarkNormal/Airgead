@@ -5,6 +5,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -23,6 +25,7 @@ import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.ui.SwipeToDelete;
 import com.marklordan.airgead.ui.TransactionActivity;
+import com.marklordan.airgead.ui.TransactionDetailsActivity;
 import com.marklordan.airgead.ui.account_details.AccountDetailsActivity;
 
 import java.util.List;
@@ -32,8 +35,11 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     private static final String TAG = MainActivity.class.getSimpleName();
     private FloatingActionButton mAddTransactionBtn;
     private TextView mAccountBalanceTextView, mSavingsTargetTextView, mRemainingBudgetTextView;
+    private CardView mAccountBalanceCardView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
+    private DividerItemDecoration mDividerItemDecoration;
+    private LinearLayoutManager mLinearLayoutManager;
 
     private MainPresenter mPresenter;
     private TransactionAdapter mAdapter;
@@ -54,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         });
 
         mAccountBalanceTextView = (TextView) findViewById(R.id.textview_account_balance);
-        mAccountBalanceTextView.setOnClickListener(new View.OnClickListener() {
+
+        mAccountBalanceCardView = (CardView) findViewById(R.id.balance_cardview);
+        mAccountBalanceCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAccountDetails();
@@ -65,7 +73,10 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         mRemainingBudgetTextView = (TextView) findViewById(R.id.remaining_balance_value_textview);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recent_transaction_recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        mDividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), mLinearLayoutManager.getOrientation());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
         SwipeToDelete swipeHelper = new SwipeToDelete(this){
             @Override
@@ -171,6 +182,13 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     @Override
     public void setAccount(AirgeadAccount account) {
         //mAccount = account;
+    }
+
+    @Override
+    public void showTransactionDetails(Transaction t) {
+        Intent i = new Intent(this, TransactionDetailsActivity.class);
+        i.putExtra("TRANSACTION", t);
+        startActivity(i);
     }
 
     @Override

@@ -90,10 +90,13 @@ public class MainPresenterTest {
 
     @Test
     public void onItemClickedDisplayToast(){
+        mMainPresenter.onResume();
+
+        verify(mRepository).getTransactions(mGetTransactionsCallbackCaptor.capture());
+        mGetTransactionsCallbackCaptor.getValue().onTransactionsLoaded(mTransactions);
+
         mMainPresenter.onItemClicked(0);
-
-
-        verify(mMainView).showMessage(any(String.class));
+        verify(mMainView).showTransactionDetails(mTransactions.get(0));
     }
 
     @Test
