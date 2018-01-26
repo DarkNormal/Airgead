@@ -41,7 +41,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/transaction_item_icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/cities"/>
 
@@ -57,7 +57,7 @@
         tools:text="@tools:sample/date/ddmmyy"/>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/transaction_item_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

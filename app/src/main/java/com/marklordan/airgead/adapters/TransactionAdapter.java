@@ -1,10 +1,12 @@
 package com.marklordan.airgead.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marklordan.airgead.R;
@@ -70,10 +72,24 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.mTransactionCategory.setText(transactionToBind.getCategory().toString());
         holder.mTransactionDate.setText(mDateFormat.format(transactionToBind.getDateOfTransaction()));
 
+        Drawable d;
         if(transactionToBind.isAnExpense())
             holder.mTransactionAmount.setTextColor(expenseColor);
         else
             holder.mTransactionAmount.setTextColor(incomeColor);
+
+        switch(transactionToBind.getCategory()){
+            case TRANSPORT:
+                d = mContext.getDrawable(R.drawable.ic_transport);
+                break;
+            case GENERAL:
+            default:
+                d = mContext.getDrawable(R.drawable.ic_shopping_basket);
+
+        }
+
+        holder.mTransactionTypeIcon.setImageDrawable(d);
+
 
     }
 
@@ -84,6 +100,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mTransactionAmount, mTransactionCategory, mTransactionDesc, mTransactionDate;
+        private ImageView mTransactionTypeIcon;
 
         public TransactionViewHolder(View itemView) {
             super(itemView);
@@ -92,6 +109,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             mTransactionCategory = (TextView) itemView.findViewById(R.id.transaction_category);
             mTransactionDesc = (TextView) itemView.findViewById(R.id.transaction_description);
             mTransactionDate = (TextView) itemView.findViewById(R.id.transaction_date);
+            mTransactionTypeIcon = (ImageView) itemView.findViewById(R.id.transaction_item_icon);
 
             itemView.setOnClickListener(this);
         }
