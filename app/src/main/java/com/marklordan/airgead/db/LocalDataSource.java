@@ -1,6 +1,7 @@
 package com.marklordan.airgead.db;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Handler;
 import android.util.Log;
@@ -86,6 +87,11 @@ public class LocalDataSource implements AirgeadDataSource{
     @Override
     public void removeTransaction(int transactionId) {
         mContentResolver.delete(AirgeadContract.TransactionTable.CONTENT_URI, null, new String[]{String.valueOf(transactionId)});
+    }
+
+    @Override
+    public void updateAccountDetails(ContentValues values) {
+        mContentResolver.update(AirgeadContract.AccountTable.CONTENT_URI,values, AirgeadContract.AccountTable.Cols.ACCOUNT_ID + "= ?", new String[]{"1"});
     }
 
 

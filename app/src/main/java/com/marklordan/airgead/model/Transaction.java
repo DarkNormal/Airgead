@@ -86,8 +86,6 @@ public abstract class Transaction implements Parcelable{
         mDescription = description;
     }
 
-    //TODO contentValues method for easier use in application
-
     public abstract ContentValues transactionToContentValues();
 
     public abstract boolean isAnExpense();

@@ -1,5 +1,7 @@
 package com.marklordan.airgead.db;
 
+import android.content.ContentValues;
+
 /**
  * Created by Mark on 14/11/2017.
  */
@@ -27,6 +29,11 @@ public class AirgeadRepository implements AirgeadDataSource {
     @Override
     public void removeTransaction(int transactionId) {
         mDataSource.removeTransaction(transactionId);
+    }
+
+    @Override
+    public void updateAccountDetails(ContentValues values) {
+        mDataSource.updateAccountDetails(values);
     }
 
 }

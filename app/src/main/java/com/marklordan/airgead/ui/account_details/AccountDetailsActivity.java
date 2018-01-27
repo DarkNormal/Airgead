@@ -3,10 +3,13 @@ package com.marklordan.airgead.ui.account_details;
 import android.content.ContentValues;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AirgeadContract;
@@ -17,7 +20,12 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     private AccountDetailsPresenter mPresenter;
 
-    private EditText mBalanceEditText, mSavingsTargetEditText;
+    private EditText mBalanceEditText;
+    private SeekBar mSavingsTargetSeekBar;
+    private int savingsTarget;
+    private TextView mSavingsAmount, mSavingsTargetValue;
+
+    private static final String TAG = AccountDetailsActivity.class.getSimpleName();
 
 
     @Override
@@ -28,8 +36,31 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mBalanceEditText = (EditText) findViewById(R.id.balance_edit_text);
+        mSavingsAmount = (TextView) findViewById(R.id.savings_target_amount);
+        mSavingsTargetValue = (TextView) findViewById(R.id.savings_target_value);
 
-        mSavingsTargetEditText = (EditText) findViewById(R.id.savings_target_edit_text);
+        mSavingsTargetSeekBar = (SeekBar) findViewById(R.id.savingsTargetSeekBar);
+
+        mSavingsTargetSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Log.d(TAG, "onProgressChanged: " + progress);
+                savingsTarget = progress;
+                mPresenter.calculateSavingsTarget(savingsTarget);
+                updateSavingsTargetPercentage();
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         mPresenter = new AccountDetailsPresenterImpl(this, new AirgeadRepository(new LocalDataSource(getContentResolver())));
         mPresenter.onResume();
@@ -60,9 +91,8 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     }
 
     @Override
-    public void displaySavingsTarget(double savingsTarget) {
-        mSavingsTargetEditText.setText(String.valueOf(savingsTarget));
-
+    public void displaySavingsTarget(String savingsTarget) {
+        mSavingsAmount.setText("Target amount to save: " + savingsTarget);
     }
 
     @Override
@@ -72,13 +102,12 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
 
     private void updateAccountDetails(){
-        //TODO implement updating details here
-        ContentValues values = new ContentValues();
-        values.put(AirgeadContract.AccountTable.Cols._ID, 1);
-        values.put(AirgeadContract.AccountTable.Cols.BALANCE, Double.parseDouble(mBalanceEditText.getText().toString()));
-        values.put(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET, Double.parseDouble(mSavingsTargetEditText.getText().toString()));
-        getContentResolver().update(AirgeadContract.AccountTable.CONTENT_URI,values, AirgeadContract.AccountTable.Cols.ACCOUNT_ID + "= ?", new String[]{"1"});
-
+        //TODO send this to the presenter task
+        mPresenter.updateAccountDetails(Double.parseDouble(mBalanceEditText.getText().toString()));
         finish();
+    }
+
+    private void updateSavingsTargetPercentage( ){
+        mSavingsTargetValue.setText(savingsTarget * 10 + "%");
     }
 }

@@ -7,42 +7,76 @@
     android:layout_height="match_parent"
     tools:context="com.marklordan.airgead.ui.account_details.AccountDetailsActivity">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/balance_input_layout"
-        android:layout_width="368dp"
+    <TextView
+        android:id="@+id/current_balance_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Current Balance"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/balance_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:hint="Balance"
+        android:textAlignment="textEnd"
+        android:inputType="number|numberDecimal|numberSigned"
+        app:layout_constraintBottom_toBottomOf="@+id/current_balance_textview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/current_balance_textview"
+        app:layout_constraintTop_toTopOf="@+id/current_balance_textview"/>
+
+    <TextView
+        android:id="@+id/savings_target_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Savings Target"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_balance_textview"/>
+
+    <TextView
+        android:id="@+id/savings_target_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="25%"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/savings_target_textview"
+        app:layout_constraintTop_toTopOf="@+id/savings_target_textview"/>
+
+    <SeekBar
+        android:id="@+id/savingsTargetSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:max="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/savings_target_textview"
+        app:layout_constraintTop_toBottomOf="@+id/savings_target_textview"/>
+
+    <TextView
+        android:id="@+id/savings_target_amount"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/savingsTargetSeekBar"
+        app:layout_constraintStart_toStartOf="@+id/savingsTargetSeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/savingsTargetSeekBar"/>
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/balance_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Balance"
-            android:inputType="number|numberSigned|numberDecimal"
-            android:text=" "/>
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/balance_input_layout">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/savings_target_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Savings Target"
-            android:text=" "
-            android:inputType="number|numberDecimal"/>
-    </android.support.design.widget.TextInputLayout>
 </android.support.constraint.ConstraintLayout>

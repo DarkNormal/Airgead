@@ -6,9 +6,11 @@ package com.marklordan.airgead.ui.account_details;
 
 public interface AccountDetailsView {
 
-    void displaySavingsTarget(double savingsTarget);
+    void displaySavingsTarget(String savingsTarget);
 
     void displayBalance(double balance);
+
+
 
 
 }

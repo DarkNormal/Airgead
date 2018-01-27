@@ -1,5 +1,6 @@
 package com.marklordan.airgead.db;
 
+import android.content.ContentValues;
 import android.support.annotation.Nullable;
 
 import com.marklordan.airgead.model.AirgeadAccount;
@@ -25,4 +26,6 @@ public interface AirgeadDataSource {
     void getTransactions(GetDataCallback callback);
 
     void removeTransaction(int transactionId);
+
+    void updateAccountDetails(ContentValues values);
 }
