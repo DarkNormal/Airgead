@@ -47,7 +47,8 @@ public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, Air
     @Override
     public void calculateSavingsTarget(int percentage) {
         double savingsTargetAmount = ((mAccount.getBalance() / 10) * percentage);
-        mAccount.setSavingsTarget(savingsTargetAmount);
+        mAccount.setSavingsTargetAmount(savingsTargetAmount);
+        mAccount.setSavingsTarget(percentage * 10);
         mDetailsView.displaySavingsTarget(nf.format(savingsTargetAmount));
 
     }
@@ -58,6 +59,7 @@ public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, Air
         values.put(AirgeadContract.AccountTable.Cols._ID, 1);
         values.put(AirgeadContract.AccountTable.Cols.BALANCE, currentBalance);
         values.put(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET, mAccount.getSavingsTarget());
+        values.put(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET_AMT, mAccount.getSavingsTargetAmount());
         mRepository.updateAccountDetails(values);
     }
 
@@ -65,7 +67,8 @@ public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, Air
     public void onAccountLoaded(AirgeadAccount account) {
         mAccount = account;
         mDetailsView.displayBalance(account.getBalance());
-        mDetailsView.displaySavingsTarget(nf.format(account.getSavingsTarget()));
+        mDetailsView.displaySavingsTarget(nf.format(account.getSavingsTargetAmount()));
+        mDetailsView.displaySavingsTargetPercentage(account.getSavingsTarget() / 10);
     }
 
     @Override

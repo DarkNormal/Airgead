@@ -23,6 +23,7 @@ public class AccountDbHelper extends SQLiteOpenHelper {
                 AirgeadContract.AccountTable.Cols._ID + " INTEGER PRIMARY KEY," +
                 AirgeadContract.AccountTable.Cols.ACCOUNT_ID + " INTEGER," +
                 AirgeadContract.AccountTable.Cols.SAVINGS_TARGET + " NUMBER," +
+                AirgeadContract.AccountTable.Cols.SAVINGS_TARGET_AMT + " NUMBER," +
                 AirgeadContract.AccountTable.Cols.BALANCE + " NUMBER)");
 
         db.execSQL("CREATE TABLE " + AirgeadContract.TransactionTable.TABLE_NAME + "(" +

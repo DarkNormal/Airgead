@@ -22,7 +22,6 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     private EditText mBalanceEditText;
     private SeekBar mSavingsTargetSeekBar;
-    private int savingsTarget;
     private TextView mSavingsAmount, mSavingsTargetValue;
 
     private static final String TAG = AccountDetailsActivity.class.getSimpleName();
@@ -45,9 +44,8 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Log.d(TAG, "onProgressChanged: " + progress);
-                savingsTarget = progress;
-                mPresenter.calculateSavingsTarget(savingsTarget);
-                updateSavingsTargetPercentage();
+                mPresenter.calculateSavingsTarget(progress);
+                updateSavingsTargetPercentage(progress);
 
             }
 
@@ -100,6 +98,11 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         mBalanceEditText.setText(String.valueOf(balance));
     }
 
+    @Override
+    public void displaySavingsTargetPercentage(double savingsTargetPercentage) {
+        updateSavingsTargetPercentage(savingsTargetPercentage);
+    }
+
 
     private void updateAccountDetails(){
         //TODO send this to the presenter task
@@ -107,7 +110,8 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         finish();
     }
 
-    private void updateSavingsTargetPercentage( ){
-        mSavingsTargetValue.setText(savingsTarget * 10 + "%");
+    private void updateSavingsTargetPercentage(double savingsTarget){
+        mSavingsTargetValue.setText((int)savingsTarget * 10 + "%");
+        mSavingsTargetSeekBar.setProgress((int)savingsTarget);
     }
 }

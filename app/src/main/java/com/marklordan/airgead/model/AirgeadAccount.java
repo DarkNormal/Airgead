@@ -6,7 +6,8 @@ import java.util.List;
 public class AirgeadAccount {
     private double mBalance;
     private List<Transaction> mTransactions;
-    private double mSavingsTarget;
+    private int mSavingsTarget;
+    private double mSavingsTargetAmount;
     private Currency mChosenCurrency;
     private boolean mIsNewAccount;
 
@@ -15,10 +16,11 @@ public class AirgeadAccount {
         mIsNewAccount = true;
     }
 
-    public AirgeadAccount(double balance, double savingsTarget) {
+    public AirgeadAccount(double balance, int savingsTarget, double savingsTargetAmount) {
         this();
         mBalance = balance;
         mSavingsTarget = savingsTarget;
+        mSavingsTargetAmount = savingsTargetAmount;
 
     }
 
@@ -39,11 +41,11 @@ public class AirgeadAccount {
     }
 
 
-    public double getSavingsTarget() {
+    public int getSavingsTarget() {
         return mSavingsTarget;
     }
 
-    public void setSavingsTarget(double savingsTarget) {
+    public void setSavingsTarget(int savingsTarget) {
         mSavingsTarget = savingsTarget;
     }
 
@@ -74,7 +76,7 @@ public class AirgeadAccount {
     }
 
     public double getRemainingBudget(){
-        return getBalance() - getSavingsTarget();
+        return getBalance() - getSavingsTargetAmount();
     }
     
     public Transaction getLatestTransactionAdded() {
@@ -91,5 +93,13 @@ public class AirgeadAccount {
     public boolean isNewAccount(){
         return mIsNewAccount;
         //todo - to be used for a new user
+    }
+
+    public double getSavingsTargetAmount() {
+        return mSavingsTargetAmount;
+    }
+
+    public void setSavingsTargetAmount(double savingsTargetAmount) {
+        mSavingsTargetAmount = savingsTargetAmount;
     }
 }

@@ -57,6 +57,6 @@ public class AccountDetailsPresenterTest {
         verify(mRepository).getAccountDetails(mGetDataCallbackArgumentCaptor.capture());
         mGetDataCallbackArgumentCaptor.getValue().onAccountLoaded(mAccount);
         verify(mDetailsView).displayBalance(mAccount.getBalance());
-        verify(mDetailsView).displaySavingsTarget(mAccount.getSavingsTarget());
+        verify(mDetailsView).displaySavingsTarget(String.valueOf(mAccount.getSavingsTarget()));
     }
 }

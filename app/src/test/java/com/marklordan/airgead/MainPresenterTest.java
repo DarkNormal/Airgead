@@ -101,7 +101,7 @@ public class MainPresenterTest {
 
     @Test
     public void onBalanceLoadedUpdateUI(){
-        mMainPresenter.onAccountLoaded(new AirgeadAccount(5000, 3000));
+        mMainPresenter.onAccountLoaded(new AirgeadAccount(5000, 10, 500));
 
         verify(mMainView).displayBalance(any(String.class));
     }
