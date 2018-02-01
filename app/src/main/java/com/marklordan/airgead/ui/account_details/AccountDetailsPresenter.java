@@ -13,4 +13,8 @@ public interface AccountDetailsPresenter {
     void onBalanceSet(double balance);
 
     void onDestroy();
+
+    void calculateSavingsTarget(int percentage);
+
+    void updateAccountDetails(double currentBalance);
 }

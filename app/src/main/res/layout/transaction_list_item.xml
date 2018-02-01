@@ -20,14 +20,19 @@
 
     <TextView
         android:id="@+id/transaction_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="23dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/transaction_amount"
         app:layout_constraintStart_toStartOf="@+id/transaction_category"
         app:layout_constraintTop_toBottomOf="@+id/transaction_category"
-        tools:text="Sample Description"/>
+        tools:text="@tools:sample/lorem/random"/>
 
     <TextView
         android:id="@+id/transaction_category"
@@ -36,9 +41,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/transaction_item_icon"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Sample Category"/>
+        tools:text="@tools:sample/cities"/>
 
     <TextView
         android:id="@+id/transaction_date"
@@ -49,10 +54,10 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Notification.Info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="29/11/2017"/>
+        tools:text="@tools:sample/date/ddmmyy"/>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/transaction_item_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -61,5 +66,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_shopping_basket"/>
+        tools:src="@drawable/ic_shopping_basket"/>
 </android.support.constraint.ConstraintLayout>

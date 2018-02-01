@@ -17,13 +17,14 @@
             android:id="@+id/balance_cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="4dp"
-            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="parent"
+            android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true">
+            app:cardCornerRadius="4dp"
+            app:layout_constraintTop_toBottomOf="parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,10 +34,10 @@
                     android:id="@+id/total_balance_title_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_gravity="center"
                     android:text="@string/total_balance"
                     android:textStyle="bold"/>
 
@@ -44,26 +45,19 @@
                     android:id="@+id/textview_account_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:drawableEnd="@drawable/ic_mode_edit"
                     android:drawablePadding="0dp"
                     android:drawableRight="@drawable/ic_mode_edit"
                     android:gravity="center"
-                    android:layout_gravity="center"
+                    android:paddingBottom="8dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     tools:text="€13000"/>
 
             </LinearLayout>
 
 
-
         </android.support.v7.widget.CardView>
-
-
-
-
-        <!-- TODO IMPROVE DISPLAY OF DETAILS
-
-    -->
 
         <android.support.constraint.Guideline
             android:id="@+id/recent_transactions_guideline"
@@ -73,23 +67,22 @@
             app:layout_constraintGuide_percent="0.3"/>
 
 
-
         <android.support.v7.widget.CardView
             android:id="@+id/transaction_list_cardview"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/savings_target_value_textview"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:cardCornerRadius="4dp">
+            app:layout_constraintTop_toBottomOf="@+id/budget_section_card_view">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/recent_transaction_recyclerview_header"
                     android:layout_width="match_parent"
@@ -108,11 +101,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="8dp"
-                    >
-                </android.support.v7.widget.RecyclerView>
+                    tools:listitem="@layout/transaction_list_item"/>
             </LinearLayout>
-
-
 
 
         </android.support.v7.widget.CardView>
@@ -132,64 +122,85 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/recent_transactions_guideline"/>
 
-        <android.support.constraint.Guideline
-            android:id="@+id/vertical_divider"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.CardView
+            android:id="@+id/budget_section_card_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5"/>
+            android:layout_margin="8dp"
+            app:cardCornerRadius="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/balance_cardview">
 
-        <TextView
-            android:id="@+id/savings_target_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="Savings Target"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/balance_cardview"/>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/target_section_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context="com.marklordan.airgead.ui.main.MainActivity">
 
-        <TextView
-            android:id="@+id/remaining_budget_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="16dp"
-            android:text="Remaining Budget"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/vertical_divider"
-            app:layout_constraintTop_toBottomOf="@+id/balance_cardview"/>
+                <android.support.constraint.Guideline
+                    android:id="@+id/vertical_divider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5"/>
 
-        <TextView
-            android:id="@+id/remaining_balance_value_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            app:layout_constraintEnd_toEndOf="@+id/remaining_budget_textview"
-            app:layout_constraintStart_toStartOf="@+id/remaining_budget_textview"
-            app:layout_constraintTop_toBottomOf="@+id/remaining_budget_textview"
-            tools:text="€1000"/>
+                <TextView
+                    android:id="@+id/savings_target_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:paddingTop="8dp"
+                    android:text="Savings Target"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
-        <TextView
-            android:id="@+id/savings_target_value_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            app:layout_constraintEnd_toEndOf="@+id/savings_target_textview"
-            app:layout_constraintStart_toStartOf="@+id/savings_target_textview"
-            app:layout_constraintTop_toBottomOf="@+id/savings_target_textview"
-            tools:text="€1000"/>
+                <TextView
+                    android:id="@+id/remaining_budget_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="16dp"
+                    android:paddingTop="8dp"
+                    android:text="Remaining Budget"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/vertical_divider"/>
+
+                <TextView
+                    android:id="@+id/remaining_balance_value_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:paddingBottom="8dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    app:layout_constraintEnd_toEndOf="@+id/remaining_budget_textview"
+                    app:layout_constraintStart_toStartOf="@+id/remaining_budget_textview"
+                    app:layout_constraintTop_toBottomOf="@+id/remaining_budget_textview"
+                    tools:text="€1000"/>
+
+                <TextView
+                    android:id="@+id/savings_target_value_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:paddingBottom="8dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    app:layout_constraintEnd_toEndOf="@+id/savings_target_textview"
+                    app:layout_constraintStart_toStartOf="@+id/savings_target_textview"
+                    app:layout_constraintTop_toBottomOf="@+id/savings_target_textview"
+                    tools:text="€1000"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
 
 
     </android.support.constraint.ConstraintLayout>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_transaction_fab"
@@ -197,9 +208,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="4dp"
-        app:elevation="6dp"
-        app:borderWidth="0dp"
         android:src="@drawable/ic_add"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
         app:layout_anchor="@id/transaction_list_cardview"
         app:layout_anchorGravity="bottom|right|end"/>
 

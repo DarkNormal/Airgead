@@ -19,6 +19,8 @@ import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.text.NumberFormat;
+
 import static org.mockito.Mockito.verify;
 
 /**
@@ -47,16 +49,18 @@ public class AccountDetailsPresenterTest {
     public void setupPresenter(){
         mDetailsPresenter = new AccountDetailsPresenterImpl(mDetailsView, mRepository);
         Mockito.when(mAccount.getBalance()).thenReturn(5000.0);
-        Mockito.when(mAccount.getSavingsTarget()).thenReturn(3000.0);
+        Mockito.when(mAccount.getSavingsTarget()).thenReturn(30);
+        Mockito.when(mAccount.getSavingsTargetAmount()).thenReturn(1500.0);
 
     }
 
     @Test
     public void displayAccountBalanceAndSavingsTargetOnLoad(){
         mDetailsPresenter.onResume();
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
         verify(mRepository).getAccountDetails(mGetDataCallbackArgumentCaptor.capture());
         mGetDataCallbackArgumentCaptor.getValue().onAccountLoaded(mAccount);
         verify(mDetailsView).displayBalance(mAccount.getBalance());
-        verify(mDetailsView).displaySavingsTarget(mAccount.getSavingsTarget());
+        verify(mDetailsView).displaySavingsTarget(nf.format(mAccount.getSavingsTargetAmount()));
     }
 }

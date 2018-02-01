@@ -8,4 +8,12 @@
     
     <color name="amount_expense">#FF1744</color>
     <color name="amount_income">#00E676</color>
+
+
+
+    <!-- Material 600 colors for transaction icons -->
+    <color name="transport_category">#1E88E5</color>
+    <color name="social_drinks_category">#5E35B1</color>
+    <color name="general_category">#FDD835</color>
+
 </resources>
