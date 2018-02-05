@@ -1,5 +1,6 @@
 package com.marklordan.airgead.ui.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 101);
             }
         });
 
@@ -194,6 +195,24 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     @Override
     public void onItemClicked(int itemPosition) {
         mPresenter.onItemClicked(itemPosition);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            Log.d(TAG, "onActivityResult from : RESULT OK");
+
+            final Snackbar snackbar = Snackbar.make(findViewById(R.id.main_coordinator_layout), "Transaction added", Snackbar.LENGTH_SHORT);
+            snackbar.setAction("DISMISS", new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    snackbar.dismiss();
+                }
+            });
+            snackbar.show();
+        }
+
+
     }
 }
 

@@ -106,6 +106,10 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
+            case android.R.id.home:
+                setResult(RESULT_CANCELED);
+                finish();
+                return false;
             case R.id.confirm_item:
                 addTransaction();
                 return true;
@@ -125,6 +129,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                 mCurrentTransaction.setDateOfTransaction(new Date());
             }
             insertTransactionToDb(mCurrentTransaction);
+            setResult(RESULT_OK);
             finish();
         }
         else{
