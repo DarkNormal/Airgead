@@ -85,6 +85,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             case DRINKS:
                 d = mContext.getDrawable(R.drawable.ic_social_drinks);
                 break;
+            case HOME:
+                d = mContext.getDrawable(R.drawable.ic_home);
+                break;
+            case FOOD:
+                d = mContext.getDrawable(R.drawable.ic_restaurant);
+                break;
             case GENERAL:
             default:
                 d = mContext.getDrawable(R.drawable.ic_shopping_basket);

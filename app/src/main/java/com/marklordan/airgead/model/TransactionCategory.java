@@ -8,7 +8,8 @@ public enum TransactionCategory {
     GENERAL("General"),
     FOOD("Food"),
     DRINKS("Drinks"),
-    TRANSPORT("Transportation");
+    TRANSPORT("Transportation"),
+    HOME("Home/Rent");
 
     private String mFriendlyName;
 
@@ -31,6 +32,8 @@ public enum TransactionCategory {
                 return DRINKS;
             case 3:
                 return TRANSPORT;
+            case 4:
+                return HOME;
         }
         return null;
     }

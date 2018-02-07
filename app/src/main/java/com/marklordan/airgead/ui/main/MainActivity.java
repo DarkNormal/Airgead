@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
             snackbar.setAction("DISMISS", new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    snackbar.dismiss();
+                    //no implementation needed here
                 }
             });
             snackbar.show();
