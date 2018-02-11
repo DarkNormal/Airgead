@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
@@ -69,7 +71,6 @@ public class MainPresenterTest {
                 new Expense(100, Calendar.getInstance().getTime(), null, "Test", 0)};
         mTransactions = new ArrayList<>(Arrays.asList(mRawTransactions));
     }
-
 
     @Test
     public void showProgressBarWhenLoadingTransactions(){
@@ -118,6 +119,16 @@ public class MainPresenterTest {
     }
 
     @Test
+    public void displaySampleTransactionIfNoTransactionsExist(){
+        //when there are no existing transactions in the database
+        //a sample transaction is added as an example to the user
+        mMainPresenter.onTransactionsLoaded(null);
+
+        verify(mMainView).hideProgress();
+        verify(mMainView).setItems(any(List.class));
+    }
+
+    @Test
     public void onItemSwipeToDeleteSendMessageToView(){
         int position = 0;
 
@@ -129,6 +140,10 @@ public class MainPresenterTest {
 
         //then
         verify(mMainView).showRemovedMessage("Transaction removed", mTransactions.get(position), position);
+
+        mMainPresenter.removeItemFromDb(position);
+        verify(mRepository).removeTransaction(position);
+
     }
 
 }

@@ -66,8 +66,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         Transaction transactionToBind = mTransactions.get(position);
 
         holder.mTransactionAmount.setText(mNumberFormat.format(transactionToBind.getAmount()));
-        //TODO bind transaction category once it is stored correctly in DB
-        //also bind transaction description / title
         holder.mTransactionDesc.setText(transactionToBind.getDescription());
         holder.mTransactionCategory.setText(transactionToBind.getCategory().toString());
         holder.mTransactionDate.setText(mDateFormat.format(transactionToBind.getDateOfTransaction()));

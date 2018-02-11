@@ -36,6 +36,13 @@ public class MainActivityTest {
     @Rule public IntentsTestRule<MainActivity> mActivityTestRule = new IntentsTestRule<MainActivity>(MainActivity.class);
 
     @Test
+    public void clickAddTransactionFABOpensAddTransactionUi(){
+        onView(withId(R.id.add_transaction_fab)).perform(click());
+
+        onView(withId(R.id.add_transaction_toolbar)).check(matches(isDisplayed()));
+    }
+
+    @Test
     public void onSwipeFirstItemInListRemovesItem(){
         //when
         onView(withId(R.id.recent_transaction_recyclerview)).perform(RecyclerViewActions.actionOnItemAtPosition(0, swipeLeft()));
