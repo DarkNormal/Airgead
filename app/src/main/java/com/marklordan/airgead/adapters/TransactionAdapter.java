@@ -66,8 +66,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         Transaction transactionToBind = mTransactions.get(position);
 
         holder.mTransactionAmount.setText(mNumberFormat.format(transactionToBind.getAmount()));
-        //TODO bind transaction category once it is stored correctly in DB
-        //also bind transaction description / title
         holder.mTransactionDesc.setText(transactionToBind.getDescription());
         holder.mTransactionCategory.setText(transactionToBind.getCategory().toString());
         holder.mTransactionDate.setText(mDateFormat.format(transactionToBind.getDateOfTransaction()));
@@ -84,6 +82,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 break;
             case DRINKS:
                 d = mContext.getDrawable(R.drawable.ic_social_drinks);
+                break;
+            case HOME:
+                d = mContext.getDrawable(R.drawable.ic_home);
+                break;
+            case FOOD:
+                d = mContext.getDrawable(R.drawable.ic_restaurant);
                 break;
             case GENERAL:
             default:

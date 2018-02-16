@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
@@ -36,6 +37,13 @@ public class MainActivityTest {
     @Rule public IntentsTestRule<MainActivity> mActivityTestRule = new IntentsTestRule<MainActivity>(MainActivity.class);
 
     @Test
+    public void clickAddTransactionFABOpensAddTransactionUi(){
+        onView(withId(R.id.add_transaction_fab)).perform(click());
+
+        onView(withId(R.id.add_transaction_toolbar)).check(matches(isDisplayed()));
+    }
+
+    @Test
     public void onSwipeFirstItemInListRemovesItem(){
         //when
         onView(withId(R.id.recent_transaction_recyclerview)).perform(RecyclerViewActions.actionOnItemAtPosition(0, swipeLeft()));
@@ -51,5 +59,22 @@ public class MainActivityTest {
 
         onView(withId(R.id.textview_account_balance)).perform(click());
         intended(hasComponent(hasClassName(AccountDetailsActivity.class.getName())));
+    }
+
+    @Test
+    public void addTransactionToList(){
+        /*  TODO delete all expenses before running this test
+            milliseconds of current time used to avoid issue of multiple matches with matches()
+            if the test runs too often, it will fail due to the item not being displayed
+            (too many items in recyclerview - ordering on query?)
+        */
+        String testExpenseText = "Test Expense " +System.currentTimeMillis();
+        onView(withId(R.id.add_transaction_fab)).perform(click());
+
+        onView(withId(R.id.transaction_value_input)).perform(typeText("5"));
+        onView(withId(R.id.transaction_desc_input)).perform(typeText(testExpenseText));
+        onView(withId(R.id.confirm_item)).perform(click());
+
+        onView(withText(testExpenseText)).check(matches(isDisplayed()));
     }
 }

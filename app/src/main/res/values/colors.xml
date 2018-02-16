@@ -15,5 +15,7 @@
     <color name="transport_category">#1E88E5</color>
     <color name="social_drinks_category">#5E35B1</color>
     <color name="general_category">#FDD835</color>
+    <color name="home_category">#009688</color>
+    <color name="food_category">#FB8C00</color>
 
 </resources>
