@@ -16,6 +16,8 @@ import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.db.LocalDataSource;
 
+import java.text.DecimalFormat;
+
 public class AccountDetailsActivity extends AppCompatActivity implements AccountDetailsView {
 
     private AccountDetailsPresenter mPresenter;
@@ -25,6 +27,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     private TextView mSavingsAmount, mSavingsTargetValue;
 
     private static final String TAG = AccountDetailsActivity.class.getSimpleName();
+    DecimalFormat mDecimalFormat = new DecimalFormat("#.00");
 
 
     @Override
@@ -95,7 +98,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     @Override
     public void displayBalance(double balance) {
-        mBalanceEditText.setText(String.valueOf(balance));
+        mBalanceEditText.setText(mDecimalFormat.format(balance));
     }
 
     @Override
