@@ -10,6 +10,7 @@ import com.marklordan.airgead.model.Transaction;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -86,7 +87,8 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
         if(mMainView != null){
             if(transactions == null) {
                 transactions = new ArrayList<>();
-                transactions.add(new Income(0, new Date(), null, "Sample Income"));
+                transactions.add(new Income(0, Calendar.getInstance().getTime(), null, "Sample Income"));
+
             }
             mTransactionList = transactions;
             //only set items in RecyclerView if there are some there, otherwise skip

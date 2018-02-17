@@ -17,6 +17,8 @@ public class Expense extends Transaction {
     public Expense(Parcel in){
         setAmount(in.readDouble());
         setDescription(in.readString());
+        setDateOfTransaction(in.readLong());
+        setCategory(TransactionCategory.fromInteger(in.readInt()));
     }
 
     @Override
@@ -62,6 +64,8 @@ public class Expense extends Transaction {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeDouble(getAmount());
         parcel.writeString(getDescription());
+        parcel.writeLong(getDateOfTransaction().getTime());
+        parcel.writeInt(TransactionCategory.fromCategory(getCategory()));
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

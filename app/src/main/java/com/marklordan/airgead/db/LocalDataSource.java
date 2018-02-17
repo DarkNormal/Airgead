@@ -117,7 +117,7 @@ public class LocalDataSource implements AirgeadDataSource{
             if(isAnExpense)
                 transaction = new Expense(id, amount, new Date(date), null, title, type);
             else
-                transaction = new Income(id, amount, new Date(date), null, title);
+                transaction = new Income(id, amount, new Date(date), null, title, type);
 
             transactionList.add(transaction);
         }

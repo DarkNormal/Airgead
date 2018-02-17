@@ -62,6 +62,10 @@ public abstract class Transaction implements Parcelable{
         mDateOfTransaction = dateOfTransaction;
     }
 
+    public void setDateOfTransaction(long dateOfTransaction) {
+        mDateOfTransaction = new Date(dateOfTransaction);
+    }
+
     public Location getLocationOfTransaction() {
         return mLocationOfTransaction;
     }
