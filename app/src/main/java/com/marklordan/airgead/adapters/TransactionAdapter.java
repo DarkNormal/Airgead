@@ -43,9 +43,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     public void removeItem(int position){
-        //TODO does not remove transaction from DB, just from Adapter list
         mTransactions.remove(position);
-        notifyItemRemoved(position);
+        //notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
     public void restoreItem(Transaction transaction, int position){

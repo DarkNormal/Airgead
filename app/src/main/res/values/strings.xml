@@ -37,4 +37,5 @@
     <string name="transaction_description">%1$s Description</string>
     <string name="transaction_removed">Transaction removed</string>
     <string name="recent_transactions">Recent Transactions</string>
+    <string name="activity_edit_transaction_details">Edit Transaction</string>
 </resources>
