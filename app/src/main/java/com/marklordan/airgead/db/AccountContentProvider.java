@@ -139,7 +139,18 @@ public class AccountContentProvider extends ContentProvider {
                       String[] selectionArgs) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-        int count = db.update(AirgeadContract.AccountTable.TABLE_NAME, values, selection, selectionArgs);
+        int match = sUriMatcher.match(uri);
+        int count;
+        switch (match){
+            case ACCOUNT:
+                count = db.update(AirgeadContract.AccountTable.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case TRANSACTION:
+                count = db.update(AirgeadContract.TransactionTable.TABLE_NAME, values, selection, selectionArgs);
+                break;
+             default:
+                count = -1;
+        }
         Log.d(TAG, "update: rows updated:" + count);
         return count;
     }

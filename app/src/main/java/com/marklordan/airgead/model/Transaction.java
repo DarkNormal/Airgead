@@ -46,6 +46,10 @@ public abstract class Transaction implements Parcelable{
         return mId;
     }
 
+    public void setId(int id){
+        mId = id;
+    }
+
     public double getAmount() {
         return mAmount;
     }

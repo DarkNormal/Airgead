@@ -95,6 +95,13 @@ public class LocalDataSource implements AirgeadDataSource{
         mContentResolver.update(AirgeadContract.AccountTable.CONTENT_URI,values, AirgeadContract.AccountTable.Cols.ACCOUNT_ID + "= ?", new String[]{"1"});
     }
 
+    @Override
+    public void updateTransaction(ContentValues values) {
+        mContentResolver.update(AirgeadContract.TransactionTable.CONTENT_URI, values,
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_ID + "= ?",
+                new String[]{String.valueOf((int) values.get(AirgeadContract.TransactionTable.Cols.TRANSACTION_ID))});
+    }
+
 
     private List<Transaction> createArrayList(Cursor cursor) {
         ArrayList<Transaction> transactionList = new ArrayList<>();

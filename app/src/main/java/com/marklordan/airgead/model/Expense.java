@@ -15,6 +15,7 @@ public class Expense extends Transaction {
     public Expense(){}
 
     public Expense(Parcel in){
+        setId(in.readInt());
         setAmount(in.readDouble());
         setDescription(in.readString());
         setDateOfTransaction(in.readLong());
@@ -24,6 +25,7 @@ public class Expense extends Transaction {
     @Override
     public ContentValues transactionToContentValues() {
         ContentValues values = new ContentValues();
+        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_ID, getId());
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT, getAmount());
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE, getDescription());
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE, true); //true if expense, false if income
@@ -40,7 +42,12 @@ public class Expense extends Transaction {
 
     @Override
     public void setAmount(double amount) {
-        super.setAmount(amount * -1);
+        if(amount < 0){
+            super.setAmount(amount);
+        }
+        else {
+            super.setAmount(amount * -1);
+        }
     }
 
     public Expense(int id, double amount, Date dateOfTransaction, Location locationOfTransaction, String title, int type) {
@@ -62,6 +69,7 @@ public class Expense extends Transaction {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(getId());
         parcel.writeDouble(getAmount());
         parcel.writeString(getDescription());
         parcel.writeLong(getDateOfTransaction().getTime());

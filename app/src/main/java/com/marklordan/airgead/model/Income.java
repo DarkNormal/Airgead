@@ -29,6 +29,7 @@ public class Income extends Transaction {
     }
 
     public Income(Parcel in){
+        setId(in.readInt());
         setAmount(in.readDouble());
         setDescription(in.readString());
         setDateOfTransaction(in.readLong());
@@ -38,6 +39,7 @@ public class Income extends Transaction {
     @Override
     public ContentValues transactionToContentValues() {
         ContentValues values = new ContentValues();
+        values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_ID, getId());
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT, getAmount());
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TITLE, getDescription());
         values.put(AirgeadContract.TransactionTable.Cols.TRANSACTION_TYPE, false); //true if expense, false if income
@@ -58,6 +60,7 @@ public class Income extends Transaction {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(getId());
         parcel.writeDouble(getAmount());
         parcel.writeString(getDescription());
         parcel.writeLong(getDateOfTransaction().getTime());

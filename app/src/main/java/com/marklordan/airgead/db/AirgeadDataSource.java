@@ -28,4 +28,6 @@ public interface AirgeadDataSource {
     void removeTransaction(int transactionId);
 
     void updateAccountDetails(ContentValues values);
+
+    void updateTransaction(ContentValues values);
 }

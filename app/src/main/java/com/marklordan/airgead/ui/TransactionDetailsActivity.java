@@ -5,12 +5,16 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.marklordan.airgead.R;
+import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.model.Transaction;
 import com.marklordan.airgead.model.TransactionCategory;
 
@@ -76,6 +80,28 @@ public class TransactionDetailsActivity extends AppCompatActivity {
         mDateTextView.setText(mDateFormat.format(mTransaction.getDateOfTransaction()));
         int cat = TransactionCategory.fromCategory(mTransaction.getCategory());
         mCategorySpinner.setSelection(cat, true);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_transaction, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.confirm_item:
+                //TODO update item
+                getContentResolver().update(AirgeadContract.TransactionTable.CONTENT_URI,
+                        mTransaction.transactionToContentValues(),
+                        AirgeadContract.TransactionTable.Cols._ID + "= ?",
+                        new String[]{String.valueOf(mTransaction.getId())});
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 }
