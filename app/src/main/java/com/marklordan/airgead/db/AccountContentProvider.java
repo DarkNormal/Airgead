@@ -146,6 +146,7 @@ public class AccountContentProvider extends ContentProvider {
                 count = db.update(AirgeadContract.AccountTable.TABLE_NAME, values, selection, selectionArgs);
                 break;
             case TRANSACTION:
+                //TODO update transaction does not update account balance
                 count = db.update(AirgeadContract.TransactionTable.TABLE_NAME, values, selection, selectionArgs);
                 break;
              default:

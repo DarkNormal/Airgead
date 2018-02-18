@@ -1,6 +1,5 @@
 package com.marklordan.airgead.ui.account_details;
 
-import android.content.ContentValues;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.marklordan.airgead.R;
-import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.db.LocalDataSource;
 
@@ -22,7 +20,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     private AccountDetailsPresenter mPresenter;
 
-    private EditText mBalanceEditText;
+    private EditText mBalanceEditText, mMonthlySalaryEditText;
     private SeekBar mSavingsTargetSeekBar;
     private TextView mSavingsAmount, mSavingsTargetValue;
 
@@ -40,6 +38,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         mBalanceEditText = (EditText) findViewById(R.id.balance_edit_text);
         mSavingsAmount = (TextView) findViewById(R.id.savings_target_amount);
         mSavingsTargetValue = (TextView) findViewById(R.id.savings_target_value);
+        mMonthlySalaryEditText = (EditText) findViewById(R.id.monthly_salary_edit_text);
 
         mSavingsTargetSeekBar = (SeekBar) findViewById(R.id.savingsTargetSeekBar);
 
@@ -108,8 +107,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
 
     private void updateAccountDetails(){
-        //TODO send this to the presenter task
-        mPresenter.updateAccountDetails(Double.parseDouble(mBalanceEditText.getText().toString()));
+        mPresenter.updateAccountDetails(Double.parseDouble(mBalanceEditText.getText().toString()), Double.parseDouble(mMonthlySalaryEditText.getText().toString()));
         finish();
     }
 

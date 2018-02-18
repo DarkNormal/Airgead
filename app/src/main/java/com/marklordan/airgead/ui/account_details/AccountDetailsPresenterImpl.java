@@ -54,7 +54,7 @@ public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, Air
     }
 
     @Override
-    public void updateAccountDetails(double currentBalance) {
+    public void updateAccountDetails(double currentBalance, double monthlySalary) {
         ContentValues values = new ContentValues();
         values.put(AirgeadContract.AccountTable.Cols._ID, 1);
         values.put(AirgeadContract.AccountTable.Cols.BALANCE, currentBalance);

@@ -79,4 +79,28 @@
         app:layout_constraintStart_toStartOf="@+id/savingsTargetSeekBar"
         app:layout_constraintTop_toBottomOf="@+id/savingsTargetSeekBar"/>
 
+
+    <TextView
+        android:id="@+id/monthly_salary_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Monthly Salary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="@+id/savingsTargetSeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/savings_target_amount"/>
+
+    <EditText
+        android:id="@+id/monthly_salary_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:hint="e.g. 1400"
+        android:textAlignment="textEnd"
+        android:inputType="number|numberDecimal|numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/monthly_salary_label"
+        app:layout_constraintTop_toTopOf="@+id/monthly_salary_label"/>
+
 </android.support.constraint.ConstraintLayout>

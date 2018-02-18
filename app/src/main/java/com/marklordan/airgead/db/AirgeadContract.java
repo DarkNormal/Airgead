@@ -23,7 +23,8 @@ public class AirgeadContract {
 
         public static final class Cols implements BaseColumns{
             public static final String ACCOUNT_ID = "accountId";
-            public static final String BALANCE = "balance";
+            public static final String BALANCE = "total_balance";
+            public static final String PERIOD_BALANCE = "period_balance";
             public static final String SAVINGS_TARGET = "target";
             public static final String SAVINGS_TARGET_AMT = "target_amt";
         }

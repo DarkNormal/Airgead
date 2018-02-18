@@ -8,6 +8,7 @@ public class AirgeadAccount {
     private List<Transaction> mTransactions;
     private int mSavingsTarget;
     private double mSavingsTargetAmount;
+    private double mMonthlyBalance;
     private Currency mChosenCurrency;
     private boolean mIsNewAccount;
 
@@ -16,10 +17,11 @@ public class AirgeadAccount {
         mIsNewAccount = true;
     }
 
-    public AirgeadAccount(double balance, int savingsTarget, double savingsTargetAmount) {
+    public AirgeadAccount(double balance,double monthlyBalance, int savingsTarget, double savingsTargetAmount) {
         this();
         mBalance = balance;
         mSavingsTarget = savingsTarget;
+        mMonthlyBalance = monthlyBalance;
         mSavingsTargetAmount = savingsTargetAmount;
 
     }

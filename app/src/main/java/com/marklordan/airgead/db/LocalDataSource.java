@@ -47,11 +47,15 @@ public class LocalDataSource implements AirgeadDataSource{
         else {
             try {
                 int balanceIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.BALANCE);
+                int monthlyIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.PERIOD_BALANCE);
                 int savingsTargetIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET);
                 int savingsTargetAmountIndex = cursor.getColumnIndex(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET_AMT);
 
                 cursor.moveToNext();
-                account = new AirgeadAccount(cursor.getDouble(balanceIndex), cursor.getInt(savingsTargetIndex), cursor.getDouble(savingsTargetAmountIndex));
+                account = new AirgeadAccount(cursor.getDouble(balanceIndex),
+                        cursor.getDouble(monthlyIndex),
+                        cursor.getInt(savingsTargetIndex),
+                        cursor.getDouble(savingsTargetAmountIndex));
 
             } finally {
                 cursor.close();
