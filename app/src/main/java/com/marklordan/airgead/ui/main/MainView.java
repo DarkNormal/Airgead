@@ -17,7 +17,7 @@ public interface MainView {
 
     void hideProgress();
 
-    void displayBalance(String balanceAmount);
+    void displayBalance(String balanceAmount, String monthlyBalance);
 
     void displaySavingsTarget(String savingsTargetAmount);
 

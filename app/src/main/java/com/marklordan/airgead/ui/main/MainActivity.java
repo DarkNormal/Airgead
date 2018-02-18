@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private FloatingActionButton mAddTransactionBtn;
-    private TextView mAccountBalanceTextView, mSavingsTargetTextView, mRemainingBudgetTextView;
+    private TextView mAccountBalanceTextView, mSavingsTargetTextView, mRemainingBudgetTextView, mMonthlyBalanceTextView;
     private CardView mAccountBalanceCardView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         });
 
         mAccountBalanceTextView = (TextView) findViewById(R.id.textview_account_balance);
+        mMonthlyBalanceTextView = (TextView) findViewById(R.id.textview_account_monthly_balance);
 
         mAccountBalanceCardView = (CardView) findViewById(R.id.balance_cardview);
         mAccountBalanceCardView.setOnClickListener(new View.OnClickListener() {
@@ -160,8 +161,9 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     }
 
     @Override
-    public void displayBalance(String balanceAmount) {
+    public void displayBalance(String balanceAmount, String monthlyBalance) {
         mAccountBalanceTextView.setText(balanceAmount);
+        mMonthlyBalanceTextView.setText(monthlyBalance);
     }
 
     @Override

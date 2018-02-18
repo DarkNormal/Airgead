@@ -33,6 +33,13 @@ public class AirgeadAccount {
     public void setBalance(double balance) {
         mBalance = balance;
     }
+    public double getMonthlyBalance() {
+        return mMonthlyBalance;
+    }
+
+    public void setMonthlyBalance(double monthlyBalance) {
+        mMonthlyBalance = monthlyBalance;
+    }
 
     public List<Transaction> getTransactions() {
         return mTransactions;
