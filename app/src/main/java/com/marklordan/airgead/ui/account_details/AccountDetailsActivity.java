@@ -25,7 +25,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     private TextView mSavingsAmount, mSavingsTargetValue;
 
     private static final String TAG = AccountDetailsActivity.class.getSimpleName();
-    DecimalFormat mDecimalFormat = new DecimalFormat("#.00");
+    DecimalFormat mDecimalFormat = new DecimalFormat("#0.00");
 
 
     @Override
@@ -98,6 +98,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @Override
     public void displayBalance(double balance) {
         mBalanceEditText.setText(mDecimalFormat.format(balance));
+        mBalanceEditText.setSelection(mBalanceEditText.getText().length());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.marklordan.airgead.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AirgeadAccount {
@@ -86,6 +87,12 @@ public class AirgeadAccount {
 
     public double getRemainingBudget(){
         return getBalance() - getSavingsTargetAmount();
+    }
+
+    public double getRemainingBudgetPerDay(){
+        Calendar cal = Calendar.getInstance();
+        int daysRemainingInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH) - cal.get(Calendar.DAY_OF_MONTH);
+        return  getRemainingBudget() / daysRemainingInMonth;
     }
     
     public Transaction getLatestTransactionAdded() {

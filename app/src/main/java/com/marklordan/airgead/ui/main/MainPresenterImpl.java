@@ -78,7 +78,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
             mMainView.setAccount(account);
             mMainView.displayBalance(mNumberFormat.format(account.getBalance()), mNumberFormat.format(account.getMonthlyBalance()));
             mMainView.displaySavingsTarget(account.getSavingsTarget() + "%");
-            mMainView.displayRemainingBudget(mNumberFormat.format(account.getRemainingBudget()));
+            mMainView.displayRemainingBudget(mNumberFormat.format(account.getRemainingBudgetPerDay()) + " / day");
         }
     }
 
