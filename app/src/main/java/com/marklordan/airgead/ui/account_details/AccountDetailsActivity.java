@@ -20,7 +20,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     private AccountDetailsPresenter mPresenter;
 
-    private EditText mBalanceEditText, mMonthlySalaryEditText;
+    private EditText mBalanceEditText;
     private SeekBar mSavingsTargetSeekBar;
     private TextView mSavingsAmount, mSavingsTargetValue;
 
@@ -38,7 +38,6 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         mBalanceEditText = (EditText) findViewById(R.id.balance_edit_text);
         mSavingsAmount = (TextView) findViewById(R.id.savings_target_amount);
         mSavingsTargetValue = (TextView) findViewById(R.id.savings_target_value);
-        mMonthlySalaryEditText = (EditText) findViewById(R.id.monthly_salary_edit_text);
 
         mSavingsTargetSeekBar = (SeekBar) findViewById(R.id.savingsTargetSeekBar);
 
@@ -108,7 +107,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
 
     private void updateAccountDetails(){
-        mPresenter.updateAccountDetails(Double.parseDouble(mBalanceEditText.getText().toString()), Double.parseDouble(mMonthlySalaryEditText.getText().toString()));
+        mPresenter.updateAccountDetails(Double.parseDouble(mBalanceEditText.getText().toString()));
         finish();
     }
 
