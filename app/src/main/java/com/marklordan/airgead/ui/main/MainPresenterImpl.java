@@ -91,7 +91,6 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
 
             }
             mTransactionList = transactions;
-            //only set items in RecyclerView if there are some there, otherwise skip
             mMainView.setItems(transactions);
             mMainView.hideProgress();
         }
