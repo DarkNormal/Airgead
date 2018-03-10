@@ -16,5 +16,5 @@ public interface AccountDetailsPresenter {
 
     void calculateSavingsTarget(int percentage);
 
-    void updateAccountDetails(double currentBalance, double monthlySalary);
+    void updateAccountDetails(double currentBalance);
 }
