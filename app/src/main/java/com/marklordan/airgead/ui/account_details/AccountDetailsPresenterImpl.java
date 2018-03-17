@@ -75,4 +75,9 @@ public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, Air
     public void onTransactionsLoaded(@Nullable List<Transaction> transactions) {
         //not used in this presenter
     }
+
+    @Override
+    public void onMonthlyTransactionsLoaded(@Nullable List<Transaction> transactions) {
+
+    }
 }

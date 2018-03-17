@@ -12,6 +12,8 @@ import android.util.Log;
 
 import com.marklordan.airgead.model.AirgeadAccount;
 
+import java.util.Calendar;
+
 public class AccountContentProvider extends ContentProvider {
 
     private static AccountDbHelper mDbHelper;
@@ -81,7 +83,14 @@ public class AccountContentProvider extends ContentProvider {
             case TRANSACTION:
                 id = db.insert(AirgeadContract.TransactionTable.TABLE_NAME, null, values);
                 double transactionAmount = values.getAsDouble(AirgeadContract.TransactionTable.Cols.TRANSACTION_AMOUNT);
-                applyTransactionToBalance(transactionAmount);
+                long dateOfTransaction = values.getAsLong(AirgeadContract.TransactionTable.Cols.TRANSACTION_DATE);
+                long currentTime = Calendar.getInstance().getTimeInMillis();
+                if(dateOfTransaction <= currentTime) {
+                    applyTransactionToBalance(transactionAmount);
+                }
+                else{
+                    //TODO upcoming expenses
+                }
 
         }
 

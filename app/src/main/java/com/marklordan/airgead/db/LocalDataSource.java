@@ -106,6 +106,29 @@ public class LocalDataSource implements AirgeadDataSource{
                 new String[]{String.valueOf((int) values.get(AirgeadContract.TransactionTable.Cols.TRANSACTION_ID))});
     }
 
+    @Override
+    public void getTransactionsForMonth(int month, GetDataCallback callback) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH,1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        long startOfMonth = cal.getTimeInMillis();
+        cal.set(Calendar.DAY_OF_MONTH,cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
+        long endOfMonth = cal.getTimeInMillis();
+        Cursor cursor = mContentResolver.query(AirgeadContract.TransactionTable.CONTENT_URI,
+                null,
+                AirgeadContract.TransactionTable.Cols.TRANSACTION_DATE + " > ? AND " + AirgeadContract.TransactionTable.Cols.TRANSACTION_DATE + " < ?",
+                new String[]{String.valueOf(startOfMonth), String.valueOf(endOfMonth)},
+                null);
+
+        callback.onMonthlyTransactionsLoaded(createArrayList(cursor));
+    }
+
 
     private List<Transaction> createArrayList(Cursor cursor) {
         ArrayList<Transaction> transactionList = new ArrayList<>();
@@ -121,7 +144,7 @@ public class LocalDataSource implements AirgeadDataSource{
             double amount = cursor.getDouble(amountIndex);
             int id = cursor.getInt(idIndex);
             String title = cursor.getString(titleIndex);
-            long date = cursor.getLong(dateIndex) * 1000;
+            long date = cursor.getLong(dateIndex);
             int type = cursor.getInt(typeIndex);
             isAnExpense = amount < 0;
             Transaction transaction;

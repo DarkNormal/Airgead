@@ -161,9 +161,14 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     }
 
     @Override
-    public void displayBalance(String balanceAmount, String monthlyBalance) {
+    public void displayBalance(String balanceAmount) {
         mAccountBalanceTextView.setText(balanceAmount);
-        mMonthlyBalanceTextView.setText(monthlyBalance);
+
+    }
+
+    @Override
+    public void displayMonthlyBalance(String balanceAmount) {
+        mMonthlyBalanceTextView.setText(balanceAmount);
     }
 
     @Override

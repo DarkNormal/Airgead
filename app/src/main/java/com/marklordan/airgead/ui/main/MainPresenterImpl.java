@@ -1,5 +1,6 @@
 package com.marklordan.airgead.ui.main;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.marklordan.airgead.db.AirgeadDataSource;
@@ -40,6 +41,10 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
 
         mRepository.getAccountDetails(this);
         mRepository.getTransactions(this);
+
+        //get transactions for the current month
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        mRepository.getTransactionsForMonth(month, this);
     }
 
     @Override
@@ -76,9 +81,10 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     public void onAccountLoaded(AirgeadAccount account) {
         if(mMainView != null) {
             mMainView.setAccount(account);
-            mMainView.displayBalance(mNumberFormat.format(account.getBalance()), mNumberFormat.format(account.getMonthlyBalance()));
+            mMainView.displayBalance(mNumberFormat.format(account.getBalance()));
             mMainView.displaySavingsTarget(account.getSavingsTarget() + "%");
             mMainView.displayRemainingBudget(mNumberFormat.format(account.getRemainingBudgetPerDay()) + " / day");
+
         }
     }
 
@@ -93,6 +99,20 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
             mTransactionList = transactions;
             mMainView.setItems(transactions);
             mMainView.hideProgress();
+        }
+    }
+
+    @Override
+    public void onMonthlyTransactionsLoaded(@Nullable List<Transaction> transactions) {
+        if(mMainView != null){
+            if(transactions == null) {
+                return;
+            }
+            double monthlyTotal = 0;
+            for (Transaction t : transactions){
+                monthlyTotal += t.getAmount();
+            }
+            mMainView.displayMonthlyBalance(mNumberFormat.format(monthlyTotal));
         }
     }
 }
