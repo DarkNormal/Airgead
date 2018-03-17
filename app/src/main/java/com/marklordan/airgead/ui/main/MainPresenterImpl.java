@@ -26,6 +26,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     private List<Transaction> mTransactionList;
     private static final String TAG = MainPresenterImpl.class.getSimpleName();
     private NumberFormat mNumberFormat = NumberFormat.getCurrencyInstance();
+    private AirgeadAccount mAccount;
 
     public MainPresenterImpl(MainView mainView, AirgeadRepository repository) {
         this.mMainView = mainView;
@@ -79,10 +80,11 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
 
     @Override
     public void onAccountLoaded(AirgeadAccount account) {
+        mAccount = account;
         if(mMainView != null) {
             mMainView.displayBalance(mNumberFormat.format(account.getBalance()));
             mMainView.displaySavingsTarget(account.getSavingsTarget() + "%");
-            mMainView.displayRemainingBudget(mNumberFormat.format(account.getRemainingBudgetPerDay()) + " / day");
+
 
         }
     }
@@ -113,6 +115,8 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
             }
 
             mMainView.displayMonthlyBalance(mNumberFormat.format(monthlyTotal));
+            mAccount.setMonthlyBalance(monthlyTotal);
+            mMainView.displayRemainingBudget(mNumberFormat.format(mAccount.getRemainingBudgetPerDay()) + " / day");
         }
     }
 }

@@ -86,7 +86,7 @@ public class AirgeadAccount {
     }
 
     public double getRemainingBudget(){
-        return getBalance() - getSavingsTargetAmount();
+        return getMonthlyBalance() - getSavingsTargetAmount();
     }
 
     public double getRemainingBudgetPerDay(){
