@@ -23,6 +23,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     private EditText mBalanceEditText;
     private SeekBar mSavingsTargetSeekBar;
     private TextView mSavingsAmount, mSavingsTargetValue;
+    private String monthlyBalance;
 
     private static final String TAG = AccountDetailsActivity.class.getSimpleName();
     DecimalFormat mDecimalFormat = new DecimalFormat("#0.00");
@@ -91,7 +92,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     @Override
     public void displaySavingsTarget(String savingsTarget) {
-        mSavingsAmount.setText("Target amount to save: " + savingsTarget);
+        mSavingsAmount.setText("Target amount to save: " + savingsTarget + " of " + monthlyBalance );
     }
 
     @Override
@@ -103,6 +104,11 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @Override
     public void displaySavingsTargetPercentage(double savingsTargetPercentage) {
         updateSavingsTargetPercentage(savingsTargetPercentage);
+    }
+
+    @Override
+    public void setMonthlyBalance(String format) {
+        monthlyBalance = format;
     }
 
 

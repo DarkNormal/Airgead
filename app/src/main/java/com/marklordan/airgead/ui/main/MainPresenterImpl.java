@@ -80,7 +80,6 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     @Override
     public void onAccountLoaded(AirgeadAccount account) {
         if(mMainView != null) {
-            mMainView.setAccount(account);
             mMainView.displayBalance(mNumberFormat.format(account.getBalance()));
             mMainView.displaySavingsTarget(account.getSavingsTarget() + "%");
             mMainView.displayRemainingBudget(mNumberFormat.format(account.getRemainingBudgetPerDay()) + " / day");
@@ -112,6 +111,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
             for (Transaction t : transactions){
                 monthlyTotal += t.getAmount();
             }
+
             mMainView.displayMonthlyBalance(mNumberFormat.format(monthlyTotal));
         }
     }

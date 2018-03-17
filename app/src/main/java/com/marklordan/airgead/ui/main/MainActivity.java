@@ -188,11 +188,6 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     }
 
     @Override
-    public void setAccount(AirgeadAccount account) {
-        //mAccount = account;
-    }
-
-    @Override
     public void showTransactionDetails(Transaction t) {
         Intent i = new Intent(this, TransactionDetailsActivity.class);
         i.putExtra("TRANSACTION", t);
