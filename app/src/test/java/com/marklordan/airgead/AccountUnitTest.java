@@ -26,7 +26,7 @@ public class AccountUnitTest {
 
     @Before
     public void setupBasicAccount(){
-        account = new AirgeadAccount(0,0, 0);
+        account = new AirgeadAccount(0,0, 0, 0);
     }
     @Test
     public void createAccountWithSelectedCurrency(){
