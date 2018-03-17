@@ -1,6 +1,5 @@
 package com.marklordan.airgead.ui.account_details;
 
-import android.content.ContentValues;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,9 +11,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.marklordan.airgead.R;
-import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.db.LocalDataSource;
+
+import java.text.DecimalFormat;
 
 public class AccountDetailsActivity extends AppCompatActivity implements AccountDetailsView {
 
@@ -23,8 +23,10 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     private EditText mBalanceEditText;
     private SeekBar mSavingsTargetSeekBar;
     private TextView mSavingsAmount, mSavingsTargetValue;
+    private String monthlyBalance;
 
     private static final String TAG = AccountDetailsActivity.class.getSimpleName();
+    DecimalFormat mDecimalFormat = new DecimalFormat("#0.00");
 
 
     @Override
@@ -90,12 +92,13 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     @Override
     public void displaySavingsTarget(String savingsTarget) {
-        mSavingsAmount.setText("Target amount to save: " + savingsTarget);
+        mSavingsAmount.setText("Target amount to save: " + savingsTarget + " of " + monthlyBalance );
     }
 
     @Override
     public void displayBalance(double balance) {
-        mBalanceEditText.setText(String.valueOf(balance));
+        mBalanceEditText.setText(mDecimalFormat.format(balance));
+        mBalanceEditText.setSelection(mBalanceEditText.getText().length());
     }
 
     @Override
@@ -103,9 +106,13 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         updateSavingsTargetPercentage(savingsTargetPercentage);
     }
 
+    @Override
+    public void setMonthlyBalance(String format) {
+        monthlyBalance = format;
+    }
+
 
     private void updateAccountDetails(){
-        //TODO send this to the presenter task
         mPresenter.updateAccountDetails(Double.parseDouble(mBalanceEditText.getText().toString()));
         finish();
     }

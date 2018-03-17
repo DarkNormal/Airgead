@@ -78,5 +78,4 @@
         app:layout_constraintEnd_toEndOf="@+id/savingsTargetSeekBar"
         app:layout_constraintStart_toStartOf="@+id/savingsTargetSeekBar"
         app:layout_constraintTop_toBottomOf="@+id/savingsTargetSeekBar"/>
-
 </android.support.constraint.ConstraintLayout>

@@ -10,6 +10,7 @@ import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Transaction;
 
 import java.text.NumberFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, AirgeadDataSource.GetDataCallback {
@@ -27,6 +28,7 @@ public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, Air
     @Override
     public void onResume() {
         mRepository.getAccountDetails(this);
+        mRepository.getTransactionsForMonth(Calendar.getInstance().get(Calendar.MONTH), this);
     }
 
     @Override
@@ -46,7 +48,7 @@ public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, Air
 
     @Override
     public void calculateSavingsTarget(int percentage) {
-        double savingsTargetAmount = ((mAccount.getBalance() / 10) * percentage);
+        double savingsTargetAmount = ((mAccount.getMonthlyBalance() / 10) * percentage);
         mAccount.setSavingsTargetAmount(savingsTargetAmount);
         mAccount.setSavingsTarget(percentage * 10);
         mDetailsView.displaySavingsTarget(nf.format(savingsTargetAmount));
@@ -74,5 +76,21 @@ public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, Air
     @Override
     public void onTransactionsLoaded(@Nullable List<Transaction> transactions) {
         //not used in this presenter
+    }
+
+    @Override
+    public void onMonthlyTransactionsLoaded(@Nullable List<Transaction> transactions) {
+        if(mDetailsView != null){
+            if(transactions == null) {
+                return;
+            }
+            double monthlyTotal = 0;
+            for (Transaction t : transactions){
+                monthlyTotal += t.getAmount();
+            }
+
+            mAccount.setMonthlyBalance(monthlyTotal);
+            mDetailsView.setMonthlyBalance(nf.format(monthlyTotal));
+        }
     }
 }

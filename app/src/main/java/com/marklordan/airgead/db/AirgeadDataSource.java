@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.marklordan.airgead.model.AirgeadAccount;
 import com.marklordan.airgead.model.Transaction;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public interface AirgeadDataSource {
 
         void onTransactionsLoaded(@Nullable List<Transaction> transactions);
 
+        void onMonthlyTransactionsLoaded(@Nullable List<Transaction> transactions);
+
     }
 
     void getAccountDetails(GetDataCallback callback);
@@ -28,4 +31,8 @@ public interface AirgeadDataSource {
     void removeTransaction(int transactionId);
 
     void updateAccountDetails(ContentValues values);
+
+    void updateTransaction(ContentValues values);
+
+    void getTransactionsForMonth(int month, GetDataCallback callback);
 }

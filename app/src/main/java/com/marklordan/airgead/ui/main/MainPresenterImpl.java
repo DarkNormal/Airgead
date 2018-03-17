@@ -1,5 +1,6 @@
 package com.marklordan.airgead.ui.main;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.marklordan.airgead.db.AirgeadDataSource;
@@ -10,6 +11,7 @@ import com.marklordan.airgead.model.Transaction;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
     private List<Transaction> mTransactionList;
     private static final String TAG = MainPresenterImpl.class.getSimpleName();
     private NumberFormat mNumberFormat = NumberFormat.getCurrencyInstance();
+    private AirgeadAccount mAccount;
 
     public MainPresenterImpl(MainView mainView, AirgeadRepository repository) {
         this.mMainView = mainView;
@@ -39,6 +42,10 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
 
         mRepository.getAccountDetails(this);
         mRepository.getTransactions(this);
+
+        //get transactions for the current month
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        mRepository.getTransactionsForMonth(month, this);
     }
 
     @Override
@@ -73,11 +80,12 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
 
     @Override
     public void onAccountLoaded(AirgeadAccount account) {
+        mAccount = account;
         if(mMainView != null) {
-            mMainView.setAccount(account);
             mMainView.displayBalance(mNumberFormat.format(account.getBalance()));
             mMainView.displaySavingsTarget(account.getSavingsTarget() + "%");
-            mMainView.displayRemainingBudget(mNumberFormat.format(account.getRemainingBudget()));
+
+
         }
     }
 
@@ -86,12 +94,29 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
         if(mMainView != null){
             if(transactions == null) {
                 transactions = new ArrayList<>();
-                transactions.add(new Income(0, new Date(), null, "Sample Income"));
+                transactions.add(new Income(0, Calendar.getInstance().getTime(), null, "Sample Income"));
+
             }
             mTransactionList = transactions;
-            //only set items in RecyclerView if there are some there, otherwise skip
             mMainView.setItems(transactions);
             mMainView.hideProgress();
+        }
+    }
+
+    @Override
+    public void onMonthlyTransactionsLoaded(@Nullable List<Transaction> transactions) {
+        if(mMainView != null){
+            if(transactions == null) {
+                return;
+            }
+            double monthlyTotal = 0;
+            for (Transaction t : transactions){
+                monthlyTotal += t.getAmount();
+            }
+
+            mMainView.displayMonthlyBalance(mNumberFormat.format(monthlyTotal));
+            mAccount.setMonthlyBalance(monthlyTotal);
+            mMainView.displayRemainingBudget(mNumberFormat.format(mAccount.getRemainingBudgetPerDay()) + " / day");
         }
     }
 }

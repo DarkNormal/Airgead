@@ -19,13 +19,13 @@ public interface MainView {
 
     void displayBalance(String balanceAmount);
 
+    void displayMonthlyBalance(String balanceAmount);
+
     void displaySavingsTarget(String savingsTargetAmount);
 
     void displayRemainingBudget(String remainingBudget);
 
     void showAccountDetails();
-
-    void setAccount(AirgeadAccount account);
 
     void showTransactionDetails(Transaction t);
 }

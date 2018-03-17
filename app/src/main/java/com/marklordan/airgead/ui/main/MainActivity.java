@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private FloatingActionButton mAddTransactionBtn;
-    private TextView mAccountBalanceTextView, mSavingsTargetTextView, mRemainingBudgetTextView;
+    private TextView mAccountBalanceTextView, mSavingsTargetTextView, mRemainingBudgetTextView, mMonthlyBalanceTextView;
     private CardView mAccountBalanceCardView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
         });
 
         mAccountBalanceTextView = (TextView) findViewById(R.id.textview_account_balance);
+        mMonthlyBalanceTextView = (TextView) findViewById(R.id.textview_account_monthly_balance);
 
         mAccountBalanceCardView = (CardView) findViewById(R.id.balance_cardview);
         mAccountBalanceCardView.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +163,12 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     @Override
     public void displayBalance(String balanceAmount) {
         mAccountBalanceTextView.setText(balanceAmount);
+
+    }
+
+    @Override
+    public void displayMonthlyBalance(String balanceAmount) {
+        mMonthlyBalanceTextView.setText(balanceAmount);
     }
 
     @Override
@@ -178,11 +185,6 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     public void showAccountDetails() {
         Intent intent = new Intent(this, AccountDetailsActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public void setAccount(AirgeadAccount account) {
-        //mAccount = account;
     }
 
     @Override

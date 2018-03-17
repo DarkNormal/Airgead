@@ -11,4 +11,6 @@ public interface AccountDetailsView {
     void displayBalance(double balance);
 
     void displaySavingsTargetPercentage(double savingsTargetPercentage);
+
+    void setMonthlyBalance(String format);
 }

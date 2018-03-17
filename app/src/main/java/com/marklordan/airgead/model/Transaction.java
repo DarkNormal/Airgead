@@ -46,6 +46,10 @@ public abstract class Transaction implements Parcelable{
         return mId;
     }
 
+    public void setId(int id){
+        mId = id;
+    }
+
     public double getAmount() {
         return mAmount;
     }
@@ -60,6 +64,10 @@ public abstract class Transaction implements Parcelable{
 
     public void setDateOfTransaction(Date dateOfTransaction) {
         mDateOfTransaction = dateOfTransaction;
+    }
+
+    public void setDateOfTransaction(long dateOfTransaction) {
+        mDateOfTransaction = new Date(dateOfTransaction);
     }
 
     public Location getLocationOfTransaction() {

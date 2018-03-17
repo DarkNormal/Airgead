@@ -39,7 +39,9 @@
             android:parentActivityName=".ui.main.MainActivity">
         </activity>
         <activity android:name=".ui.TransactionDetailsActivity"
-                  android:parentActivityName=".ui.main.MainActivity">
+                  android:label="@string/activity_edit_transaction_details"
+                  android:parentActivityName=".ui.main.MainActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

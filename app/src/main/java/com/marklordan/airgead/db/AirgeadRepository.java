@@ -36,4 +36,14 @@ public class AirgeadRepository implements AirgeadDataSource {
         mDataSource.updateAccountDetails(values);
     }
 
+    @Override
+    public void updateTransaction(ContentValues values) {
+        mDataSource.updateTransaction(values);
+    }
+
+    @Override
+    public void getTransactionsForMonth(int month, GetDataCallback callback) {
+        mDataSource.getTransactionsForMonth(month, callback);
+    }
+
 }

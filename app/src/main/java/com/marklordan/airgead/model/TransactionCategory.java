@@ -37,4 +37,20 @@ public enum TransactionCategory {
         }
         return null;
     }
+
+    public static int fromCategory(TransactionCategory t){
+        switch (t){
+            case GENERAL:
+                return 0;
+            case FOOD:
+                return 1;
+            case DRINKS:
+                return 2;
+            case TRANSPORT:
+                return 3;
+            case HOME:
+                return 4;
+        }
+        return 0;
+    }
 }

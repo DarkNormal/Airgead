@@ -1,6 +1,7 @@
 package com.marklordan.airgead.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AirgeadAccount {
@@ -8,6 +9,7 @@ public class AirgeadAccount {
     private List<Transaction> mTransactions;
     private int mSavingsTarget;
     private double mSavingsTargetAmount;
+    private double mMonthlyBalance;
     private Currency mChosenCurrency;
     private boolean mIsNewAccount;
 
@@ -16,10 +18,11 @@ public class AirgeadAccount {
         mIsNewAccount = true;
     }
 
-    public AirgeadAccount(double balance, int savingsTarget, double savingsTargetAmount) {
+    public AirgeadAccount(double balance,double monthlyBalance, int savingsTarget, double savingsTargetAmount) {
         this();
         mBalance = balance;
         mSavingsTarget = savingsTarget;
+        mMonthlyBalance = monthlyBalance;
         mSavingsTargetAmount = savingsTargetAmount;
 
     }
@@ -30,6 +33,13 @@ public class AirgeadAccount {
 
     public void setBalance(double balance) {
         mBalance = balance;
+    }
+    public double getMonthlyBalance() {
+        return mMonthlyBalance;
+    }
+
+    public void setMonthlyBalance(double monthlyBalance) {
+        mMonthlyBalance = monthlyBalance;
     }
 
     public List<Transaction> getTransactions() {
@@ -76,7 +86,13 @@ public class AirgeadAccount {
     }
 
     public double getRemainingBudget(){
-        return getBalance() - getSavingsTargetAmount();
+        return getMonthlyBalance() - getSavingsTargetAmount();
+    }
+
+    public double getRemainingBudgetPerDay(){
+        Calendar cal = Calendar.getInstance();
+        int daysRemainingInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH) - cal.get(Calendar.DAY_OF_MONTH);
+        return  getRemainingBudget() / daysRemainingInMonth;
     }
     
     public Transaction getLatestTransactionAdded() {
