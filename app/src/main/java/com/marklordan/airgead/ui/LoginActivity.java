@@ -1,6 +1,9 @@
 package com.marklordan.airgead.ui;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.SQLException;
@@ -25,7 +28,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AirgeadContract;
+import com.marklordan.airgead.service.NotificationReceiver;
 import com.marklordan.airgead.ui.main.MainActivity;
+
+import java.util.Calendar;
 
 /**
  * A login screen that offers login via email/password.
@@ -64,7 +70,8 @@ public class LoginActivity extends AppCompatActivity{
             proceedToMainActivity();
         }
         else{
-            initialiseUSerAccountOnDb();
+            initialiseUserAccountOnDb();
+            scheduleReminder();
         }
 
         mAuth = FirebaseAuth.getInstance();
@@ -96,6 +103,19 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+    private void scheduleReminder() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(System.currentTimeMillis());
+        cal.set(Calendar.HOUR_OF_DAY, 20);
+        PendingIntent pendingIntent;
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        //TODO - alarm repeats very regularly as a test for development, for release it must use cal
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 8000, pendingIntent);
+        Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -186,7 +206,7 @@ public class LoginActivity extends AppCompatActivity{
         finish();
     }
 
-    private void initialiseUSerAccountOnDb() {
+    private void initialiseUserAccountOnDb() {
         ContentValues values = new ContentValues();
         values.put(AirgeadContract.AccountTable.Cols._ID, 1);
         values.put(AirgeadContract.AccountTable.Cols.ACCOUNT_ID, 1);
@@ -196,7 +216,7 @@ public class LoginActivity extends AppCompatActivity{
             getContentResolver().insert(AirgeadContract.AccountTable.CONTENT_URI, values);
         }
         catch(SQLException ex){
-            Log.d(TAG, "initialiseUSerAccountOnDb: " + ex.getMessage());
+            Log.d(TAG, "initialiseUserAccountOnDb: " + ex.getMessage());
         }
     }
 
