@@ -1,4 +1,4 @@
-package com.marklordan.airgead.adapters;
+package com.marklordan.airgead.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -14,7 +14,6 @@ import com.marklordan.airgead.model.Transaction;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
