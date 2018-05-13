@@ -6,6 +6,7 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
 
 import com.marklordan.airgead.ui.LoginActivity;
 import com.marklordan.airgead.ui.account_details.AccountDetailsActivity;
@@ -31,6 +32,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.any;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -42,16 +45,17 @@ public class MainActivityTest {
         onView(withId(R.id.add_transaction_fab)).perform(click());
 
         onView(withId(R.id.add_transaction_toolbar)).check(matches(isDisplayed()));
+
     }
 
-    @Test
-    public void onSwipeFirstItemInListRemovesItem(){
-        //when
-        onView(withId(R.id.recent_transaction_recyclerview)).perform(RecyclerViewActions.actionOnItemAtPosition(0, swipeLeft()));
-
-        //then
-        onView(withText("Transaction removed")).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-    }
+//    @Test
+//    public void onSwipeFirstItemInListRemovesItem(){
+//        //when
+//        onView(withId(R.id.recent_transaction_recyclerview)).perform(RecyclerViewActions.actionOnItemAtPosition(0, swipeLeft()));
+//
+//        //then
+//        onView(withText("Transaction removed")).check(matches((withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))));
+//    }
 
     @Test
     public void ensureBalanceIsDisplayedOnLoadAndOpensAccountDetailsOnClick(){

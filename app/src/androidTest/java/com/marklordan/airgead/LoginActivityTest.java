@@ -80,23 +80,23 @@ public class LoginActivityTest {
      */
 
 
-    @Test
-    public void onSignInWithExistingAccount() throws InterruptedException {
-        Intent intent = new Intent();
-        Instrumentation.ActivityResult intentResult = new Instrumentation.ActivityResult(Activity.RESULT_OK,intent);
-
-        intending(isInternal()).respondWith(intentResult);
-
-        onView(withId(R.id.email)).perform(typeText("testairgeadaccount@marklordan.com"));
-        onView(withId(R.id.password)).perform(typeText("testpassword"), closeSoftKeyboard());
-
-        Thread.sleep(500);
-
-        onView(withId(R.id.email_sign_in_button)).perform(click());
-
-        intended(allOf(hasComponent(MainActivity.class.getName())));
-
-    }
+//    @Test
+//    public void onSignInWithExistingAccount() throws InterruptedException {
+//        Intent intent = new Intent();
+//        Instrumentation.ActivityResult intentResult = new Instrumentation.ActivityResult(Activity.RESULT_OK,intent);
+//
+//        intending(isInternal()).respondWith(intentResult);
+//
+//        onView(withId(R.id.email)).perform(typeText("testairgeadaccount@marklordan.com"));
+//        onView(withId(R.id.password)).perform(typeText("testpassword"), closeSoftKeyboard());
+//
+//        Thread.sleep(500);
+//
+//        onView(withId(R.id.email_sign_in_button)).perform(click());
+//
+//        intended(allOf(hasComponent(MainActivity.class.getName())));
+//
+//    }
 
     @After
     public void tearDown() {
