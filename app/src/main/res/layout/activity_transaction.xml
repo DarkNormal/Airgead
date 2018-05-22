@@ -78,9 +78,9 @@
                     android:layout_weight="1"
                     android:drawableStart="@drawable/ic_mode_edit"
                     android:hint="@string/transaction_description_title"
-                    android:text=" "
-                    android:inputType="textAutoComplete"
-                    android:maxLength="30"/>
+                    android:inputType="textCapSentences|textAutoComplete"
+                    android:maxLength="30"
+                    android:text=" "/>
             </android.support.design.widget.TextInputLayout>
 
             <TextView
