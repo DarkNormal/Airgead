@@ -14,6 +14,8 @@ import java.util.Date;
 
 import static com.marklordan.airgead.model.Currency.*;
 
+import static com.marklordan.airgead.model.Currency.*;
+
 
 /**
  *
@@ -30,12 +32,14 @@ public class AccountUnitTest {
     }
     @Test
     public void createAccountWithSelectedCurrency(){
+            AirgeadAccount account = new AirgeadAccount();
         account.setCurrency(EURO);
         Assert.assertEquals(EURO, account.getCurrency());
     }
 
     @Test
-    public void setCurrentSavingsOnAccount() {
+    public void checkAccountBalanceIsSet() {
+        AirgeadAccount account = new AirgeadAccount(0,0, 0, 0);
         account.setBalance(100);
         Assert.assertEquals(100, account.getBalance(), 0);
     }

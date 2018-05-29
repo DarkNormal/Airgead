@@ -82,7 +82,6 @@ public class AirgeadAccount {
 
     public void setCurrency(Currency chosenCurrency){
         mChosenCurrency = chosenCurrency;
-
     }
 
     public double getRemainingBudget(){

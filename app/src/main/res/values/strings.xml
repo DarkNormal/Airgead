@@ -26,6 +26,15 @@
         <item>Monthly</item>
     </string-array>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_to_airgead">Welcome to Airgead!</string>
+    <string name="enter_currency">Select your currency to use with Airgead</string>
+    <string name="change_currency">This can be changed later on</string>
+    <string name="how_much_in_account">How much is currently in your account?</string>
+
+    <item name="visible" type="id"/>
+    <item name="masked" type="id"/>
     <string name="activity_new_transaction_title">New Transaction</string>
     <string name="transaction_description_title">Description</string>
     <string name="transaction_amount_title">Amount</string>

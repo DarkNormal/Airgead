@@ -37,9 +37,10 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.google.firebase:firebase-auth:10.0.1'
     implementation 'com.android.support:design:25.4.0'
-    //implementation "com.android.support:support-compat:25.4.0"
-
+    implementation 'com.android.support:support-v4:25.4.0'
+    implementation 'com.github.apl-devs:appintro:v4.2.0'
     implementation 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
+
     testImplementation 'junit:junit:4.12'
     // Dependencies for local unit tests
     testImplementation 'org.mockito:mockito-all:1.10.19'
