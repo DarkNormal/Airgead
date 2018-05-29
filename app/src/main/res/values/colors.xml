@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#302b53</color>
+    <color name="colorPrimaryDark">#292446</color>
     <color name="colorAccent">#00bfa5</color>
+    <color name="color_delete">#d32f2f</color>
+    
+    
+    <color name="amount_expense">#FF1744</color>
+    <color name="amount_income">#00E676</color>
+
+
+
+    <!-- Material 600 colors for transaction icons -->
+    <color name="transport_category">#1E88E5</color>
+    <color name="social_drinks_category">#5E35B1</color>
+    <color name="general_category">#FDD835</color>
+    <color name="home_category">#009688</color>
+    <color name="food_category">#FB8C00</color>
+
 </resources>

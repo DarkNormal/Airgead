@@ -11,6 +11,7 @@ import com.github.paolorotolo.appintro.AppIntro;
 import com.marklordan.airgead.ui.fragments.BalanceDetailsFragment;
 import com.marklordan.airgead.ui.fragments.CurrencyFragment;
 import com.marklordan.airgead.ui.fragments.IntroFragment;
+import com.marklordan.airgead.ui.main.MainActivity;
 
 public class SetupAccountActivity extends AppIntro implements IntroFragment.OnFragmentInteractionListener, CurrencyFragment.OnCurrencySelectedListener{
 
