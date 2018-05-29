@@ -45,10 +45,12 @@
             android:id="@+id/balance_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Initial value"
+            android:hint="Current Balance"
             android:inputType="numberDecimal"
             android:maxLines="1"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:drawableStart="@drawable/ic_euro_symbol"
+            android:drawableTint="#96616161"/>
 
     </android.support.design.widget.TextInputLayout>
 

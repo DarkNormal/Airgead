@@ -1,5 +1,6 @@
 package com.marklordan.airgead.ui;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,6 +35,9 @@ public class SetupAccountActivity extends AppIntro implements IntroFragment.OnFr
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         bankAccountValues = ((BalanceDetailsFragment)currentFragment).getCurrentBalance();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

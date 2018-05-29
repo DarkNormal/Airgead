@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_purple"
+                                             android:theme="@style/AppTheme.NoActionBar"
     tools:context="com.marklordan.airgead.ui.fragments.CurrencyFragment">
 
     <TextView
@@ -93,7 +94,8 @@
             android:paddingTop="8dp"
             android:text="Euro"
             android:textAlignment="viewStart"
-            android:textSize="24sp" />
+            android:textColor="@android:color/white"
+            android:textSize="24sp"/>
 
         <RadioButton
             android:id="@+id/us_dollar_option"
@@ -104,8 +106,9 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:text="RadioButton"
+            android:textColor="@android:color/white"
             android:textSize="24sp"
-            tools:text="US Dollar" />
+            tools:text="US Dollar"/>
 
         <RadioButton
             android:id="@+id/pound_option"
@@ -116,7 +119,8 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:text="British Pound"
-            android:textSize="24sp" />
+            android:textColor="@android:color/white"
+            android:textSize="24sp"/>
 
         <RadioButton
             android:id="@+id/can_dollar_dollar"
@@ -127,7 +131,8 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:text="Canadian Dollar"
-            android:textSize="24sp" />
+            android:textColor="@android:color/white"
+            android:textSize="24sp"/>
     </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>
