@@ -30,6 +30,7 @@ import com.marklordan.airgead.R;
 import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.service.NotificationReceiver;
 import com.marklordan.airgead.ui.main.MainActivity;
+import com.marklordan.airgead.utils.NotificationUtils;
 
 import java.util.Calendar;
 
@@ -106,15 +107,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void scheduleReminder() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(System.currentTimeMillis());
-        cal.set(Calendar.HOUR_OF_DAY, 20);
-        PendingIntent pendingIntent;
-        Intent intent = new Intent(this, NotificationReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        //TODO - alarm repeats very regularly as a test for development, for release it must use cal
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 8000, pendingIntent);
+        NotificationUtils.scheduleNotification(this);
         Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
     }
 

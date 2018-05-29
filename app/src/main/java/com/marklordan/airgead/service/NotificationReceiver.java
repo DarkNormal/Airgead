@@ -7,12 +7,10 @@ import android.content.Intent;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.ui.main.MainActivity;
-
-import java.util.Calendar;
+import com.marklordan.airgead.utils.NotificationUtils;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
@@ -20,6 +18,10 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+            Log.i(DEBUG_TAG, "boot completed received");
+            NotificationUtils.scheduleNotification(context);
+        }
         Intent mainactivityIntent = new Intent(context, MainActivity.class);
         PendingIntent resultIntent = PendingIntent.getActivity(context, 0, mainactivityIntent, PendingIntent.FLAG_UPDATE_CURRENT );
         // TODO: This method is called when the BroadcastReceiver is receiving
