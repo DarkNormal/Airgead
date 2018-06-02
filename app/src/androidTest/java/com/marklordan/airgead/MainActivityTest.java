@@ -8,7 +8,6 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
-import com.marklordan.airgead.ui.LoginActivity;
 import com.marklordan.airgead.ui.account_details.AccountDetailsActivity;
 import com.marklordan.airgead.ui.main.MainActivity;
 

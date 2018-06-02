@@ -15,6 +15,11 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <provider
@@ -23,24 +28,11 @@
             android:enabled="true"
             android:exported="false">
         </provider>
-
-        <activity
-            android:name=".ui.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.SetupAccountActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".ui.TransactionActivity"
             android:label="@string/activity_new_transaction_title"
             android:parentActivityName=".ui.main.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
             android:name=".ui.account_details.AccountDetailsActivity"
@@ -63,7 +55,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
->>>>>>> development
     </application>
 
 </manifest>

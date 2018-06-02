@@ -1,7 +1,11 @@
 package com.marklordan.airgead.ui.main;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.SQLException;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
@@ -24,6 +28,7 @@ import android.widget.Toast;
 
 import com.marklordan.airgead.R;
 import com.marklordan.airgead.adapter.TransactionAdapter;
+import com.marklordan.airgead.db.AirgeadContract;
 import com.marklordan.airgead.db.AirgeadRepository;
 import com.marklordan.airgead.db.LocalDataSource;
 import com.marklordan.airgead.model.Transaction;
@@ -100,7 +105,12 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
 
         mPresenter = new MainPresenterImpl(this, new AirgeadRepository(new LocalDataSource(getContentResolver())));
 
-
+        SharedPreferences preferences = this.getPreferences(Context.MODE_PRIVATE);
+        boolean hasAccountBeenCreated = preferences.getBoolean(getString(R.string.account_initialised_key), false);
+        if(!hasAccountBeenCreated) {
+            Log.d(TAG, "account has not been initialised yet, creating account..");
+            initialiseAccount();
+        }
 
     }
 
@@ -220,6 +230,25 @@ public class MainActivity extends AppCompatActivity implements MainView, Transac
     @Override
     public void onItemClicked(int itemPosition) {
         mPresenter.onItemClicked(itemPosition);
+    }
+
+    private void initialiseAccount() {
+        ContentValues values = new ContentValues();
+        values.put(AirgeadContract.AccountTable.Cols._ID, 1);
+        values.put(AirgeadContract.AccountTable.Cols.ACCOUNT_ID, 1);
+        values.put(AirgeadContract.AccountTable.Cols.BALANCE, 0);
+        values.put(AirgeadContract.AccountTable.Cols.SAVINGS_TARGET, 0);
+        try {
+            getContentResolver().insert(AirgeadContract.AccountTable.CONTENT_URI, values);
+            SharedPreferences preferences = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(getString(R.string.account_initialised_key), true);
+            editor.apply();
+            Log.i(TAG, "account_initialised; writing value to shared preferences");
+        }
+        catch(SQLException ex){
+            Log.d(TAG, "initialiseUSerAccountOnDb: " + ex.getMessage());
+        }
     }
 
     @Override
