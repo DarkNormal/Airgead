@@ -27,6 +27,11 @@ public class AirgeadRepository implements AirgeadDataSource {
     }
 
     @Override
+    public void getRecentTransactions(int numTransactionsToRetrieve, GetDataCallback callback) {
+        mDataSource.getRecentTransactions(numTransactionsToRetrieve, callback);
+    }
+
+    @Override
     public void removeTransaction(int transactionId) {
         mDataSource.removeTransaction(transactionId);
     }

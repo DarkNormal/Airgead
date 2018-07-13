@@ -90,6 +90,28 @@ public class LocalDataSource implements AirgeadDataSource{
     }
 
     @Override
+    public void getRecentTransactions(int numTransactionsToRetrieve, final GetDataCallback callback) {
+        final Cursor cursor = mContentResolver.query(AirgeadContract.TransactionTable.CONTENT_URI,
+                null,
+                null,
+                null,
+                "date_occurred DESC LIMIT " + numTransactionsToRetrieve);
+
+        if(cursor == null || cursor.getCount() <= 0){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onTransactionsLoaded(null);
+                }
+            }, 2000);
+
+            return;
+        }
+
+        callback.onRecentTransactionsLoaded(createArrayList(cursor));
+    }
+
+    @Override
     public void removeTransaction(int transactionId) {
         mContentResolver.delete(AirgeadContract.TransactionTable.CONTENT_URI, null, new String[]{String.valueOf(transactionId)});
     }

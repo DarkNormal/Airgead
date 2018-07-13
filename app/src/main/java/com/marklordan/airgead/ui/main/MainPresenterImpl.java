@@ -119,4 +119,18 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
             mMainView.displayRemainingBudget(mNumberFormat.format(mAccount.getRemainingBudgetPerDay()) + " / day");
         }
     }
+
+    @Override
+    public void onRecentTransactionsLoaded(@Nullable List<Transaction> transactions) {
+        if(mMainView != null){
+            if(transactions == null) {
+                transactions = new ArrayList<>();
+                transactions.add(new Income(0, Calendar.getInstance().getTime(), null, "Sample Income"));
+
+            }
+            mTransactionList = transactions;
+            mMainView.setItems(transactions);
+            mMainView.hideProgress();
+        }
+    }
 }

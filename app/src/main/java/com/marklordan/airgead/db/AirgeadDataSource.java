@@ -15,6 +15,8 @@ import java.util.List;
 
 public interface AirgeadDataSource {
 
+    //TODO this interface needs to be refactored for classes that do not implement the methods
+    //goes against the whole interface design if not implemented/used
     interface GetDataCallback{
         void onAccountLoaded(AirgeadAccount account);
 
@@ -22,11 +24,15 @@ public interface AirgeadDataSource {
 
         void onMonthlyTransactionsLoaded(@Nullable List<Transaction> transactions);
 
+        void onRecentTransactionsLoaded(@Nullable List<Transaction> transactions);
+
     }
 
     void getAccountDetails(GetDataCallback callback);
 
     void getTransactions(GetDataCallback callback);
+
+    void getRecentTransactions(int numTransactionsToRetrieve, GetDataCallback callback);
 
     void removeTransaction(int transactionId);
 

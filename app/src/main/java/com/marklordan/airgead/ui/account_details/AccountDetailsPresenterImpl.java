@@ -93,4 +93,9 @@ public class AccountDetailsPresenterImpl implements AccountDetailsPresenter, Air
             mDetailsView.setMonthlyBalance(nf.format(monthlyTotal));
         }
     }
+
+    @Override
+    public void onRecentTransactionsLoaded(@Nullable List<Transaction> transactions) {
+        //not used
+    }
 }
