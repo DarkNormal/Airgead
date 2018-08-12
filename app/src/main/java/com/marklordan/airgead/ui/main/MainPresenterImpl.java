@@ -41,7 +41,7 @@ public class MainPresenterImpl implements MainPresenter, AirgeadDataSource.GetDa
         }
 
         mRepository.getAccountDetails(this);
-        mRepository.getTransactions(this);
+        mRepository.getRecentTransactions(5,this);
 
         //get transactions for the current month
         int month = Calendar.getInstance().get(Calendar.MONTH);
